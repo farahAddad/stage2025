@@ -1,0 +1,71 @@
+/* CSS pour les graphiques du tableau de bord */
+
+.chartjs {
+    position: relative;
+    margin: 20px 0;
+}
+
+.chartjs canvas {
+    max-height: 300px;
+}
+
+.chartjs ul.list-inline {
+    margin-top: 15px;
+}
+
+.chartjs ul.list-inline li {
+    margin-right: 20px;
+}
+
+.chartjs ul.list-inline li h6 {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.chartjs ul.list-inline li .fa-circle {
+    margin-right: 8px;
+}
+
+/* Responsive pour les graphiques */
+@media (max-width: 768px) {
+    .chartjs canvas {
+        max-height: 250px;
+    }
+    
+    .chartjs ul.list-inline li {
+        margin-right: 10px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Styles pour les boutons de contrôle */
+.btn-group .btn {
+    margin-left: 5px;
+}
+
+.btn-group .btn:first-child {
+    margin-left: 0;
+}
+
+/* Styles pour le titre des graphiques */
+.d-flex.justify-content-between.align-items-center.mb-3 h5 {
+    color: #333;
+    font-weight: 600;
+}
+
+/* Styles pour les canvas des graphiques */
+.chartjs canvas {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Styles pour les légendes */
+.chartjs ul.list-inline li h6 .fa-circle {
+    font-size: 12px;
+}
+
+/* Animation pour les boutons */
+.btn-group .btn:hover {
+    transform: translateY(-1px);
+    transition: transform 0.2s ease;
+}

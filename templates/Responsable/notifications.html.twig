@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="fr">
+<!-- BEGIN: Head-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/jquery-jvectormap-2.0.3.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/morris.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/unslider.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/weather-icons/climacons.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
+    <!-- END: Theme CSS-->
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-overlay-menu.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-gradient.css">
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
+    <!-- END: Custom CSS-->
+
+    <title>Notifications - Responsable</title>
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+<body class="vertical-layout vertical-overlay-menu 2-columns fixed-navbar" data-open="click" data-menu="vertical-overlay-menu" data-col="2-columns">
+
+{% include 'Responsable/navBar.html.twig' %}
+
+<!-- BEGIN: Main Menu-->
+{% include 'Responsable/menuVertical.html.twig' %}
+<!-- END: Main Menu-->
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-md-6 col-12 mb-2">
+                <h3 class="content-header-title">Mes Notifications</h3>
+            </div>
+        </div>
+        
+        <div class="content-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header border-0-bottom">
+                            <h4 class="card-title">
+                                Notifications ({{ countNonLues }} non lues)
+                                {% if countNonLues > 0 %}
+                                    <button class="btn btn-sm btn-primary float-right" onclick="marquerToutesLues()">
+                                        <i class="ft-check"></i> Marquer toutes comme lues       </button>
+                                {% endif %}
+                            </h4>
+                            <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">
+                                    <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                    <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body">
+                                {% if notifications|length > 0 %}
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>Titre</th>
+                                                    <th>Message</th>
+                                                    <th>Type</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for notification in notifications %}
+                                                    <tr class="{% if not notification.lu %}table-warning{% endif %}" data-notification-id="{{ notification.id }}">
+                                                        <td>{{ notification.dateCreation|date('d/m/Y H:i') }}</td>
+                                                        <td>{{ notification.titre }}</td>
+                                                        <td>{{ notification.message }}</td>
+                                                        <td>
+                                                            <span class="badge badge-{{ notification.type == 'formation' ? 'primary' : (notification.type == 'session' ? 'success' : 'info') }}">
+                                                                {{ notification.type }}
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            {% if not notification.lu %}
+                                                                <button class="btn btn-sm btn-success" onclick="marquerLue({{ notification.id }})">
+                                                                    <i class="ft-check"></i> Marquer lue
+                                                                </button>
+                                                            {% else %}
+                                                                <span class="text-muted">Lue</span>
+                                                            {% endif %}
+                                                            {% if notification.lien %}
+                                                                <a href="{{ notification.lien }}" class="btn btn-sm btn-info">
+                                                                    <i class="ft-eye"></i> Voir
+                                                                </a>
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                {% else %}
+                                    <div class="text-center py-4">
+                                        <i class="ft-bell" style="font-size: 3rem; color: #ccc;"></i>
+                                        <h5 class="mt-2">Aucune notification</h5>
+                                        <p class="text-muted">Vous n'avez aucune notification pour le moment.</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: Content-->
+
+<!-- BEGIN: Sidenav overlay-->
+<div class="sidenav-overlay"></div>
+<div class="drag-target"></div>
+<!-- END: Sidenav overlay-->
+
+<!-- BEGIN: Vendor JS-->
+<script src="../../../app-assets/vendors/js/vendors.min.js" type="text/javascript"></script>
+<!-- BEGIN Vendor JS-->
+
+<!-- BEGIN: Page Vendor JS-->
+<script src="../../../app-assets/vendors/js/charts/chart.min.js" type="text/javascript"></script>
+<script src="../../../app-assets/vendors/js/charts/raphael-min.js" type="text/javascript"></script>
+<script src="../../../app-assets/vendors/js/charts/morris.min.js" type="text/javascript"></script>
+<script src="../../../app-assets/vendors/js/charts/jvector/jquery-jvectormap-2.0.3.min.js" type="text/javascript"></script>
+<script src="../../../app-assets/vendors/js/charts/jvector/jquery-jvectormap-world-mill.js" type="text/javascript"></script>
+<script src="../../../app-assets/vendors/js/charts/knob/jquery.knob.min.js" type="text/javascript"></script>
+<script src="../../../app-assets/vendors/js/charts/knob/knob.js" type="text/javascript"></script>
+<!-- END: Page Vendor JS-->
+
+<!-- BEGIN: Theme JS-->
+<script src="../../../app-assets/js/core/app-menu.js" type="text/javascript"></script>
+<script src="../../../app-assets/js/core/app.js" type="text/javascript"></script>
+<!-- END: Theme JS-->
+
+<!-- BEGIN: Page JS-->
+<script src="../../../app-assets/js/scripts/pages/dashboard-analytics.js" type="text/javascript"></script>
+<!-- END: Page JS-->
+
+<script>
+function marquerLue(notificationId) {
+    fetch(`/responsable/notification/marquer-lue/${notificationId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Trouver la ligne de la notification
+            const notificationRow = document.querySelector(`tr[data-notification-id="${notificationId}"]`);
+            if (notificationRow) {
+                // Mettre à jour l'apparence de la ligne
+                notificationRow.classList.remove('table-warning');
+                notificationRow.classList.add('table-success');
+                
+                // Mettre à jour le bouton
+                const button = notificationRow.querySelector('.btn-success');
+                if (button) {
+                    button.innerHTML = '<i class="ft-check"></i> Lue';
+                    button.disabled = true;
+                    button.classList.remove('btn-success');
+                    button.classList.add('btn-secondary');
+                }
+                
+                // Mettre à jour le compteur
+                updateNotificationCount();
+            }
+        } else {
+            alert('Erreur: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+        alert('Erreur lors du marquage de la notification');
+    });
+}
+
+function updateNotificationCount() {
+    const nonLueRows = document.querySelectorAll('tr.table-warning');
+    const countElement = document.querySelector('.card-title');
+    if (countElement) {
+        const newCount = nonLueRows.length;
+        countElement.innerHTML = `Notifications (${newCount} non lues)`;
+        
+        // Masquer le bouton "Marquer toutes comme lues" si plus de notifications non lues
+        const marquerToutesBtn = document.querySelector('button[onclick="marquerToutesLues()"]');
+        if (marquerToutesBtn) {
+            marquerToutesBtn.style.display = newCount > 0 ? 'inline-block' : 'none';
+        }
+    }
+}
+
+function marquerToutesLues() {
+    if (confirm('Marquer toutes les notifications comme lues ?')) {
+        fetch('/responsable/notifications/marquer-toutes-lues', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Mettre à jour toutes les lignes
+                const allRows = document.querySelectorAll('tbody tr');
+                allRows.forEach(row => {
+                    row.classList.remove('table-warning');
+                    row.classList.add('table-success');
+                    
+                    const button = row.querySelector('.btn-success');
+                    if (button) {
+                        button.innerHTML = '<i class="ft-check"></i> Lue';
+                        button.disabled = true;
+                        button.classList.remove('btn-success');
+                        button.classList.add('btn-secondary');
+                    }
+                });
+                
+                // Mettre à jour le compteur
+                updateNotificationCount();
+                
+                // Masquer le bouton "Marquer toutes comme lues"
+                const marquerToutesBtn = document.querySelector('button[onclick="marquerToutesLues()"]');
+                if (marquerToutesBtn) {
+                    marquerToutesBtn.style.display = 'none';
+                }
+            } else {
+                alert('Erreur: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+            alert('Erreur lors du marquage des notifications');
+        });
+    }
+}
+</script>
+
+
+
+</body>
+<!-- END: Body-->
+</html> 

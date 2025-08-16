@@ -1,0 +1,26 @@
+<nav class="vertical-menu">
+    <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow menu-border">
+       
+        <div class="main-menu-content">
+            <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+                <li class=" navigation-header"><span>Responsable</span><i class=" ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Responsable"></i>
+                </li>
+                
+                <!-- Formations -->
+                <li class=" nav-item"><a href="#"><i class="ft-graduation-cap"></i><i class="ft-check-square"></i><span class="menu-title" data-i18n="">Formations</span></a>
+                    <ul class="menu-content">
+                        <li><a class="menu-item" href="{{ path('responsable_formations') }}">Mes formations</a></li>
+                        <li><a class="menu-item" href="{{ path('responsable_nouvelle_formation') }}">Créer une formation</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Évaluations -->
+                <li class=" nav-item"><a href="{{ path('responsable_evaluations_list') }}"><i class="ft-chart-bar"></i><span class="menu-title" data-i18n="">Évaluations</span></a></li>
+                
+                <!-- Notifications -->
+                <li class=" nav-item"><a href="{{ path('responsable_notifications') }}"><i class="ft-bell"></i><span class="menu-title" data-i18n="">Mes notifications</span></a></li>
+                
+            </ul>
+        </div>
+    </div>
+</nav> 

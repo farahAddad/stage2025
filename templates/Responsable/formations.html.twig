@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="fr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   
+    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/jquery-jvectormap-2.0.3.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/morris.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/unslider.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/weather-icons/climacons.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
+    <!-- END: Theme CSS-->
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-overlay-menu.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-gradient.css">
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
+    <!-- END: Custom CSS-->
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-overlay-menu 2-columns fixed-navbar" data-open="click" data-menu="vertical-overlay-menu" data-col="2-columns">
+
+{% include 'Responsable/navBar.html.twig' %}
+
+<!-- BEGIN: Main Menu-->
+<div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
+    <div class="main-menu-content">
+        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+            <li class="nav-item">
+                <a href="{{ path('responsable_dashboard') }}">
+                    <i class="icon-home"></i>
+                    <span class="menu-title" data-i18n="">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a href="{{ path('responsable_formations') }}">
+                    <i class="icon-book-open"></i>
+                    <span class="menu-title" data-i18n="">Mes Formations</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ path('ajouter_formation') }}">
+                    <i class="icon-plus"></i>
+                    <span class="menu-title" data-i18n="">Créer Formation</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ path('responsable_notifications') }}">
+                    <i class="icon-bell"></i>
+                    <span class="menu-title" data-i18n="">Notifications</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ path('liste_formations') }}">
+                    <i class="icon-settings"></i>
+                    <span class="menu-title" data-i18n="">Espace Admin</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- END: Main Menu-->
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-md-6 col-12 mb-2">
+                <h3 class="content-header-title">Mes Formations</h3>
+                <p class="text-muted">Gestion de vos formations en tant que responsable</p>
+            </div>
+            <div class="content-header-right col-md-6 col-12">
+                <div class="btn-group float-md-right" role="group">
+                    <a href="{{ path('ajouter_formation') }}" class="btn btn-primary">
+                        <i class="icon-plus"></i> Créer une formation
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-body">
+            <!-- Statistiques -->
+            <div class="row">
+                <div class="col-xl-2 col-md-4 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-left">
+                                        <h3 class="primary">{{ totalFormations }}</h3>
+                                        <span>Formations</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="icon-book-open primary font-large-2 float-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-xl-2 col-md-4 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-left">
+                                        <h3 class="warning">{{ formationsEnCours }}</h3>
+                                        <span>En Cours</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="icon-clock warning font-large-2 float-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-xl-2 col-md-4 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-left">
+                                        <h3 class="success">{{ formationsTerminees }}</h3>
+                                        <span>Terminées</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="icon-check success font-large-2 float-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-xl-2 col-md-4 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-left">
+                                        <h3 class="info">{{ totalSessions }}</h3>
+                                        <span>Sessions</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="icon-calendar info font-large-2 float-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-xl-2 col-md-4 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-left">
+                                        <h3 class="warning">{{ sessionsEnCours }}</h3>
+                                        <span>Sessions Actives</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="icon-play warning font-large-2 float-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-xl-2 col-md-4 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-left">
+                                        <h3 class="success">{{ totalParticipants }}</h3>
+                                        <span>Participants</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="icon-users success font-large-2 float-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Liste des Formations -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Liste de mes formations</h4>
+                            
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body">
+                                <!-- Barre de recherche et filtres avancés -->
+                                <form id="searchForm" class="mb-3">
+                                    <div class="form-row align-items-end">
+                                        <div class="col-md-4 mb-2">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="ft-search"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control" id="searchInput" placeholder="Rechercher par sujet ou date ...">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 mb-2">
+                                            <div class="input-group">
+                                                <div class="input-group-append">
+                                                    <button type="reset" class="btn btn-link p-0 m-0 btn-sm ms-1" id="resetFilters" title="Réinitialiser les filtres" style="margin-left:6px;">
+                                                        <i class="ft-rotate-cw"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 mb-2 text-right"></div>
+                                    </div>
+                                </form>
+                                <!-- Fin barre de recherche et filtres -->
+                                {% if formations is empty %}
+                                    <div class="text-center py-4">
+                                        <i class="icon-book-open font-large-2 text-muted"></i>
+                                        <h5 class="mt-2">Aucune formation</h5>
+                                        <p class="text-muted">Vous n'êtes responsable d'aucune formation pour le moment.</p>
+                                        <a href="{{ path('ajouter_formation') }}" class="btn btn-primary">
+                                            <i class="icon-plus"></i> Créer ma première formation
+                                        </a>
+                                    </div>
+                                {% else %}
+                                    <div class="table-responsive">
+                                        <table class="table table-hover" id="formationsTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sujet</th>
+                                                    <th>Date de début</th>
+                                                    <th>Durée</th>
+                                                    <th>Sessions</th>
+                                                    <th>Participants</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for formation in formations %}
+                                                    <tr class="formation-row" data-sujet="{{ formation.sujet|lower }}" data-date="{% if formation.dateDebut %}{{ formation.dateDebut|date('d/m/Y')|lower }}{% endif %}">
+                                                        <td>
+                                                            <strong>{{ formation.sujet }}</strong>
+                                                        </td>
+                                                        <td>
+                                                            {% if formation.dateDebut %}
+                                                                {{ formation.dateDebut|date('d/m/Y') }}
+                                                            {% else %}
+                                                                <span class="text-muted">Non définie</span>
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            {% if formation.duree %}
+                                                                {{ formation.duree }} jour(s)
+                                                            {% else %}
+                                                                <span class="text-muted">Non définie</span>
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            <span class="badge badge-info">{{ formation.sessions|length }} session(s)</span>
+                                                        </td>
+                                                        <td>
+                                                            {% set totalParticipants = 0 %}
+                                                            {% for session in formation.sessions %}
+                                                                {% set inscriptions = session.inscriptions %}
+                                                                {% set totalParticipants = totalParticipants + inscriptions|length %}
+                                                            {% endfor %}
+                                                            <span class="badge badge-success">{{ totalParticipants }} participant(s)</span>
+                                                        </td>
+
+                                                        <td>
+                                                            <a href="{{ path('responsable_formation_details', {'id': formation.id}) }}" class="btn btn-sm btn-primary">
+                                                                <i class="icon-eye"></i> Voir
+                                                            </a>
+                                                            
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: Content-->
+
+<!-- BEGIN: Sidenav overlay-->
+<div class="sidenav-overlay"></div>
+<div class="drag-target"></div>
+<!-- END: Sidenav overlay-->
+
+<!-- BEGIN: Vendor JS-->
+<script src="../../../app-assets/vendors/js/vendors.min.js" type="text/javascript"></script>
+<!-- BEGIN Vendor JS-->
+
+<!-- BEGIN: Page Vendor JS-->
+<script src="../../../app-assets/vendors/js/charts/chart.min.js" type="text/javascript"></script>
+<script src="../../../app-assets/vendors/js/charts/raphael-min.js" type="text/javascript"></script>
+<script src="../../../app-assets/vendors/js/charts/morris.min.js" type="text/javascript"></script>
+<script src="../../../app-assets/vendors/js/charts/jvector-map/jquery-jvectormap-2.0.3.min.js" type="text/javascript"></script>
+<script src="../../../app-assets/vendors/js/charts/jvector-map/jquery-jvectormap-world-mill.js" type="text/javascript"></script>
+<script src="../../../app-assets/vendors/js/charts/knob/jquery.knob.min.js" type="text/javascript"></script>
+<script src="../../../app-assets/vendors/js/charts/knob/jquery.appear.min.js" type="text/javascript"></script>
+<script src="../../../app-assets/vendors/js/charts/knob/knob.js" type="text/javascript"></script>
+<!-- END: Page Vendor JS-->
+
+<!-- BEGIN: Theme JS-->
+<script src="../../../app-assets/js/core/app-menu.js" type="text/javascript"></script>
+<script src="../../../app-assets/js/core/app.js" type="text/javascript"></script>
+<!-- END: Theme JS-->
+
+<!-- BEGIN: Page JS-->
+<script src="../../../app-assets/js/scripts/pages/dashboard-analytics.js" type="text/javascript"></script>
+<!-- END: Page JS-->
+
+<!-- Recherche dynamique et filtres avancés -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        const resetBtn = document.getElementById('resetFilters');
+        const rows = document.querySelectorAll('#formationsTable tbody tr');
+
+        function filterRows() {
+            const search = searchInput.value.toLowerCase();
+            rows.forEach(row => {
+                const sujet = row.getAttribute('data-sujet');
+                const date = row.getAttribute('data-date');
+                let show = true;
+                if (search && !(sujet.includes(search) || (date && date.includes(search)))) show = false;
+                row.style.display = show ? '' : 'none';
+            });
+        }
+
+        searchInput.addEventListener('input', filterRows);
+        resetBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            searchInput.value = '';
+            filterRows();
+        });
+    });
+</script>
+<!-- Fin recherche dynamique et filtres avancés -->
+
+<!-- SCHEDULER CONSOLE SCRIPT - Messages toutes les 40 secondes -->
+<script>
+
+</script>
+
+</body>
+<!-- END: Body-->
+
+</html> 

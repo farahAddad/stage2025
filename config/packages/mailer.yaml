@@ -1,0 +1,6 @@
+framework:
+    mailer:
+        # Pour les tests, utiliser le transport de test
+        dsn: 'null://null'
+        # Pour un vrai serveur SMTP, décommentez la ligne suivante :
+        # dsn: 'smtp://localhost:1025'

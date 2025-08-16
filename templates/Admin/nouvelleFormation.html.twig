@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="fr">
+<!-- BEGIN: Head-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<head>
+
+<!-- CSS -->
+<!-- Dual Listbox CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap4-duallistbox@4.0.2/src/bootstrap-duallistbox.css">
+
+<!-- Dual Listbox JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap4-duallistbox@4.0.2/dist/jquery.bootstrap-duallistbox.min.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<!-- JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   
+    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/jquery-jvectormap-2.0.3.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/morris.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/unslider.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/weather-icons/climacons.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
+    <!-- END: Theme CSS-->
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-overlay-menu.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-gradient.css">
+    <!-- link(rel='stylesheet', type='text/css' href=app_assets_path+'/css'+rtl+'/pages/users.css')-->
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
+    <!-- END: Custom CSS-->
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-overlay-menu 2-columns   fixed-navbar" data-open="click" data-menu="vertical-overlay-menu" data-col="2-columns">
+{% include 'Admin/navBar.html.twig' %}
+
+  
+
+<!-- BEGIN: Content-->
+         <section id="form-ajout-formation">
+                    <div class="row">
+                     <div class="col-md-9 mx-auto">
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title" id="file-repeater">Informations de la Formation</h4>
+                                    <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                                    <div class="heading-elements">
+                                        <ul class="list-inline mb-0">
+                                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                            <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                            <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                            <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-content collapse show">
+                                    <div class="card-body">
+
+                                        <form class="form row" method="post" action="{{ path('save_formation') }}">
+                                            <div class="form-group col-md-6 mb-2">
+<textarea rows="3" class="form-control" placeholder="Sujet" name="sujet" required>{{ app.request.get('sujet') }}</textarea>
+                                            {% if errors.sujet is defined %}
+                                                <div class="text-danger">{{ errors.sujet }}</div>
+                                            {% endif %}
+                                            </div>
+                                            <div class="form-group col-md-6 mb-2">
+                                                <input type="date" class="form-control" placeholder="Date de début" name="dateDebut" required min="{{ "now"|date('Y-m-d') }}" value="{{ "now"|date('Y-m-d') }}">
+                                                {% if errors.dateDebut is defined %}
+                                                    <div class="text-danger">{{ errors.dateDebut }}</div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="form-group col-md-6 mb-2">
+                                                <input type="number" class="form-control" placeholder="Durée" name="duree" required min="2" value="{{ app.request.get('duree') }}">
+                                                {% if errors.duree is defined %}
+                                                    <div class="text-danger">{{ errors.duree }}</div>
+                                                {% endif %}
+                                            </div>
+                                                   
+                                             <div class="form-group col-md-6 mb-2">
+    
+    <select name="responsable" id="responsable-select" class="form-control" required>
+        <option value="">choisir Responsable...</option>
+    </select>
+    {% if errors.responsable is defined %}
+        <div class="text-danger">{{ errors.responsable }}</div>
+    {% endif %}
+</div>
+
+
+                                           
+
+                                      
+                                            
+                                         
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                       
+                    </div>
+                </section>
+                        
+
+  <section id="form-repeater">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title" id="repeat-form">iInformation de Session</h4>
+          <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+              <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+              <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+              <li><a data-action="close"><i class="ft-x"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      <div class="card-content collapse show">
+  <div class="card-body">
+    <div class="repeater-default">
+      <div data-repeater-list="car">
+        <div data-repeater-item>
+          <h4 class="card-title">Information de Session</h4>
+          <form class="form row">
+
+            <!-- Ligne 1 : Titre, Date début, Date fin -->
+            <div class="form-group mb-1 col-sm-12 col-md-4">
+              <label>Titre</label>
+              <input type="text" class="form-control" placeholder="Entrer le titre de session" name="titre" />
+            </div>
+            <div class="form-group mb-1 col-sm-12 col-md-4">
+              <label>Date début</label>
+              <input type="datetime-local" class="form-control" name="dateDebut" required min="{{ "now"|date('Y-m-d\\TH:i') }}" />
+            </div>
+            <div class="form-group mb-1 col-sm-12 col-md-4">
+              <label>Date fin</label>
+              <input type="datetime-local" class="form-control" name="dateFin" required min="{{ "now"|date('Y-m-d\\TH:i') }}" />
+            </div>
+         
+
+            <!-- Ligne 2 : Type, Salle, Localisation -->
+            <div class="form-group mb-1 col-sm-12 col-md-4">
+              <label>Type</label>
+              <select class="type-select form-control" name="type">
+                <option value="">choisir</option>
+                <option value="interne">interne</option>
+                <option value="externe">externe</option>
+              </select>
+            </div>
+
+            <div class="form-group salle-container mb-1 col-sm-12 col-md-4" style="display: none;">
+              <label>Salle</label>
+              <select class="salle form-control" name="salle">
+                <option value="">Choisir une salle</option>
+              </select>
+            </div>
+
+            <div class="form-group localisation-container mb-1 col-sm-12 col-md-4" style="display: none;">
+              <label>Localisation</label>
+              <input type="text" class="form-control" placeholder="Entrer la localisation" name="localisation" />
+            </div>
+
+            <!-- Ligne 3 : Liste ciblée -->
+            <div class="form-group users-duallistbox-container col-12" style="margin-top: 20px;">
+              <label>Employés ciblés</label>
+              <select multiple="multiple" size="8" class="users-select form-control" name="users[]"></select>
+            </div>
+
+            <!-- Dans chaque bloc session, ajoute le champ fichier -->
+            <div class="form-group col-12 mb-2">
+                <label>Fichier de la session</label>
+                <input type="file" name="fichier_session[]" class="fichier-session" />
+            </div>
+
+            <!-- Bouton delete -->
+            <div class="form-group col-12 text-center mt-2">
+              <button type="button" class="btn btn-danger" data-repeater-delete><i class="ft-x"></i> Supprimer</button>
+            </div>
+
+            <hr class="w-100">
+
+          </form>
+        </div>
+      </div>
+
+      <!-- Bouton Ajouter -->
+      <div class="form-group overflow-hidden">
+        <div class="col-12">
+          <button data-repeater-create class="btn btn-primary btn-lg"><i class="icon-plus4"></i> Ajouter</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</section>
+
+<!-- END: content-->
+
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+
+<!-- Charger jQuery (déjà inclus dans vendors.min.js) -->
+<script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+
+<!-- Ensuite les plugins qui dépendent de jQuery -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap4-duallistbox@4.0.2/dist/jquery.bootstrap-duallistbox.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery.repeater/jquery.repeater.min.js"></script>
+
+<!-- Ton script principal qui utilise $('.repeater-default').repeater(...) -->
+<script>
+$(document).ready(function() {
+  // Initialiser le répéteur
+  $('.repeater-default').repeater({
+    show: function () {
+      $(this).slideDown();
+      initSessionBlock($(this));
+    },
+    hide: function (deleteElement) {
+      $(this).slideUp(deleteElement);
+    }
+  });
+
+  // Initialiser tous les blocs existants au chargement
+  $('.repeater-default [data-repeater-item]').each(function() {
+    initSessionBlock($(this));
+  });
+
+  // Forcer l'affichage de la liste users pour chaque bloc session au chargement
+  $('.repeater-default [data-repeater-item]').each(function() {
+      $(this).find('.users-duallistbox-container').show();
+  });
+
+  // Charger dynamiquement la liste des responsables
+  $.getJSON('{{ path("get_responsables") }}', function(data) {
+      var select = $('#responsable-select');
+      select.empty();
+      select.append('<option value="">choisir Responsable...</option>');
+      data.forEach(function(user) {
+          select.append('<option value="' + user.id + '">' + user.nom + ' ' + user.prenom + ' (' + user.email + ')</option>');
+      });
+  });
+
+  // Fonction d'initialisation d'un bloc de session
+  function initSessionBlock($block) {
+    const $typeSelect = $block.find('.type-select');
+    const $salleContainer = $block.find('.salle-container');
+    const $salleSelect = $block.find('.salle');
+    const $localisationContainer = $block.find('.localisation-container');
+    const $usersContainer = $block.find('.users-duallistbox-container');
+    const $usersSelect = $block.find('.users-select');
+
+    // Appliquer l'attribut min sur dateDebut (date du jour, heure locale)
+    function getLocalDateTimeString() {
+      const now = new Date();
+      const pad = n => n < 10 ? '0' + n : n;
+      return now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate()) + 'T' + pad(now.getHours()) + ':' + pad(now.getMinutes());
+    }
+    $block.find('input[name$="dateDebut"]').attr('min', getLocalDateTimeString());
+
+    // Type change
+    $typeSelect.on('change', function() {
+      const val = $(this).val();
+      if (val === 'interne') {
+        $salleContainer.show();
+        $localisationContainer.hide();
+        loadSalles($salleSelect);
+      } else if (val === 'externe') {
+        $localisationContainer.show();
+        $salleContainer.hide();
+        $salleSelect.html('');
+      } else {
+        $localisationContainer.hide();
+        $salleContainer.hide();
+        $salleSelect.html('');
+      }
+    });
+    $typeSelect.trigger('change');
+
+    // Validation de la date de session vs date de formation
+    $block.find('input[name$="dateDebut"]').on('change', function() {
+      validateSessionDate($block);
+    });
+
+    // Validation de disponibilité de salle
+    $salleSelect.on('change', function() {
+      validateSalleDisponibilite($block);
+    });
+
+    $block.find('input[name$="dateFin"]').on('change', function() {
+      validateSalleDisponibilite($block);
+      validateUserConflicts($block);
+    });
+
+    // Validation des utilisateurs ciblés
+    $usersSelect.on('change', function() {
+      validateUserConflicts($block);
+    });
+
+    // Charger les users ciblés
+    loadUsers($usersSelect, $usersContainer);
+  }
+
+  // Charger les salles pour un select donné
+  function loadSalles($salleSelect) {
+    fetch('/get-salles')
+      .then(response => response.json())
+      .then(data => {
+        $salleSelect.html('<option value="">Choisir une salle</option>');
+        data.forEach(salle => {
+          $salleSelect.append(
+            $('<option>').val(salle.id).text(`${salle.nom} (capacité: ${salle.capacite})`)
+          );
+        });
+      });
+  }
+
+  // Charger les users pour un select donné
+  function loadUsers($usersSelect, $usersContainer) {
+    $usersSelect.html('');
+    fetch('/get-users-cibles')
+      .then(response => response.json())
+      .then(users => {
+        users.forEach(user => {
+          $usersSelect.append(
+            $('<option>').val(user.id).text(`${user.nom} ${user.prenom} (${user.email})`)
+          );
+        });
+        $usersContainer.show();
+      });
+  }
+
+  // Fonction pour mettre à jour l'état des boutons supprimer
+  function updateDeleteButtons() {
+    var $items = $('.repeater-default [data-repeater-item]');
+    $items.find('[data-repeater-delete]').prop('disabled', false).show();
+    if ($items.length === 1) {
+      $items.find('[data-repeater-delete]').prop('disabled', true).hide();
+    } else {
+      $items.first().find('[data-repeater-delete]').prop('disabled', true).hide();
+    }
+  }
+
+  // Appeler la fonction après chaque ajout ou suppression
+  $('.repeater-default').on('click', '[data-repeater-create]', function() {
+    setTimeout(updateDeleteButtons, 100);
+  });
+  $('.repeater-default').on('click', '[data-repeater-delete]', function() {
+    setTimeout(updateDeleteButtons, 100);
+  });
+
+  // Appel initial
+  updateDeleteButtons();
+
+  // Fonction de validation de la date de session
+  function validateSessionDate($block) {
+    const dateDebutSession = $block.find('input[name*="dateDebut"]').val();
+    const dateDebutFormation = $('input[name="dateDebut"]').val();
+    
+    if (dateDebutSession && dateDebutFormation) {
+      const sessionDate = new Date(dateDebutSession);
+      const formationDate = new Date(dateDebutFormation);
+      
+      // Comparer seulement les dates (sans l'heure)
+      sessionDate.setHours(0, 0, 0, 0);
+      formationDate.setHours(0, 0, 0, 0);
+      
+      if (sessionDate < formationDate) {
+        showSessionError($block, 'La date de début de session doit être supérieure ou égale à la date de début de formation');
+      } else {
+        clearSessionError($block, 'date');
+      }
+    }
+  }
+
+  // Fonction pour valider la date de formation quand elle change
+  $('input[name="dateDebut"]').on('change', function() {
+    // Revalider toutes les sessions existantes
+    $('.repeater-default [data-repeater-item]').each(function() {
+      validateSessionDate($(this));
+    });
+  });
+
+  // Fonction de validation de disponibilité de salle
+  function validateSalleDisponibilite($block) {
+    const type = $block.find('select[name*="type"]').val();
+    const salleId = $block.find('select[name*="salle"]').val();
+    const dateDebut = $block.find('input[name$="dateDebut"]').val();
+    const dateFin = $block.find('input[name$="dateFin"]').val();
+    
+    if (type === 'interne' && salleId && dateDebut && dateFin) {
+      const formData = new FormData();
+      formData.append('salleId', salleId);
+      formData.append('dateDebut', dateDebut);
+      formData.append('dateFin', dateFin);
+      
+      fetch('/check-salle-disponibilite', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (!data.disponible) {
+          showSessionError($block, data.message);
+        } else {
+          clearSessionError($block, 'salle');
+        }
+      })
+      .catch(error => {
+        console.error('Erreur lors de la vérification de disponibilité:', error);
+      });
+    }
+  }
+
+  // Fonction pour afficher une erreur de session
+  function showSessionError($block, message) {
+    clearSessionError($block);
+    const errorDiv = $('<div class="text-danger session-validation-error">' + message + '</div>');
+    $block.find('.card-body').append(errorDiv);
+  }
+
+  // Fonction pour effacer les erreurs de session
+  function clearSessionError($block, type = null) {
+    if (type) {
+      $block.find('.session-validation-error, .ajax-error').each(function() {
+        const errorText = $(this).text();
+        if (type === 'date' && (errorText.includes('date de début') || errorText.includes('supérieure'))) {
+          $(this).remove();
+        } else if (type === 'salle' && (errorText.includes('salle') || errorText.includes('disponible'))) {
+          $(this).remove();
+        } else if (type === 'users' && (errorText.includes('Conflit d\'horaires') || errorText.includes('utilisateurs'))) {
+          $(this).remove();
+        }
+      });
+    } else {
+      $block.find('.session-validation-error, .ajax-error').remove();
+    }
+  }
+
+  // Fonction de validation des conflits d'utilisateurs
+  function validateUserConflicts($block) {
+    const usersSelect = $block.find('select.users-select');
+    const dateDebut = $block.find('input[name*="dateDebut"]').val();
+    const dateFin = $block.find('input[name*="dateFin"]').val();
+    
+    if (usersSelect && usersSelect.length > 0 && dateDebut && dateFin) {
+      const selectedOptions = usersSelect[0].selectedOptions;
+      if (selectedOptions && selectedOptions.length > 0) {
+        const selectedUsers = Array.from(selectedOptions).map(opt => opt.value);
+        
+        if (selectedUsers.length > 0) {
+          const formData = new FormData();
+          selectedUsers.forEach(userId => formData.append('userIds[]', userId));
+          formData.append('dateDebut', dateDebut);
+          formData.append('dateFin', dateFin);
+          
+          fetch('/check-user-conflicts', {
+            method: 'POST',
+            body: formData
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.conflicts && data.conflicts.length > 0) {
+              showSessionError($block, data.conflicts.join(', '));
+            } else {
+              clearSessionError($block, 'users');
+            }
+          })
+          .catch(error => {
+            console.error('Erreur lors de la vérification des conflits utilisateurs:', error);
+          });
+        }
+      }
+    }
+  }
+});
+</script>
+<!-- Ajout du bouton de sauvegarde -->
+<button id="btn-save-formation" class="btn btn-success">Enregistrer la formation</button>
+<script>
+document.getElementById('btn-save-formation').addEventListener('click', function(e) {
+    e.preventDefault();
+
+            // Nettoyer tous les anciens messages d'erreur (formation + sessions)
+        document.querySelectorAll('.text-danger.ajax-error, .text-danger.session-error, .text-danger.formation-error, .text-danger.session-validation-error').forEach(function(el) { el.remove(); });
+        
+        // Nettoyer aussi les erreurs dans les blocs de session
+        document.querySelectorAll('#form-repeater [data-repeater-item]').forEach(function(item) {
+            item.querySelectorAll('.text-danger.ajax-error, .text-danger.session-error, .text-danger.session-validation-error').forEach(function(el) { el.remove(); });
+        });
+
+    let hasSessionError = false;
+    let hasFormationError = false;
+    const now = new Date();
+
+    // --- Validation FORMATION ---
+    // Sujet
+    const sujetInput = document.querySelector('[name="sujet"]');
+    if (sujetInput && !sujetInput.value.trim()) {
+        if (!sujetInput.parentNode.querySelector('.formation-error')) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'text-danger formation-error';
+            errorDiv.innerText = 'Le sujet est requis.';
+            sujetInput.parentNode.appendChild(errorDiv);
+        }
+        hasFormationError = true;
+    }
+    // Date début
+    const dateDebutInput = document.querySelector('[name="dateDebut"]');
+    let dateDebutValue = dateDebutInput ? dateDebutInput.value : '';
+    let dateDebutDate = dateDebutValue ? new Date(dateDebutValue) : null;
+    if (dateDebutInput && !dateDebutValue) {
+        if (!dateDebutInput.parentNode.querySelector('.formation-error')) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'text-danger formation-error';
+            errorDiv.innerText = 'La date de début est requise.';
+            dateDebutInput.parentNode.appendChild(errorDiv);
+        }
+        hasFormationError = true;
+    } else if (dateDebutInput && dateDebutDate) {
+        // Comparer seulement les dates (sans l'heure)
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const formationDate = new Date(dateDebutDate);
+        formationDate.setHours(0, 0, 0, 0);
+        
+        if (formationDate < today) {
+            if (!dateDebutInput.parentNode.querySelector('.formation-error')) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'text-danger formation-error';
+                errorDiv.innerText = 'La date de début doit être aujourd\'hui ou dans le futur.';
+                dateDebutInput.parentNode.appendChild(errorDiv);
+            }
+            hasFormationError = true;
+        }
+    }
+    // Durée
+    const dureeInput = document.querySelector('[name="duree"]');
+    if (dureeInput && (!dureeInput.value || isNaN(dureeInput.value) || parseInt(dureeInput.value) < 2)) {
+        if (!dureeInput.parentNode.querySelector('.formation-error')) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'text-danger formation-error';
+            errorDiv.innerText = 'La durée doit être un nombre supérieur ou égal à 2.';
+            dureeInput.parentNode.appendChild(errorDiv);
+        }
+        hasFormationError = true;
+    }
+    // Responsable
+    const responsableInput = document.querySelector('[name="responsable"]');
+    if (responsableInput && !responsableInput.value) {
+        if (!responsableInput.parentNode.querySelector('.formation-error')) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'text-danger formation-error';
+            errorDiv.innerText = 'Le responsable est obligatoire.';
+            responsableInput.parentNode.appendChild(errorDiv);
+        }
+        hasFormationError = true;
+    }
+
+    // --- Validation SESSIONS ---
+    document.querySelectorAll('#form-repeater [data-repeater-item]').forEach(function(item) {
+        // Titre
+        const titreInput = item.querySelector('input[name$="[titre]"]');
+        if (titreInput && !titreInput.value.trim()) {
+            const parent = titreInput.closest('.form-group') || titreInput.parentNode;
+            if (!parent.querySelector('.session-error')) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'text-danger session-error';
+                errorDiv.innerText = 'Le titre est requis.';
+                parent.appendChild(errorDiv);
+            }
+            hasSessionError = true;
+        }
+        // Date début
+        let dateDebutInput = item.querySelector('input[name*="dateDebut"]');
+        if (!dateDebutInput) {
+            console.warn('Champ dateDebut non trouvé dans une session', item);
+        }
+        let dateDebutValue = dateDebutInput ? dateDebutInput.value : '';
+        let dateDebutDate = dateDebutValue ? new Date(dateDebutValue) : null;
+        if (dateDebutInput && !dateDebutValue) {
+            let parent = dateDebutInput.closest('.form-group');
+            if (!parent) {
+                parent = dateDebutInput;
+            }
+            if (!parent.querySelector?.('.session-error')) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'text-danger session-error';
+                errorDiv.innerText = 'La date de début est requise.';
+                if (parent !== dateDebutInput) {
+                    parent.appendChild(errorDiv);
+                } else {
+                    dateDebutInput.insertAdjacentElement('afterend', errorDiv);
+                }
+            }
+            hasSessionError = true;
+        } else if (dateDebutInput && dateDebutDate && dateDebutDate <= now) {
+            let parent = dateDebutInput.closest('.form-group');
+            if (!parent) {
+                parent = dateDebutInput;
+            }
+            if (!parent.querySelector?.('.session-error')) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'text-danger session-error';
+                errorDiv.innerText = 'La date de début doit être dans le futur.';
+                if (parent !== dateDebutInput) {
+                    parent.appendChild(errorDiv);
+                } else {
+                    dateDebutInput.insertAdjacentElement('afterend', errorDiv);
+                }
+            }
+            hasSessionError = true;
+        }
+        // Date fin
+        let dateFinInput = item.querySelector('input[name*="dateFin"]');
+        if (!dateFinInput) {
+            console.warn('Champ dateFin non trouvé dans une session', item);
+        }
+        let dateFinValue = dateFinInput ? dateFinInput.value : '';
+        let dateFinDate = dateFinValue ? new Date(dateFinValue) : null;
+        if (dateFinInput && !dateFinValue) {
+            let parent = dateFinInput.closest('.form-group');
+            if (!parent) {
+                parent = dateFinInput;
+            }
+            if (!parent.querySelector?.('.session-error')) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'text-danger session-error';
+                errorDiv.innerText = 'La date de fin est requise.';
+                if (parent !== dateFinInput) {
+                    parent.appendChild(errorDiv);
+                } else {
+                    dateFinInput.insertAdjacentElement('afterend', errorDiv);
+                }
+            }
+            hasSessionError = true;
+        } else if (dateFinInput && dateDebutDate && dateFinDate && dateFinDate <= dateDebutDate) {
+            let parent = dateFinInput.closest('.form-group');
+            if (!parent) {
+                parent = dateFinInput;
+            }
+            if (!parent.querySelector?.('.session-error')) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'text-danger session-error';
+                errorDiv.innerText = 'La date de fin doit être supérieure à la date de début.';
+                if (parent !== dateFinInput) {
+                    parent.appendChild(errorDiv);
+                } else {
+                    dateFinInput.insertAdjacentElement('afterend', errorDiv);
+                }
+            }
+            hasSessionError = true;
+        }
+        // Type
+        const typeInput = item.querySelector('select[name*="type"]');
+        let typeValue = typeInput ? typeInput.value : '';
+        if (typeInput && !typeValue) {
+            const parent = typeInput.closest('.form-group') || typeInput.parentNode;
+            if (!parent.querySelector('.session-error')) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'text-danger session-error';
+                errorDiv.innerText = 'Le type est requis.';
+                parent.appendChild(errorDiv);
+            }
+            hasSessionError = true;
+        }
+        // Localisation ou salle selon type
+        if (typeValue === 'externe') {
+            const localisationInput = item.querySelector('input[name*="localisation"]');
+            if (localisationInput && !localisationInput.value.trim()) {
+                const parent = localisationInput.closest('.form-group') || localisationInput.parentNode;
+                if (!parent.querySelector('.session-error')) {
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'text-danger session-error';
+                    errorDiv.innerText = 'La localisation est requise pour une session externe.';
+                    parent.appendChild(errorDiv);
+                }
+                hasSessionError = true;
+            }
+        }
+        if (typeValue === 'interne') {
+            const salleInput = item.querySelector('select[name*="salle"]');
+            if (salleInput && !salleInput.value) {
+                const parent = salleInput.closest('.form-group') || salleInput.parentNode;
+                if (!parent.querySelector('.session-error')) {
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'text-danger session-error';
+                    errorDiv.innerText = 'La salle est requise pour une session interne.';
+                    parent.appendChild(errorDiv);
+                }
+                hasSessionError = true;
+            }
+        }
+        // Users ciblés
+        let usersSelect = item.querySelector('select.users-select');
+        let users = [];
+        if (usersSelect) {
+          users = Array.from(usersSelect.selectedOptions).map(opt => opt.value);
+        }
+        // Toujours envoyer un tableau d'IDs (même si un seul)
+        if (!Array.isArray(users)) {
+          users = users ? [users] : [];
+        }
+        if (!usersSelect || Array.from(usersSelect.selectedOptions).filter(opt => opt.value).length === 0) {
+          const parent = usersSelect ? (usersSelect.closest('.form-group') || usersSelect.parentNode) : item;
+          if (!parent.querySelector('.session-error')) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'text-danger session-error';
+            errorDiv.innerText = 'Veuillez sélectionner au moins un employé ciblé.';
+            parent.appendChild(errorDiv);
+          }
+          hasSessionError = true;
+        }
+    });
+    if (hasFormationError || hasSessionError) {
+        return; // Stoppe la soumission si erreur
+    }
+
+    // Créer un objet FormData
+    const formData = new FormData();
+
+    // Récupérer les infos de la formation
+    const sujet = sujetInput ? sujetInput.value : '';
+    const dateDebut = dateDebutInput ? dateDebutInput.value : '';
+    const duree = dureeInput ? dureeInput.value : '';
+    const responsable = responsableInput ? responsableInput.value : '';
+
+    const sessions = [];
+    let sessionIndex = 0;
+    
+    document.querySelectorAll('#form-repeater [data-repeater-item]').forEach(function(item) {
+        
+        // Récupération du champ titre avec nom dynamique généré par le répéteur
+        var titreInput = item.querySelector('input[name$="[titre]"]');
+        var titreValue = titreInput ? titreInput.value : '';
+        
+        // Récupérer les champs de date avec les noms générés par le répéteur
+        let dateDebutInput = item.querySelector('input[name*="dateDebut"]');
+        let dateDebutValue = '';
+        if (dateDebutInput) {
+            dateDebutValue = dateDebutInput.value;
+            console.log('Date début trouvée:', dateDebutValue, 'Element:', dateDebutInput.name);
+        } else {
+            console.log('Date début non trouvée dans:', item);
+        }
+        
+        let dateFinInput = item.querySelector('input[name*="dateFin"]');
+        let dateFinValue = '';
+        if (dateFinInput) {
+            dateFinValue = dateFinInput.value;
+            console.log('Date fin trouvée:', dateFinValue, 'Element:', dateFinInput.name);
+        } else {
+            console.log('Date fin non trouvée dans:', item);
+        }
+   
+        let typeInput = item.querySelector('select[name*="type"]');
+        let salleInput = item.querySelector('select[name*="salle"]');
+        let emplacementInput = item.querySelector('input[name*="localisation"]');
+        let usersSelect = item.querySelector('select.users-select');
+        let fichierInput = item.querySelector('.fichier-session');
+
+        let users = [];
+        if (usersSelect) {
+          users = Array.from(usersSelect.selectedOptions).map(opt => opt.value);
+        }
+        // Toujours envoyer un tableau d'IDs (même si un seul)
+        if (!Array.isArray(users)) {
+          users = users ? [users] : [];
+        }
+
+        let fichierName = null;
+        if (fichierInput && fichierInput.files.length > 0) {
+            fichierName = `fichier_session_${sessionIndex}`;
+            formData.append(fichierName, fichierInput.files[0]);
+        }
+
+        // Logique selon le type
+        let typeValue = typeInput ? typeInput.value : '';
+        console.log('Type de session récupéré:', typeValue, 'Element:', typeInput);
+        
+        let salleValue = null;
+        let emplacementValue = null;
+        if (typeValue === 'interne') {
+            salleValue = salleInput ? salleInput.value : null;
+            console.log('Salle récupérée:', salleValue, 'Element:', salleInput);
+            emplacementValue = null;
+        } else if (typeValue === 'externe') {
+            salleValue = null;
+            emplacementValue = emplacementInput ? emplacementInput.value : null;
+            console.log('Emplacement récupéré:', emplacementValue, 'Element:', emplacementInput);
+        }
+
+        console.log('Users pour session', sessionIndex, ':', users);
+        const sessionData = {
+            titre: titreValue,
+            dateDebut: dateDebutInput ? dateDebutInput.value : '',
+            dateFin: dateFinInput ? dateFinInput.value : '',
+            type: typeValue,
+            salle: salleValue,
+            emplacement: emplacementValue,
+            users: users,
+            fichier: fichierName
+        };
+        
+        console.log('Session data:', sessionData);
+        sessions.push(sessionData);
+        sessionIndex++;
+    });
+
+    // Ajouter les infos de la formation au FormData
+    formData.append('sujet', sujet);
+    formData.append('dateDebut', dateDebut);
+    formData.append('duree', duree);
+    formData.append('responsable', responsable);
+    console.log('Sessions envoyées :', sessions);
+    formData.append('sessions', JSON.stringify(sessions));
+
+    // Envoi AJAX
+    fetch('{{ path('save_formation') }}', {
+        method: 'POST',
+        body: formData,
+        credentials: 'same-origin'
+    })
+    .then(async response => {
+        let data;
+        try {
+            data = await response.json();
+        } catch (e) {
+            throw new Error('Réponse serveur invalide');
+        }
+        // Nettoyer les anciens messages d'erreur
+        document.querySelectorAll('.text-danger.ajax-error').forEach(e => e.remove());
+        if (!response.ok || !data.success) {
+            if (data.errors) {
+                // Afficher les erreurs sous chaque champ
+                for (const [field, message] of Object.entries(data.errors)) {
+                                    if (field.startsWith('session_')) {
+                    // Erreur de session
+                    const sessionIndex = field.split('_')[1];
+                    const sessionBlocks = document.querySelectorAll('#form-repeater [data-repeater-item]');
+                    if (sessionBlocks[sessionIndex]) {
+                        const sessionBlock = sessionBlocks[sessionIndex];
+                        
+                        // Traiter les erreurs par type
+                        if (typeof message === 'object' && message !== null) {
+                            // Erreurs organisées par type
+                            if (message.date && message.date.length > 0) {
+                                const dateDebutInput = sessionBlock.querySelector('input[name*="dateDebut"]');
+                                if (dateDebutInput) {
+                                    const errorDiv = document.createElement('div');
+                                    errorDiv.className = 'text-danger ajax-error';
+                                    errorDiv.innerText = message.date.join(', ');
+                                    dateDebutInput.parentNode.appendChild(errorDiv);
+                                }
+                            }
+                            
+                            if (message.salle && message.salle.length > 0) {
+                                const salleSelect = sessionBlock.querySelector('select[name*="salle"]');
+                                if (salleSelect) {
+                                    const errorDiv = document.createElement('div');
+                                    errorDiv.className = 'text-danger ajax-error';
+                                    errorDiv.innerText = message.salle.join(', ');
+                                    salleSelect.parentNode.appendChild(errorDiv);
+                                }
+                            }
+                            
+                            if (message.users && message.users.length > 0) {
+                                const usersSelect = sessionBlock.querySelector('select.users-select');
+                                if (usersSelect) {
+                                    const errorDiv = document.createElement('div');
+                                    errorDiv.className = 'text-danger ajax-error';
+                                    errorDiv.innerText = message.users.join(', ');
+                                    usersSelect.parentNode.appendChild(errorDiv);
+                                }
+                            }
+                            
+                            if (message.general && message.general.length > 0) {
+                                const errorDiv = document.createElement('div');
+                                errorDiv.className = 'text-danger ajax-error';
+                                errorDiv.innerHTML = '<strong>Session ' + (parseInt(sessionIndex) + 1) + ':</strong> ' + message.general.join(', ');
+                                sessionBlock.querySelector('.card-body').appendChild(errorDiv);
+                            }
+                                                } else {
+                            // Erreur simple (ancien format)
+                            const errorMessage = message;
+                            
+                            if (errorMessage.includes('date de début de session doit être supérieure')) {
+                                const dateDebutInput = sessionBlock.querySelector('input[name*="dateDebut"]');
+                                if (dateDebutInput) {
+                                    const errorDiv = document.createElement('div');
+                                    errorDiv.className = 'text-danger ajax-error';
+                                    errorDiv.innerText = errorMessage;
+                                    dateDebutInput.parentNode.appendChild(errorDiv);
+                                }
+                            } else if (errorMessage.includes('salle') && errorMessage.includes('disponible')) {
+                                const salleSelect = sessionBlock.querySelector('select[name*="salle"]');
+                                if (salleSelect) {
+                                    const errorDiv = document.createElement('div');
+                                    errorDiv.className = 'text-danger ajax-error';
+                                    errorDiv.innerText = errorMessage;
+                                    salleSelect.parentNode.appendChild(errorDiv);
+                                }
+                            } else if (errorMessage.includes('Conflit d\'horaires pour les utilisateurs')) {
+                                const usersSelect = sessionBlock.querySelector('select.users-select');
+                                if (usersSelect) {
+                                    const errorDiv = document.createElement('div');
+                                    errorDiv.className = 'text-danger ajax-error';
+                                    errorDiv.innerText = errorMessage;
+                                    usersSelect.parentNode.appendChild(errorDiv);
+                                }
+                            } else {
+                                const errorDiv = document.createElement('div');
+                                errorDiv.className = 'text-danger ajax-error';
+                                errorDiv.innerHTML = '<strong>Session ' + (parseInt(sessionIndex) + 1) + ':</strong> ' + errorMessage;
+                                sessionBlock.querySelector('.card-body').appendChild(errorDiv);
+                            }
+                        }
+                    }
+                } else {
+                        // Erreur de formation
+                        let input = document.querySelector(`[name="${field}"]`);
+                        if (!input) {
+                            // Pour textarea sujet
+                            if (field === 'sujet') input = document.querySelector('textarea[name="sujet"]');
+                            if (field === 'dateDebut') input = document.querySelector('input[name="dateDebut"]');
+                            if (field === 'duree') input = document.querySelector('input[name="duree"]');
+                            if (field === 'responsable') input = document.querySelector('select[name="responsable"]');
+                        }
+                        if (input) {
+                            const errorDiv = document.createElement('div');
+                            errorDiv.className = 'text-danger ajax-error';
+                            errorDiv.innerText = message;
+                            input.parentNode.appendChild(errorDiv);
+                        }
+                    }
+                }
+            } else {
+                alert('Erreur lors de la sauvegarde');
+            }
+            throw new Error('Validation error');
+        }
+        // Succès
+        alert('Formation et sessions enregistrées !');
+        window.location.href = data.redirect;
+    })
+    .catch(err => {
+        if (err.message !== 'Validation error') {
+            alert('Erreur : ' + err.message);
+        }
+    });
+});
+</script>
+<!-- Enfin, les scripts du template -->
+<script src="../../../app-assets/js/core/app-menu.js"></script>
+<script src="../../../app-assets/js/core/app.js"></script>
+
+
+
+</body>
+<!-- END: Body-->
+
+</html>

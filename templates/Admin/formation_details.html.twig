@@ -1,0 +1,1985 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="fr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   
+    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/jquery-jvectormap-2.0.3.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/morris.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/unslider.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/weather-icons/climacons.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
+    <!-- END: Theme CSS-->
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-overlay-menu.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-gradient.css">
+    <!-- link(rel='stylesheet', type='text/css', href=app_assets_path+'/css'+rtl+'/pages/users.css')-->
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
+    <title>Détails de la formation</title>
+    <style>
+        /* Styles pour les colonnes à largeur fixe */
+        .resizable-table {
+            table-layout: fixed;
+            width: 100%;
+            border-collapse: collapse; 
+        }
+        
+        .resizable-column {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        
+        /* Largeurs des colonnes - MODIFIEZ ICI selon vos préférences */
+        .resizable-column[data-column="titre"] { width: 13%; }
+        .resizable-column[data-column="dateDebut"] { width: 15.5%; }
+        .resizable-column[data-column="dateFin"] { width: 15.5%; }
+        .resizable-column[data-column="type"] { width: 8%; }
+        .resizable-column[data-column="salle"] { width: 14%; }
+        .resizable-column[data-column="participants"] { width: 20%; }
+        .resizable-column[data-column="statut"] { width: 8%; }
+        .resizable-column[data-column="fichier"] { width: 11.2%; }
+        .resizable-column[data-column="actions"] { width: 7%; }
+        
+        /* Assurer que le contenu ne déborde pas */
+        .resizable-column > * {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+    
+        .resizable-table th,
+        .resizable-table td {
+            padding: 18px 3px; 
+           
+        }
+        
+       
+        .resizable-column .edit-mode {
+            white-space: normal;
+            overflow: visible;
+        }
+        
+      
+    </style>
+</head>
+<body class="vertical-layout vertical-overlay-menu 2-columns   fixed-navbar" data-open="click" data-menu="vertical-overlay-menu" data-col="2-columns">
+{% include 'Admin/navBar.html.twig' %}
+<div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-md-6 col-12 mb-2">
+                <h3 class="content-header-title">Détails de la formation</h3>
+                <p class="text-muted">Visualisez les informations de la formation et ses sessions</p>
+            </div>
+        </div>
+        <div class="content-body">
+            <div class="row">
+                <div class="col-md-9 mx-auto">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h4 class="card-title mb-0">Informations de la Formation</h4>
+                            <button id="edit-formation-btn" class="btn btn-sm btn-outline-primary" title="Modifier"><i class="ft-edit"></i></button>
+                        </div>
+                        <div class="card-content collapse show">
+                            <div class="card-body">
+                                <form id="formation-edit-form" data-formation-id="{{ formation.id }}">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6 mb-2">
+                                            <label><strong>Sujet :</strong></label>
+                                            <div class="view-mode" data-field="sujet">
+                                                {{ formation.sujet }}
+                                            </div>
+                                            <input type="text" class="form-control edit-mode d-none" name="sujet" value="{{ formation.sujet }}" required>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="form-group col-md-6 mb-2">
+                                            <label><strong>Date de début :</strong></label>
+                                            <div class="view-mode" data-field="dateDebut">{{ formation.dateDebut ? formation.dateDebut|date('Y-m-d') : 'Non définie' }}</div>
+                                            <input type="date" class="form-control edit-mode d-none" name="dateDebut" value="{{ formation.dateDebut ? formation.dateDebut|date('Y-m-d') : '' }}" required min="{{ "now"|date('Y-m-d') }}">
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="form-group col-md-6 mb-2">
+                                            <label><strong>Durée :</strong></label>
+                                            <div class="view-mode" data-field="duree">{{ formation.duree ? formation.duree : 'Non définie' }}</div>
+                                            <input type="number" class="form-control edit-mode d-none" name="duree" value="{{ formation.duree }}" min="2" required>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="form-group col-md-6 mb-2">
+                                            <label><strong>Responsable :</strong></label>
+                                            <div class="view-mode">{{ formation.responsable ? formation.responsable.nom ~ ' ' ~ formation.responsable.prenom : 'Non défini' }}</div>
+                                            <select class="form-control edit-mode d-none" name="responsable" required>
+                                                <option value="" disabled>Choisir un responsable</option>
+                                                {% for resp in responsables %}
+                                                    <option value="{{ resp.id }}" {% if formation.responsable and formation.responsable.id == resp.id %}selected{% endif %}>{{ resp.nom }} {{ resp.prenom }} ({{ resp.email }})</option>
+                                                {% endfor %}
+                                            </select>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-1">
+                                        <button type="button" class="btn btn-success btn-sm edit-mode d-none save-formation-btn" title="Valider" style="padding: 0.3rem 0.6rem;"><i class="ft-check"></i></button>
+                                        <button type="button" class="btn btn-danger btn-sm edit-mode d-none cancel-formation-edit" title="Annuler" style="padding: 0.3rem 0.6rem;"><i class="ft-x"></i></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h4 class="card-title mb-0">Sessions de la formation</h4>
+                        </div>
+                        <div class="card-content collapse show">
+                            <div class="card-body">
+                                <table class="table table-hover resizable-table" id="sessionsTable">
+                                    <thead>
+                                        <tr>
+                                            <th class="resizable-column" data-column="titre">
+                                                Titre
+                                            </th>
+                                            <th class="resizable-column" data-column="dateDebut">
+                                                Date début
+                                            </th>
+                                            <th class="resizable-column" data-column="dateFin">
+                                                Date fin
+                                            </th>
+                                            <th class="resizable-column" data-column="type">
+                                                Type
+                                            </th>
+                                            <th class="resizable-column" data-column="salle">
+                                                Salle/Localisation
+                                            </th>
+                                            <th class="resizable-column" data-column="participants">
+                                                Participants
+                                            </th>
+                                            <th class="resizable-column" data-column="statut">
+                                                Statut
+                                            </th>
+                                            <th class="resizable-column" data-column="fichier">
+                                                Fichier
+                                            </th>
+                                            <th class="resizable-column" data-column="actions">
+                                                Actions
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% if formation.sessions is empty %}
+                                            <tr class="text-center"><td colspan="8">Aucune session pour cette formation.</td></tr>
+                                        {% else %}
+                                            {% for session in formation.sessions %}
+                                                <tr data-session-id="{{ session.id }}">
+                                                    <td>
+                                                        <span class="view-mode">
+                                                            {{ session.titre }}
+                                                        </span>
+                                                        <input type="text" class="form-control edit-mode d-none" name="titre" value="{{ session.titre }}" required>
+                                                        <div class="invalid-feedback"></div>
+                                                    </td>
+                                                    <td>
+                                                        <span class="view-mode">{{ session.dateDebut ? session.dateDebut|date('d/m/Y H:i') : 'Non définie' }}</span>
+                                                        <input type="datetime-local" class="form-control edit-mode d-none" name="dateDebut" value="{{ session.dateDebut ? session.dateDebut|date('Y-m-d\\TH:i') : '' }}" required min="{{ "now"|date('Y-m-d\\TH:i') }}">
+                                                        <div class="invalid-feedback"></div>
+                                                    </td>
+                                                    <td>
+                                                        <span class="view-mode">{{ session.dateFin ? session.dateFin|date('d/m/Y H:i') : 'Non définie' }}</span>
+                                                        <input type="datetime-local" class="form-control edit-mode d-none" name="dateFin" value="{{ session.dateFin ? session.dateFin|date('Y-m-d\\TH:i') : '' }}" required min="{{ "now"|date('Y-m-d\\TH:i') }}">
+                                                        <div class="invalid-feedback"></div>
+                                                    </td>
+                                                    <td>
+                                                        <span class="view-mode">{{ session.type|capitalize }}</span>
+                                                        <select class="form-control edit-mode d-none" name="type" required>
+                                                            <option value="interne" {% if session.type == 'interne' %}selected{% endif %}>Interne</option>
+                                                            <option value="externe" {% if session.type == 'externe' %}selected{% endif %}>Externe</option>
+                                                        </select>
+                                                        <div class="invalid-feedback"></div>
+                                                    </td>
+                                                    <td>
+                                                        <span class="view-mode">
+                                                            {% if session.type == 'interne' %}
+                                                                {{ session.salle ? session.salle.nom : 'Non définie' }}
+                                                            {% else %}
+                                                                {{ session.emplacement ?: 'Non définie' }}
+                                                            {% endif %}
+                                                        </span>
+                                                        <input type="text" class="form-control edit-mode d-none" name="emplacement" value="{{ session.emplacement }}" {% if session.type == 'externe' %}required{% endif %} {% if session.type == 'interne' %}style="display:none;"{% endif %}>
+                                                        <div class="invalid-feedback"></div>
+                                                        <select class="form-control edit-mode d-none" name="salle" {% if session.type == 'interne' %}required{% endif %} {% if session.type == 'externe' %}style="display:none;"{% endif %}>
+                                                            {% if session.salle %}
+                                                                <option value="{{ session.salle.id }}">{{ session.salle.nom }}</option>
+                                                            {% else %}
+                                                                <option value="">Choisir une salle</option>
+                                                            {% endif %}
+                                                            <!-- TODO: charger les autres salles -->
+                                                        </select>
+                                                        <div class="invalid-feedback"></div>
+                                                    </td>
+                                                    <td>
+                                                        <span class="view-mode">
+                                                            {% set inscriptions = session.inscriptions %}
+                                                            <span class="badge badge-success">{{ inscriptions|length }} participant(s)</span>
+                                                        </span>
+                                                        <div class="edit-mode d-none">
+                                                            <select class="form-control participants-select" name="participants" multiple>
+                                                                {% for user in users %}
+                                                                    <option value="{{ user.id }}" {% if user.id in inscriptions|map(i => i.user.id)|join(',') %}selected{% endif %}>{{ user.nom }} {{ user.prenom }} ({{ user.email }})</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                            <small class="text-muted">Ctrl+clic pour sélectionner/désélectionner plusieurs participants</small>
+                                                            <div class="invalid-feedback"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <span class="view-mode">
+                                                            {% set status = session.status ?: 'créée' %}
+                                                            <span class="badge badge-{% if status == 'créée' %}info{% elseif status == 'en cours' %}warning{% elseif status == 'terminée' %}success{% else %}secondary{% endif %}">{{ status|capitalize }}</span>
+                                                        </span>
+                                                        <select class="form-control edit-mode d-none" name="status" required>
+                                                            <option value="créée" {% if status == 'créée' %}selected{% endif %}>Créée</option>
+                                                            <option value="en cours" {% if status == 'en cours' %}selected{% endif %}>En cours</option>
+                                                            <option value="terminée" {% if status == 'terminée' %}selected{% endif %}>Terminée</option>
+                                                            <option value="annulée" {% if status == 'annulée' %}selected{% endif %}>Annulée</option>
+                                                        </select>
+                                                        <div class="invalid-feedback"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="view-mode">
+                                                            {% if session.fichier %}
+                                                                <a href="{{ asset('uploads/' ~ session.fichier) }}" target="_blank" class="btn btn-sm btn-outline-info">
+                                                                    <i class="ft-download"></i> Voir le fichier
+                                                                </a>
+                                                            {% else %}
+                                                                <span class="text-muted">Aucun fichier</span>
+                                                            {% endif %}
+                                                        </div>
+                                                        <div class="edit-mode d-none">
+                                                            <input type="file" class="form-control" name="fichier" accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png">
+                                                            {% if session.fichier %}
+                                                                <div class="form-check mt-1">
+                                                                    <input type="checkbox" class="form-check-input" name="supprimer_fichier" id="supprimer_fichier_{{ session.id }}">
+                                                                    <label class="form-check-label text-danger small" for="supprimer_fichier_{{ session.id }}">
+                                                                        <i class="ft-trash"></i> Supprimer le fichier actuel
+                                                                    </label>
+                                                                </div>
+                                                            {% endif %}
+                                                            <div class="invalid-feedback"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center gap-1">
+                                                            {% set canEdit = session.status == 'créée' or session.status == 'en cours' %}
+                                                            <button class="btn btn-sm btn-outline-primary edit-session-btn view-mode" title="Modifier" {% if not canEdit %}disabled{% endif %} style="{% if not canEdit %}opacity: 0.5; cursor: not-allowed;{% endif %}">
+                                                                <i class="ft-edit"></i>
+                                                            </button>
+                                                            <button class="btn btn-sm btn-outline-danger delete-session-btn view-mode" title="Supprimer">
+                                                                <i class="ft-trash"></i>
+                                                            </button>
+                                                            <button class="btn btn-success btn-sm edit-mode d-none save-session-btn" title="Valider" style="padding: 0.3rem 0.6rem;"><i class="ft-check"></i></button>
+                                                            <button class="btn btn-danger btn-sm edit-mode d-none cancel-session-edit" title="Annuler" style="padding: 0.3rem 0.6rem;"><i class="ft-x"></i></button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-2">
+                <button id="add-session-btn" class="btn btn-primary btn-sm"><i class="ft-plus"></i> Ajouter une session</button>
+            </div>
+            <!-- Ligne de session vide à cloner/injecter en JS (hidden template) -->
+            <table style="display:none;"><tbody><tr id="session-row-template">
+                <td><input type="text" class="form-control edit-mode" name="titre" value="" required>
+                    <div class="invalid-feedback"></div>
+                </td>
+                <td><input type="datetime-local" class="form-control edit-mode" name="dateDebut" value="" required min="{{ "now"|date('Y-m-d\\TH:i') }}">
+                    <div class="invalid-feedback"></div>
+                </td>
+                <td><input type="datetime-local" class="form-control edit-mode" name="dateFin" value="" required min="{{ "now"|date('Y-m-d\\TH:i') }}">
+                    <div class="invalid-feedback"></div>
+                </td>
+                <td><select class="form-control edit-mode" name="type" required><option value="interne">Interne</option><option value="externe">Externe</option></select>
+                    <div class="invalid-feedback"></div>
+                </td>
+                <td>
+                    <input type="text" class="form-control edit-mode" name="emplacement" value="" style="display:none;">
+                    <div class="invalid-feedback"></div>
+                    <select class="form-control edit-mode" name="salle" style="display:none;">
+                        <option value="">Choisir une salle</option>
+                    </select>
+                    <div class="invalid-feedback"></div>
+                </td>
+                <td>
+                    <select class="form-control participants-select edit-mode" name="participants" multiple>
+                        {% for user in users %}
+                            <option value="{{ user.id }}">{{ user.nom }} {{ user.prenom }} ({{ user.email }})</option>
+                        {% endfor %}
+                    </select>
+                    <div class="invalid-feedback" style="display: none; color: #dc3545; font-size: 0.875em; margin-top: 0.25rem;"></div>
+                </td>
+                <td>
+                    <!-- Le statut sera automatiquement défini à "créée" pour les nouvelles sessions -->
+                    <input type="hidden" name="status" value="créée">
+                    <span class="text-muted small">Créée (automatique)</span>
+                </td>
+                <td>
+                    <input type="file" class="form-control edit-mode" name="fichier" accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png">
+                    <div class="invalid-feedback"></div>
+                </td>
+                <td>
+                    <div class="d-flex align-items-center gap-1">
+                        <button class="btn btn-success btn-sm save-session-btn" title="Valider" style="padding: 0.3rem 0.6rem;"><i class="ft-check"></i></button>
+                        <button class="btn btn-danger btn-sm cancel-session-edit" title="Annuler" style="padding: 0.3rem 0.6rem;"><i class="ft-x"></i></button>
+                    </div>
+                </td>
+            </tr></tbody></table>
+        </div>
+    </div>
+</div>
+<div class="sidenav-overlay"></div>
+<div class="drag-target"></div>
+<script>
+// Fonction de test pour le tooltip
+function testTooltip() {
+    console.log('Test tooltip function called');
+    
+    // Vérifier si les éléments existent
+    const sessionTitles = document.querySelectorAll('.session-title-tooltip');
+    const formationTitles = document.querySelectorAll('.formation-title-tooltip');
+    
+    console.log('Session titles found:', sessionTitles.length);
+    console.log('Formation titles found:', formationTitles.length);
+    
+    // Vérifier les données
+    sessionTitles.forEach((title, index) => {
+        console.log(`Session ${index}:`, {
+            element: title,
+            fullTitle: title.dataset.fullTitle,
+            className: title.className
+        });
+    });
+    
+    formationTitles.forEach((title, index) => {
+        console.log(`Formation ${index}:`, {
+            element: title,
+            fullTitle: title.dataset.fullTitle,
+            className: title.className
+        });
+    });
+    
+    // Vérifier si le tooltip existe
+    const tooltip = document.getElementById('titleTooltip');
+    console.log('Tooltip element:', tooltip);
+    
+    // Tester l'affichage du tooltip
+    if (tooltip && sessionTitles.length > 0) {
+        const firstSession = sessionTitles[0];
+        const fullTitle = firstSession.dataset.fullTitle;
+        
+        if (fullTitle && fullTitle.length > 7) {
+            tooltip.querySelector('.tooltip-title').textContent = fullTitle;
+            
+            const rect = firstSession.getBoundingClientRect();
+            tooltip.style.left = (rect.left + window.scrollX) + 'px';
+            tooltip.style.top = (rect.top + window.scrollY - tooltip.offsetHeight - 10) + 'px';
+            
+            tooltip.classList.add('show');
+            console.log('Tooltip should be visible now');
+        }
+    }
+}
+
+// Fonction pour gérer le tooltip personnalisé des titres de session et de formation
+function initializeTitleTooltips() {
+    console.log('Initializing title tooltips...');
+    
+    // Créer l'élément tooltip s'il n'existe pas
+    let tooltip = document.getElementById('titleTooltip');
+    if (!tooltip) {
+        console.log('Creating new tooltip element...');
+        tooltip = document.createElement('div');
+        tooltip.id = 'titleTooltip';
+        tooltip.className = 'title-tooltip-element';
+        tooltip.innerHTML = `
+            <div class="tooltip-title"></div>
+        `;
+        document.body.appendChild(tooltip);
+        console.log('Tooltip element created and added to body');
+    } else {
+        console.log('Tooltip element already exists');
+    }
+    
+    console.log('Tooltip element:', tooltip);
+    
+    // Gérer les événements de survol sur les titres de session
+    document.addEventListener('mouseover', function(e) {
+        console.log('Mouseover event triggered on:', e.target);
+        
+        const sessionTitle = e.target.closest('.session-title-tooltip');
+        const formationTitle = e.target.closest('.formation-title-tooltip');
+        
+        console.log('Session title found:', sessionTitle);
+        console.log('Formation title found:', formationTitle);
+        
+        if (sessionTitle) {
+            const fullTitle = sessionTitle.dataset.fullTitle;
+            
+            console.log('Session title data:', { fullTitle });
+            
+            if (fullTitle && fullTitle.length > 7) {
+                tooltip.querySelector('.tooltip-title').textContent = fullTitle;
+                
+                // Positionner le tooltip
+                const rect = sessionTitle.getBoundingClientRect();
+                tooltip.style.left = (rect.left + window.scrollX) + 'px';
+                tooltip.style.top = (rect.top + window.scrollY - tooltip.offsetHeight - 10) + 'px';
+                
+                console.log('Showing tooltip for session at position:', { left: tooltip.style.left, top: tooltip.style.top });
+                
+                // Afficher le tooltip
+                tooltip.classList.add('show');
+            }
+        } else if (formationTitle) {
+            const fullTitle = formationTitle.dataset.fullTitle;
+            
+            console.log('Formation title data:', { fullTitle });
+            
+            if (fullTitle && fullTitle.length > 7) {
+                tooltip.querySelector('.tooltip-title').textContent = fullTitle;
+                
+                // Positionner le tooltip
+                const rect = formationTitle.getBoundingClientRect();
+                tooltip.style.left = (rect.left + window.scrollX) + 'px';
+                tooltip.style.top = (rect.top + window.scrollY - tooltip.offsetHeight - 10) + 'px';
+                
+                console.log('Showing tooltip for formation at position:', { left: tooltip.style.left, top: tooltip.style.top });
+                
+                // Afficher le tooltip
+                tooltip.classList.add('show');
+            }
+        }
+    });
+    
+    // Masquer le tooltip quand la souris quitte
+    document.addEventListener('mouseout', function(e) {
+        const sessionTitle = e.target.closest('.session-title-tooltip');
+        const formationTitle = e.target.closest('.formation-title-tooltip');
+        
+        if (sessionTitle || formationTitle) {
+            tooltip.classList.remove('show');
+        }
+    });
+    
+    // Masquer le tooltip quand la souris bouge
+    document.addEventListener('mousemove', function(e) {
+        if (tooltip.classList.contains('show')) {
+            const sessionTitle = e.target.closest('.session-title-tooltip');
+            const formationTitle = e.target.closest('.formation-title-tooltip');
+            
+            if (!sessionTitle && !formationTitle) {
+                tooltip.classList.remove('show');
+            }
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Formation inline edit
+    const editBtn = document.getElementById('edit-formation-btn');
+    const form = document.getElementById('formation-edit-form');
+    const viewEls = form.querySelectorAll('.view-mode');
+    const editEls = form.querySelectorAll('.edit-mode');
+    const cancelBtn = form.querySelector('.cancel-formation-edit');
+    
+    editBtn.addEventListener('click', function() {
+        viewEls.forEach(e => e.classList.add('d-none'));
+        editEls.forEach(e => e.classList.remove('d-none'));
+        
+        // Ajouter les validations en temps réel pour la formation
+        addFormationRealTimeValidation();
+    });
+    cancelBtn.addEventListener('click', function() {
+        location.reload();
+    });
+    
+    // Sessions inline edit
+    document.querySelectorAll('.edit-session-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            const tr = btn.closest('tr');
+            tr.querySelectorAll('.view-mode').forEach(e => e.classList.add('d-none'));
+            tr.querySelectorAll('.edit-mode').forEach(e => e.classList.remove('d-none'));
+            
+
+            
+            // Initialiser l'affichage salle/emplacement selon le type actuel
+            const typeSelect = tr.querySelector('select[name="type"]');
+            const salleSelect = tr.querySelector('select[name="salle"]');
+            const emplacementInput = tr.querySelector('input[name="emplacement"]');
+            
+            if (typeSelect && typeSelect.value === 'interne') {
+                // Charger les salles pour cette session
+                loadSallesForSession(tr);
+            } else if (typeSelect && typeSelect.value === 'externe') {
+                // S'assurer que l'emplacement est visible
+                if (salleSelect) {
+                    salleSelect.style.display = 'none';
+                    salleSelect.required = false;
+                }
+                if (emplacementInput) {
+                    emplacementInput.style.display = '';
+                    emplacementInput.required = true;
+                }
+            }
+            
+            // Ajouter les validations en temps réel
+            addRealTimeValidation(tr);
+        });
+    });
+    
+    // Fonction pour charger les salles pour une session existante
+    function loadSallesForSession(tr) {
+        const typeSelect = tr.querySelector('select[name="type"]');
+        const salleSelect = tr.querySelector('select[name="salle"]');
+        const emplacementInput = tr.querySelector('input[name="emplacement"]');
+        
+        if (typeSelect && typeSelect.value === 'interne' && salleSelect) {
+            // Récupérer l'ID de la salle actuelle
+            let selectedSalleId = salleSelect.value;
+            if (!selectedSalleId) {
+                const selectedOption = salleSelect.querySelector('option[selected]');
+                if (selectedOption) {
+                    selectedSalleId = selectedOption.value;
+                }
+            }
+            
+            // Charger toutes les salles
+            fetch('/get-salles')
+                .then(response => response.json())
+                .then(data => {
+                    salleSelect.innerHTML = '<option value="">Choisir une salle</option>';
+                    let found = false;
+                    data.forEach(salle => {
+                        const opt = document.createElement('option');
+                        opt.value = salle.id;
+                        opt.textContent = salle.nom + '( capacité:'+ salle.capacite + ')';
+                        if (selectedSalleId && String(salle.id) === String(selectedSalleId)) {
+                            opt.selected = true;
+                            found = true;
+                        }
+                        salleSelect.appendChild(opt);
+                    });
+                    
+                    // Si la salle actuelle n'est pas dans la liste (ex: salle supprimée), l'ajouter quand même
+                    if (selectedSalleId && !found) {
+                        const opt = document.createElement('option');
+                        opt.value = selectedSalleId;
+                        opt.textContent = 'Salle actuelle (ID: ' + selectedSalleId + ')';
+                        opt.selected = true;
+                        salleSelect.appendChild(opt);
+                    }
+                    
+                    // S'assurer que le select est visible
+                    salleSelect.style.display = '';
+                    salleSelect.required = true;
+                    
+                    // Masquer l'emplacement
+                    if (emplacementInput) {
+                        emplacementInput.style.display = 'none';
+                        emplacementInput.required = false;
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur lors du chargement des salles:', error);
+                });
+        }
+    }
+    
+    document.querySelectorAll('.cancel-session-edit').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            const tr = btn.closest('tr');
+            tr.querySelectorAll('.edit-mode').forEach(e => e.classList.add('d-none'));
+            tr.querySelectorAll('.view-mode').forEach(e => e.classList.remove('d-none'));
+            
+
+        });
+    });
+
+    // Formation : validation et sauvegarde AJAX
+    const saveFormationBtn = form.querySelector('.save-formation-btn');
+    saveFormationBtn.addEventListener('click', function() {
+        let valid = true;
+        const sujet = form.querySelector('input[name="sujet"]');
+        const dateDebut = form.querySelector('input[name="dateDebut"]');
+        const duree = form.querySelector('input[name="duree"]');
+        const responsable = form.querySelector('select[name="responsable"]');
+        const sujetError = sujet.nextElementSibling;
+        const dateDebutError = dateDebut.nextElementSibling;
+        const dureeError = duree.nextElementSibling;
+        const responsableError = responsable.nextElementSibling;
+        
+        // Reset erreurs
+        sujet.classList.remove('is-invalid'); sujetError.textContent = '';
+        dateDebut.classList.remove('is-invalid'); dateDebutError.textContent = '';
+        duree.classList.remove('is-invalid'); dureeError.textContent = '';
+        responsable.classList.remove('is-invalid'); responsableError.textContent = '';
+        
+        // Validation
+        if (!sujet.value.trim()) { sujet.classList.add('is-invalid'); sujetError.textContent = 'Le sujet est requis.'; valid = false; }
+        if (!dateDebut.value) { dateDebut.classList.add('is-invalid'); dateDebutError.textContent = 'La date de début est requise.'; valid = false; }
+        if (!duree.value || isNaN(duree.value) || parseInt(duree.value) < 2) { duree.classList.add('is-invalid'); dureeError.textContent = 'La durée doit être un nombre supérieur ou égal à 2.'; valid = false; }
+        if (!responsable.value) { responsable.classList.add('is-invalid'); responsableError.textContent = 'Le responsable est requis.'; valid = false; }
+        
+        if (!valid) return;
+        
+        // Envoi AJAX
+        fetch(`/formation/${form.dataset.formationId}/ajax-update`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                sujet: sujet.value,
+                dateDebut: dateDebut.value,
+                duree: duree.value,
+                responsable: responsable.value
+            })
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else if (data.errors) {
+                if (data.errors.sujet) { sujet.classList.add('is-invalid'); sujetError.textContent = data.errors.sujet; }
+                if (data.errors.dateDebut) { dateDebut.classList.add('is-invalid'); dateDebutError.textContent = data.errors.dateDebut; }
+                if (data.errors.duree) { duree.classList.add('is-invalid'); dureeError.textContent = data.errors.duree; }
+                if (data.errors.responsable) { responsable.classList.add('is-invalid'); responsableError.textContent = data.errors.responsable; }
+            } else {
+                alert(data.message || 'Erreur lors de la mise à jour');
+            }
+        })
+        .catch(() => alert('Erreur réseau ou serveur.'));
+    });
+
+    // Délégation d'événement pour les boutons sur le tbody du tableau
+    const sessionsTable = document.getElementById('sessionsTable');
+    if (sessionsTable) {
+        sessionsTable.querySelector('tbody').addEventListener('click', function(e) {
+            const btn = e.target.closest('button');
+            if (!btn) return;
+            const tr = btn.closest('tr');
+            
+            if (btn.classList.contains('save-session-btn')) {
+                // Validation et sauvegarde session
+                const titre = tr.querySelector('input[name="titre"]');
+                const dateDebut = tr.querySelector('input[name="dateDebut"]');
+                const dateFin = tr.querySelector('input[name="dateFin"]');
+                const type = tr.querySelector('select[name="type"]');
+                const salle = tr.querySelector('select[name="salle"]');
+                const emplacement = tr.querySelector('input[name="emplacement"]');
+                const participants = tr.querySelector('.participants-select');
+                const fichier = tr.querySelector('input[name="fichier"]');
+                const formationId = form.dataset.formationId;
+                const sessionId = tr.getAttribute('data-session-id');
+                const status = tr.querySelector('select[name="status"]');
+                
+                // Validation complète avec affichage forcé des erreurs
+                let valid = true;
+                
+                // Validation titre
+                if (!titre.value.trim()) {
+                    titre.classList.add('is-invalid');
+                    const errorDiv = titre.nextElementSibling;
+                    if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                        errorDiv.textContent = 'Le titre est requis.';
+                        errorDiv.style.display = 'block';
+                    }
+                    valid = false;
+                } else {
+                    titre.classList.remove('is-invalid');
+                    const errorDiv = titre.nextElementSibling;
+                    if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                        errorDiv.textContent = '';
+                        errorDiv.style.display = 'none';
+                    }
+                }
+                
+                // Validation dateDebut
+                if (!dateDebut.value) {
+                    dateDebut.classList.add('is-invalid');
+                    const errorDiv = dateDebut.nextElementSibling;
+                    if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                        errorDiv.textContent = 'La date de début est requise.';
+                        errorDiv.style.display = 'block';
+                    }
+                    valid = false;
+                } else {
+                    dateDebut.classList.remove('is-invalid');
+                    const errorDiv = dateDebut.nextElementSibling;
+                    if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                        errorDiv.textContent = '';
+                        errorDiv.style.display = 'none';
+                    }
+                }
+                
+                // Validation dateFin
+                if (!dateFin.value) {
+                    dateFin.classList.add('is-invalid');
+                    const errorDiv = dateFin.nextElementSibling;
+                    if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                        errorDiv.textContent = 'La date de fin est requise.';
+                        errorDiv.style.display = 'block';
+                    }
+                    valid = false;
+                } else {
+                    dateFin.classList.remove('is-invalid');
+                    const errorDiv = dateFin.nextElementSibling;
+                    if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                        errorDiv.textContent = '';
+                        errorDiv.style.display = 'none';
+                    }
+                }
+                
+                // Validation type
+                if (!type.value) {
+                    type.classList.add('is-invalid');
+                    const errorDiv = type.nextElementSibling;
+                    if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                        errorDiv.textContent = 'Le type est requis.';
+                        errorDiv.style.display = 'block';
+                    }
+                    valid = false;
+                } else {
+                    type.classList.remove('is-invalid');
+                    const errorDiv = type.nextElementSibling;
+                    if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                        errorDiv.textContent = '';
+                        errorDiv.style.display = 'none';
+                    }
+                }
+                
+                // Validation salle/emplacement selon le type
+                if (type.value === 'interne') {
+                    if (!salle.value) {
+                        salle.classList.add('is-invalid');
+                        const errorDiv = salle.nextElementSibling;
+                        if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                            errorDiv.textContent = 'La salle est requise.';
+                            errorDiv.style.display = 'block';
+                        }
+                        valid = false;
+                    } else {
+                        salle.classList.remove('is-invalid');
+                        const errorDiv = salle.nextElementSibling;
+                        if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                            errorDiv.textContent = '';
+                            errorDiv.style.display = 'none';
+                        }
+                    }
+                } else if (type.value === 'externe') {
+                    if (!emplacement.value.trim()) {
+                        emplacement.classList.add('is-invalid');
+                        const errorDiv = emplacement.nextElementSibling;
+                        if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                            errorDiv.textContent = 'La localisation est requise.';
+                            errorDiv.style.display = 'block';
+                        }
+                        valid = false;
+                    } else {
+                        emplacement.classList.remove('is-invalid');
+                        const errorDiv = emplacement.nextElementSibling;
+                        if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                            errorDiv.textContent = '';
+                            errorDiv.style.display = 'none';
+                        }
+                    }
+                }
+                
+                // Validation participants
+                if (!participants.selectedOptions.length) {
+                    participants.classList.add('is-invalid');
+                    const errorDiv = participants.nextElementSibling;
+                    if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                        errorDiv.textContent = 'Au moins un participant est requis.';
+                        errorDiv.style.display = 'block';
+                    }
+                    valid = false;
+                } else {
+                    participants.classList.remove('is-invalid');
+                    const errorDiv = participants.nextElementSibling;
+                    if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                        errorDiv.textContent = '';
+                        errorDiv.style.display = 'none';
+                    }
+                }
+                
+                if (!valid) return;
+                
+                // Préparer FormData
+                const formData = new FormData();
+                formData.append('formationId', formationId);
+                formData.append('sessionId', sessionId || '');
+                formData.append('titre', titre.value);
+                formData.append('dateDebut', dateDebut.value);
+                formData.append('dateFin', dateFin.value);
+                formData.append('type', type.value);
+                formData.append('status', status ? status.value : 'créée');
+                formData.append('salleId', (type.value === 'interne') ? salle.value : '');
+                formData.append('emplacement', (type.value === 'externe') ? emplacement.value : '');
+                
+                Array.from(participants.selectedOptions).forEach(opt => {
+                    formData.append('participants[]', opt.value);
+                });
+                
+                if (fichier && fichier.files.length > 0) {
+                    formData.append('fichier', fichier.files[0]);
+                }
+                
+                const supprimerFichier = tr.querySelector('input[name="supprimer_fichier"]');
+                if (supprimerFichier && supprimerFichier.checked) {
+                    formData.append('supprimer_fichier', '1');
+                }
+                
+                // Envoi AJAX
+                fetch('/session/ajax-save', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else if (data.errors) {
+                        // Afficher les erreurs
+                        Object.keys(data.errors).forEach(field => {
+                            const element = tr.querySelector(`[name="${field}"]`);
+                            if (element) {
+                                element.classList.add('is-invalid');
+                                const errorDiv = element.nextElementSibling;
+                                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                                    errorDiv.textContent = data.errors[field];
+                                    errorDiv.style.display = 'block';
+                                }
+                            }
+                        });
+                    } else {
+                        alert(data.message || 'Erreur lors de la sauvegarde');
+                    }
+                })
+                .catch((error) => {
+                    console.error('Erreur lors de la requête:', error);
+                    alert('Erreur réseau: ' + error.message);
+                });
+            } else if (btn.classList.contains('cancel-session-edit')) {
+                location.reload();
+            }
+        });
+    }
+
+    // Ajout dynamique d'une session
+    const addSessionBtn = document.getElementById('add-session-btn');
+    const sessionRowTemplate = document.getElementById('session-row-template');
+    
+    addSessionBtn && addSessionBtn.addEventListener('click', function() {
+        const newRow = sessionRowTemplate.cloneNode(true);
+        newRow.removeAttribute('id');
+        newRow.style.display = '';
+        
+        // Initialiser les champs
+        const typeSelect = newRow.querySelector('select[name="type"]');
+        const salleSelect = newRow.querySelector('select[name="salle"]');
+        const emplacementInput = newRow.querySelector('input[name="emplacement"]');
+        
+        function toggleSalleLocalisation() {
+            if (typeSelect.value === 'interne') {
+                salleSelect.style.display = '';
+                salleSelect.required = true;
+                emplacementInput.style.display = 'none';
+                emplacementInput.required = false;
+                // Charger les salles pour les nouvelles sessions aussi
+                fetch('/get-salles')
+                    .then(response => response.json())
+                    .then(data => {
+                        salleSelect.innerHTML = '<option value="">Choisir une salle</option>';
+                        data.forEach(salle => {
+                            const opt = document.createElement('option');
+                            opt.value = salle.id;
+                            opt.textContent = salle.nom + ' (capacité: ' + salle.capacite + ')';
+                            salleSelect.appendChild(opt);
+                        });
+                    });
+            } else {
+                salleSelect.style.display = 'none';
+                salleSelect.required = false;
+                emplacementInput.style.display = '';
+                emplacementInput.required = true;
+            }
+        }
+        
+        typeSelect.addEventListener('change', toggleSalleLocalisation);
+        toggleSalleLocalisation();
+        
+        // Afficher la ligne en mode édition
+        newRow.querySelectorAll('.edit-mode').forEach(e => e.classList.remove('d-none'));
+        newRow.querySelectorAll('.view-mode').forEach(e => e.classList.add('d-none'));
+        
+        // Ajouter les validations en temps réel pour la nouvelle session
+        addSessionValidation(newRow);
+        
+        // Ajouter la ligne au tableau
+        sessionsTable.querySelector('tbody').appendChild(newRow);
+    });
+    
+
+});
+
+// Fonction spécifique pour les validations d'ajout de session
+function addSessionValidation(tr) {
+    const titre = tr.querySelector('input[name="titre"]');
+    const dateDebut = tr.querySelector('input[name="dateDebut"]');
+    const dateFin = tr.querySelector('input[name="dateFin"]');
+    const typeSelect = tr.querySelector('select[name="type"]');
+    const salleSelect = tr.querySelector('select[name="salle"]');
+    const emplacementInput = tr.querySelector('input[name="emplacement"]');
+    const participantsSelect = tr.querySelector('.participants-select');
+    
+    // Variables pour suivre si les champs ont été touchés
+    let titreTouched = false;
+    let dateDebutTouched = false;
+    let dateFinTouched = false;
+    let typeTouched = false;
+    let salleTouched = false;
+    let emplacementTouched = false;
+    let participantsTouched = false;
+    
+    // Validation titre en temps réel (seulement après interaction)
+    if (titre) {
+        titre.addEventListener('input', function() {
+            titreTouched = true;
+            validateTitre(this);
+        });
+        
+        titre.addEventListener('blur', function() {
+            titreTouched = true;
+            validateTitre(this);
+        });
+    }
+    
+    function validateTitre(input) {
+        if (!titreTouched) return; // Ne valider que si touché
+        
+        if (!input.value.trim()) {
+            input.classList.add('is-invalid');
+            const errorDiv = input.nextElementSibling;
+            if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                errorDiv.textContent = 'Le titre est requis.';
+                errorDiv.style.display = 'block';
+            }
+        } else {
+            input.classList.remove('is-invalid');
+            const errorDiv = input.nextElementSibling;
+            if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                errorDiv.textContent = '';
+                errorDiv.style.display = 'none';
+            }
+        }
+    }
+    
+    // Validation dates en temps réel (seulement après interaction)
+    if (dateDebut) {
+        dateDebut.addEventListener('change', function() {
+            dateDebutTouched = true;
+            validateDateDebut(this);
+        });
+        
+        dateDebut.addEventListener('input', function() {
+            dateDebutTouched = true;
+            validateDateDebut(this);
+        });
+        
+        dateDebut.addEventListener('blur', function() {
+            dateDebutTouched = true;
+            validateDateDebut(this);
+        });
+    }
+    
+    function validateDateDebut(input) {
+        if (!dateDebutTouched) return; // Ne valider que si touché
+        
+        if (!input.value) {
+            input.classList.add('is-invalid');
+            const errorDiv = input.nextElementSibling;
+            if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                errorDiv.textContent = 'La date de début est requise.';
+                errorDiv.style.display = 'block';
+            }
+        } else {
+            input.classList.remove('is-invalid');
+            const errorDiv = input.nextElementSibling;
+            if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                errorDiv.textContent = '';
+                errorDiv.style.display = 'none';
+            }
+        }
+        
+        // Validation croisée avec dateFin
+        if (dateFinTouched && dateFin && dateFin.value && input.value >= dateFin.value) {
+            dateFin.classList.add('is-invalid');
+            const errorDiv = dateFin.nextElementSibling;
+            if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                errorDiv.textContent = 'La date de fin doit être supérieure à la date de début.';
+                errorDiv.style.display = 'block';
+            }
+        } else if (dateFin) {
+            dateFin.classList.remove('is-invalid');
+            const errorDiv = dateFin.nextElementSibling;
+            if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                errorDiv.textContent = '';
+                errorDiv.style.display = 'none';
+            }
+        }
+        
+        // Vérifier les conflits avec les autres sessions de la même formation
+        checkSessionOverlapForNew(tr);
+    }
+    
+    if (dateFin) {
+        dateFin.addEventListener('change', function() {
+            dateFinTouched = true;
+            validateDateFin(this);
+        });
+        
+        dateFin.addEventListener('input', function() {
+            dateFinTouched = true;
+            validateDateFin(this);
+        });
+        
+        dateFin.addEventListener('blur', function() {
+            dateFinTouched = true;
+            validateDateFin(this);
+        });
+    }
+    
+    function validateDateFin(input) {
+        if (!dateFinTouched) return; // Ne valider que si touché
+        
+        if (!input.value) {
+            input.classList.add('is-invalid');
+            const errorDiv = input.nextElementSibling;
+            if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                errorDiv.textContent = 'La date de fin est requise.';
+                errorDiv.style.display = 'block';
+            }
+        } else if (dateDebutTouched && dateDebut && dateDebut.value && input.value <= dateDebut.value) {
+            input.classList.add('is-invalid');
+            const errorDiv = input.nextElementSibling;
+            if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                errorDiv.textContent = 'La date de fin doit être supérieure à la date de début.';
+                errorDiv.style.display = 'block';
+            }
+        } else {
+            input.classList.remove('is-invalid');
+            const errorDiv = input.nextElementSibling;
+            if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                errorDiv.textContent = '';
+                errorDiv.style.display = 'none';
+            }
+        }
+        
+        // Vérifier les conflits avec les autres sessions de la même formation
+        checkSessionOverlapForNew(tr);
+    }
+    
+    // Fonction pour vérifier les conflits de sessions pour les nouvelles sessions
+    function checkSessionOverlapForNew(currentTr) {
+        if (!dateDebutTouched || !dateFinTouched || !dateDebut.value || !dateFin.value) {
+            return;
+        }
+        
+        const thisDateDebut = new Date(dateDebut.value);
+        const thisDateFin = new Date(dateFin.value);
+        
+        let hasOverlap = false;
+        let overlapMessage = '';
+        
+        // Vérifier les conflits avec les sessions existantes
+        document.querySelectorAll('tr[data-session-id]').forEach(function(existingTr) {
+            const existingDateDebut = existingTr.querySelector('input[name="dateDebut"]');
+            const existingDateFin = existingTr.querySelector('input[name="dateFin"]');
+            
+            if (existingDateDebut && existingDateFin && existingDateDebut.value && existingDateFin.value) {
+                const existingStart = new Date(existingDateDebut.value);
+                const existingEnd = new Date(existingDateFin.value);
+                
+                // Vérifier si les intervalles se chevauchent
+                if (thisDateDebut < existingEnd && thisDateFin > existingStart) {
+                    hasOverlap = true;
+                    const sessionTitre = existingTr.querySelector('input[name="titre"]')?.value || 
+                                       existingTr.querySelector('.view-mode')?.textContent || 
+                                       'Session existante';
+                    overlapMessage = `Chevauchement avec une autre session de la formation : ${sessionTitre}`;
+                }
+            }
+        });
+        
+        // Afficher l'erreur sur les deux champs de date
+        if (hasOverlap) {
+            dateDebut.classList.add('is-invalid');
+            dateFin.classList.add('is-invalid');
+            
+            const errorDivDebut = dateDebut.nextElementSibling;
+            const errorDivFin = dateFin.nextElementSibling;
+            
+            if (errorDivDebut && errorDivDebut.classList.contains('invalid-feedback')) {
+                errorDivDebut.textContent = overlapMessage;
+                errorDivDebut.style.display = 'block';
+            }
+            
+            if (errorDivFin && errorDivFin.classList.contains('invalid-feedback')) {
+                errorDivFin.textContent = overlapMessage;
+                errorDivFin.style.display = 'block';
+            }
+        } else {
+            // Nettoyer les erreurs de chevauchement si elles existaient
+            const errorDivDebut = dateDebut.nextElementSibling;
+            const errorDivFin = dateFin.nextElementSibling;
+            
+            if (errorDivDebut && errorDivDebut.classList.contains('invalid-feedback') && 
+                errorDivDebut.textContent.includes('Chevauchement')) {
+                errorDivDebut.textContent = '';
+                errorDivDebut.style.display = 'none';
+            }
+            
+            if (errorDivFin && errorDivFin.classList.contains('invalid-feedback') && 
+                errorDivFin.textContent.includes('Chevauchement')) {
+                errorDivFin.textContent = '';
+                errorDivFin.style.display = 'none';
+            }
+        }
+    }
+    
+    // Validation type en temps réel
+    if (typeSelect) {
+        typeSelect.addEventListener('change', function() {
+            typeTouched = true;
+            validateType(this);
+            // Réinitialiser les états "touched" et valider salle/emplacement
+            salleTouched = false;
+            emplacementTouched = false;
+            validateSalleEmplacement();
+        });
+    }
+    
+    function validateType(select) {
+        if (!typeTouched) return;
+        
+        if (!select.value) {
+            select.classList.add('is-invalid');
+            const errorDiv = select.nextElementSibling;
+            if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                errorDiv.textContent = 'Le type est requis.';
+                errorDiv.style.display = 'block';
+            }
+        } else {
+            select.classList.remove('is-invalid');
+            const errorDiv = select.nextElementSibling;
+            if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                errorDiv.textContent = '';
+                errorDiv.style.display = 'none';
+            }
+        }
+    }
+    
+    // Validation salle/emplacement en temps réel
+    if (salleSelect) {
+        salleSelect.addEventListener('change', function() {
+            salleTouched = true;
+            validateSalleEmplacement();
+        });
+    }
+    
+    if (emplacementInput) {
+        emplacementInput.addEventListener('input', function() {
+            emplacementTouched = true;
+            validateSalleEmplacement();
+        });
+        
+        emplacementInput.addEventListener('blur', function() {
+            emplacementTouched = true;
+            validateSalleEmplacement();
+        });
+    }
+    
+    function validateSalleEmplacement() {
+        // Nettoyer d'abord toutes les erreurs
+        if (salleSelect) {
+            salleSelect.classList.remove('is-invalid');
+            const errorDiv = salleSelect.nextElementSibling;
+            if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                errorDiv.textContent = '';
+                errorDiv.style.display = 'none';
+            }
+        }
+        
+        if (emplacementInput) {
+            emplacementInput.classList.remove('is-invalid');
+            const errorDiv = emplacementInput.nextElementSibling;
+            if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                errorDiv.textContent = '';
+                errorDiv.style.display = 'none';
+            }
+        }
+        
+        // Valider selon le type sélectionné
+        if (typeSelect && typeSelect.value === 'interne') {
+            if (salleTouched && (!salleSelect || !salleSelect.value)) {
+                salleSelect.classList.add('is-invalid');
+                const errorDiv = salleSelect.nextElementSibling;
+                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                    errorDiv.textContent = 'La salle est requise.';
+                    errorDiv.style.display = 'block';
+                }
+            }
+        } else if (typeSelect && typeSelect.value === 'externe') {
+            if (emplacementTouched && (!emplacementInput || !emplacementInput.value.trim())) {
+                emplacementInput.classList.add('is-invalid');
+                const errorDiv = emplacementInput.nextElementSibling;
+                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                    errorDiv.textContent = 'La localisation est requise.';
+                    errorDiv.style.display = 'block';
+                }
+            }
+        }
+    }
+    
+    // Validation participants en temps réel
+    if (participantsSelect) {
+        participantsSelect.addEventListener('change', function() {
+            participantsTouched = true;
+            validateParticipants(this);
+        });
+        
+        participantsSelect.addEventListener('click', function() {
+            participantsTouched = true;
+            setTimeout(() => {
+                validateParticipants(this);
+            }, 100);
+        });
+        
+        participantsSelect.addEventListener('blur', function() {
+            participantsTouched = true;
+            validateParticipants(this);
+        });
+    }
+    
+    function validateParticipants(select) {
+        if (!participantsTouched) return; // Ne valider que si touché
+        
+        if (!select.selectedOptions.length) {
+            select.classList.add('is-invalid');
+            const errorDiv = select.nextElementSibling;
+            if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                errorDiv.textContent = 'Au moins un participant est requis.';
+                errorDiv.style.display = 'block';
+            }
+        } else {
+            select.classList.remove('is-invalid');
+            const errorDiv = select.nextElementSibling;
+            if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                errorDiv.textContent = '';
+                errorDiv.style.display = 'none';
+            }
+        }
+    }
+}
+
+// Fonction pour ajouter les validations en temps réel
+function addRealTimeValidation(tr) {
+    const titre = tr.querySelector('input[name="titre"]');
+    const dateDebut = tr.querySelector('input[name="dateDebut"]');
+    const dateFin = tr.querySelector('input[name="dateFin"]');
+    const typeSelect = tr.querySelector('select[name="type"]');
+    const salleSelect = tr.querySelector('select[name="salle"]');
+    const emplacementInput = tr.querySelector('input[name="emplacement"]');
+    const participantsSelect = tr.querySelector('.participants-select');
+    
+    // Validation titre en temps réel
+    if (titre) {
+        titre.addEventListener('input', function() {
+            if (!this.value.trim()) {
+                this.classList.add('is-invalid');
+                const errorDiv = this.nextElementSibling;
+                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                    errorDiv.textContent = 'Le titre est requis.';
+                    errorDiv.style.display = 'block';
+                }
+            } else {
+                this.classList.remove('is-invalid');
+                const errorDiv = this.nextElementSibling;
+                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                    errorDiv.textContent = '';
+                    errorDiv.style.display = 'none';
+                }
+            }
+        });
+    }
+    
+    // Validation dates en temps réel
+    if (dateDebut) {
+        dateDebut.addEventListener('change', function() {
+            if (!this.value) {
+                this.classList.add('is-invalid');
+                const errorDiv = this.nextElementSibling;
+                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                    errorDiv.textContent = 'La date de début est requise.';
+                    errorDiv.style.display = 'block';
+                }
+            } else {
+                this.classList.remove('is-invalid');
+                const errorDiv = this.nextElementSibling;
+                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                    errorDiv.textContent = '';
+                    errorDiv.style.display = 'none';
+                }
+            }
+            
+            // Vérifier la cohérence avec dateFin
+            if (dateFin && dateFin.value && this.value >= dateFin.value) {
+                dateFin.classList.add('is-invalid');
+                const errorDiv = dateFin.nextElementSibling;
+                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                    errorDiv.textContent = 'La date de fin doit être supérieure à la date de début.';
+                    errorDiv.style.display = 'block';
+                }
+            } else if (dateFin) {
+                dateFin.classList.remove('is-invalid');
+                const errorDiv = dateFin.nextElementSibling;
+                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                    errorDiv.textContent = '';
+                    errorDiv.style.display = 'none';
+                }
+            }
+            
+            // Vérifier que la date de début de session >= date de début de formation
+            const formationDateDebut = document.querySelector('input[name="dateDebut"]').value;
+            if (formationDateDebut && this.value < formationDateDebut) {
+                this.classList.add('is-invalid');
+                const errorDiv = this.nextElementSibling;
+                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                    errorDiv.textContent = 'La date de début de session doit être supérieure ou égale à la date de début de la formation (' + new Date(formationDateDebut).toLocaleDateString('fr-FR') + ')';
+                    errorDiv.style.display = 'block';
+                }
+            }
+            
+            // Vérifier le chevauchement avec les autres sessions de la même formation
+            checkSessionOverlap(tr);
+            
+            // Vérifier les conflits de participants
+            checkParticipantsConflicts(tr);
+            
+            // Vérifier la disponibilité de la salle
+            if (salleSelect && salleSelect.value && dateFin && dateFin.value) {
+                checkSalleAvailability(tr);
+            }
+        });
+        
+        // Ajouter aussi un événement input pour capturer les changements
+        dateDebut.addEventListener('input', function() {
+            setTimeout(() => {
+                if (salleSelect && salleSelect.value && dateFin && dateFin.value) {
+                    checkSalleAvailability(tr);
+                }
+                // Vérifier le chevauchement avec les autres sessions
+                checkSessionOverlap(tr);
+                // Vérifier les conflits de participants
+                checkParticipantsConflicts(tr);
+            }, 500);
+        });
+    }
+    
+    if (dateFin) {
+        dateFin.addEventListener('change', function() {
+            if (!this.value) {
+                this.classList.add('is-invalid');
+                const errorDiv = this.nextElementSibling;
+                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                    errorDiv.textContent = 'La date de fin est requise.';
+                    errorDiv.style.display = 'block';
+                }
+            } else if (dateDebut && dateDebut.value && this.value <= dateDebut.value) {
+                this.classList.add('is-invalid');
+                const errorDiv = this.nextElementSibling;
+                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                    errorDiv.textContent = 'La date de fin doit être supérieure à la date de début.';
+                    errorDiv.style.display = 'block';
+                }
+            } else {
+                this.classList.remove('is-invalid');
+                const errorDiv = this.nextElementSibling;
+                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                    errorDiv.textContent = '';
+                    errorDiv.style.display = 'none';
+                }
+            }
+            
+            // Vérifier la disponibilité de la salle
+            if (salleSelect && salleSelect.value && dateDebut && dateDebut.value) {
+                checkSalleAvailability(tr);
+            }
+            
+            // Vérifier le chevauchement avec les autres sessions de la même formation
+            checkSessionOverlap(tr);
+        });
+        
+        // Ajouter aussi un événement input pour capturer les changements
+        dateFin.addEventListener('input', function() {
+            setTimeout(() => {
+                if (salleSelect && salleSelect.value && dateDebut && dateDebut.value) {
+                    checkSalleAvailability(tr);
+                }
+                // Vérifier le chevauchement avec les autres sessions
+                checkSessionOverlap(tr);
+                // Vérifier les conflits de participants
+                checkParticipantsConflicts(tr);
+            }, 500);
+        });
+    }
+    
+    // Validation type en temps réel
+    if (typeSelect) {
+        typeSelect.addEventListener('change', function() {
+            if (!this.value) {
+                this.classList.add('is-invalid');
+                const errorDiv = this.nextElementSibling;
+                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                    errorDiv.textContent = 'Le type est requis.';
+                    errorDiv.style.display = 'block';
+                }
+            } else {
+                this.classList.remove('is-invalid');
+                const errorDiv = this.nextElementSibling;
+                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                    errorDiv.textContent = '';
+                    errorDiv.style.display = 'none';
+                }
+            }
+            
+            // Gérer l'affichage salle/emplacement comme dans Responsable
+            function toggleSalleLocalisation() {
+                if (typeSelect.value === 'interne') {
+                    if (salleSelect) {
+                        salleSelect.style.display = '';
+                        salleSelect.required = true;
+                    }
+                    if (emplacementInput) {
+                        emplacementInput.style.display = 'none';
+                        emplacementInput.required = false;
+                        // Masquer l'erreur de l'emplacement
+                        emplacementInput.classList.remove('is-invalid');
+                        const errorDiv = emplacementInput.nextElementSibling;
+                        if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                            errorDiv.textContent = '';
+                            errorDiv.style.display = 'none';
+                        }
+                    }
+                    // Charger les salles si besoin
+                    if (salleSelect) {
+                        fetch('/get-salles')
+                            .then(response => response.json())
+                            .then(data => {
+                                // Récupérer l'ID de la salle actuelle
+                                let selectedSalleId = salleSelect.value;
+                                if (!selectedSalleId) {
+                                    const selectedOption = salleSelect.querySelector('option[selected]');
+                                    if (selectedOption) {
+                                        selectedSalleId = selectedOption.value;
+                                    }
+                                }
+                                salleSelect.innerHTML = '<option value="">Choisir une salle</option>';
+                                let found = false;
+                                data.forEach(salle => {
+                                    const opt = document.createElement('option');
+                                    opt.value = salle.id;
+                                    opt.textContent = salle.nom + ' (capacité: ' + salle.capacite + ')';
+                                    if (selectedSalleId && String(salle.id) === String(selectedSalleId)) {
+                                        opt.selected = true;
+                                        found = true;
+                                    }
+                                    salleSelect.appendChild(opt);
+                                });
+                                // Si la salle actuelle n'est pas dans la liste (ex: salle supprimée), l'ajouter quand même
+                                if (selectedSalleId && !found) {
+                                    const opt = document.createElement('option');
+                                    opt.value = selectedSalleId;
+                                    opt.textContent = 'Salle actuelle (ID: ' + selectedSalleId + ')';
+                                    opt.selected = true;
+                                    salleSelect.appendChild(opt);
+                                }
+                                
+                                // Vérifier immédiatement la disponibilité de la salle après le chargement
+                                setTimeout(() => {
+                                    const dateDebut = tr.querySelector('input[name="dateDebut"]');
+                                    const dateFin = tr.querySelector('input[name="dateFin"]');
+                                    if (salleSelect.value && dateDebut && dateFin && dateDebut.value && dateFin.value) {
+                                        checkSalleAvailability(tr);
+                                    }
+                                }, 100);
+                            });
+                    }
+                } else {
+                    if (salleSelect) {
+                        salleSelect.style.display = 'none';
+                        salleSelect.required = false;
+                        // Masquer l'erreur de la salle
+                        salleSelect.classList.remove('is-invalid');
+                        const errorDiv = salleSelect.nextElementSibling;
+                        if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                            errorDiv.textContent = '';
+                            errorDiv.style.display = 'none';
+                        }
+                    }
+                    if (emplacementInput) {
+                        emplacementInput.style.display = '';
+                        emplacementInput.required = true;
+                        // Valider immédiatement l'emplacement
+                        validateEmplacement(emplacementInput);
+                    }
+                }
+            }
+            
+            toggleSalleLocalisation();
+        });
+    }
+    
+    // Fonction pour valider l'emplacement
+    function validateEmplacement(input) {
+        if (!input.value.trim()) {
+            input.classList.add('is-invalid');
+            const errorDiv = input.nextElementSibling;
+            if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                errorDiv.textContent = 'La localisation est requise.';
+                errorDiv.style.display = 'block';
+            }
+        } else {
+            input.classList.remove('is-invalid');
+            const errorDiv = input.nextElementSibling;
+            if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                errorDiv.textContent = '';
+                errorDiv.style.display = 'none';
+            }
+        }
+    }
+    
+    // Validation salle en temps réel
+    if (salleSelect) {
+        salleSelect.addEventListener('change', function() {
+            if (typeSelect && typeSelect.value === 'interne' && !this.value) {
+                this.classList.add('is-invalid');
+                const errorDiv = this.nextElementSibling;
+                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                    errorDiv.textContent = 'La salle est requise.';
+                    errorDiv.style.display = 'block';
+                }
+            } else {
+                this.classList.remove('is-invalid');
+                const errorDiv = this.nextElementSibling;
+                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                    errorDiv.textContent = '';
+                    errorDiv.style.display = 'none';
+                }
+            }
+            
+            // Vérifier la disponibilité de la salle en temps réel lors de la modification
+            const dateDebut = tr.querySelector('input[name="dateDebut"]');
+            const dateFin = tr.querySelector('input[name="dateFin"]');
+            if (this.value && dateDebut && dateFin && dateDebut.value && dateFin.value) {
+                checkSalleAvailability(tr);
+            }
+        });
+    }
+    
+    // Validation emplacement en temps réel
+    if (emplacementInput) {
+        emplacementInput.addEventListener('input', function() {
+            validateEmplacement(this);
+        });
+        
+        emplacementInput.addEventListener('blur', function() {
+            validateEmplacement(this);
+        });
+    }
+    
+    // Validation participants en temps réel
+    if (participantsSelect) {
+        participantsSelect.addEventListener('change', function() {
+            validateParticipants(this);
+        });
+        
+        // Ajouter d'autres événements pour capturer les changements de sélection multiple
+        participantsSelect.addEventListener('click', function() {
+            setTimeout(() => {
+                validateParticipants(this);
+            }, 100);
+        });
+        
+        participantsSelect.addEventListener('mouseup', function() {
+            setTimeout(() => {
+                validateParticipants(this);
+            }, 50);
+        });
+        
+        participantsSelect.addEventListener('keyup', function() {
+            setTimeout(() => {
+                validateParticipants(this);
+            }, 50);
+        });
+        
+        participantsSelect.addEventListener('blur', function() {
+            validateParticipants(this);
+        });
+    }
+    
+    // Fonction pour valider les participants
+    function validateParticipants(select) {
+        if (!select.selectedOptions.length) {
+            select.classList.add('is-invalid');
+            const errorDiv = select.nextElementSibling;
+            if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                errorDiv.textContent = 'Au moins un participant est requis.';
+                errorDiv.style.display = 'block';
+            }
+        } else {
+            select.classList.remove('is-invalid');
+            const errorDiv = select.nextElementSibling;
+            if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                errorDiv.textContent = '';
+                errorDiv.style.display = 'none';
+            }
+        }
+        
+        // Vérifier les conflits de participants
+        checkParticipantsConflicts(tr);
+    }
+    
+    // Fonction pour vérifier les conflits de participants
+    function checkParticipantsConflicts(tr) {
+        const participantsSelect = tr.querySelector('.participants-select');
+        const dateDebut = tr.querySelector('input[name="dateDebut"]');
+        const dateFin = tr.querySelector('input[name="dateFin"]');
+        
+        if (!participantsSelect || !dateDebut || !dateFin || !dateDebut.value || !dateFin.value) {
+            return;
+        }
+        
+        const selectedParticipants = Array.from(participantsSelect.selectedOptions).map(opt => opt.value);
+        const thisDateDebut = dateDebut.value;
+        const thisDateFin = dateFin.value;
+        const thisSessionId = tr.getAttribute('data-session-id');
+        
+        let hasConflicts = false;
+        let conflictMessage = '';
+        
+        // Vérifier les conflits avec les autres sessions
+        document.querySelectorAll('tr[data-session-id]').forEach(function(otherTr) {
+            if (otherTr === tr) return; // ignorer soi-même
+            
+            const otherDateDebut = otherTr.querySelector('input[name="dateDebut"]');
+            const otherDateFin = otherTr.querySelector('input[name="dateFin"]');
+            const otherParticipants = otherTr.querySelector('.participants-select');
+            
+            if (otherDateDebut && otherDateFin && otherParticipants && 
+                otherDateDebut.value && otherDateFin.value) {
+                
+                // Si les intervalles se chevauchent
+                if (thisDateDebut < otherDateFin.value && thisDateFin > otherDateDebut.value) {
+                    // Vérifier les participants en commun
+                    const otherSelectedParticipants = Array.from(otherParticipants.selectedOptions).map(opt => opt.value);
+                    const commonParticipants = selectedParticipants.filter(p => otherSelectedParticipants.includes(p));
+                    
+                    if (commonParticipants.length > 0) {
+                        hasConflicts = true;
+                        // Récupérer les noms des participants en conflit
+                        const conflictNames = commonParticipants.map(participantId => {
+                            const option = participantsSelect.querySelector(`option[value="${participantId}"]`);
+                            return option ? option.textContent.split(' (')[0] : `Participant ${participantId}`;
+                        });
+                        conflictMessage = `Conflit d'agenda pour : ${conflictNames.join(', ')}`;
+                    }
+                }
+            }
+        });
+        
+        // Afficher ou masquer l'erreur
+        if (hasConflicts) {
+            participantsSelect.classList.add('is-invalid');
+            const errorDiv = participantsSelect.nextElementSibling;
+            if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                errorDiv.textContent = conflictMessage;
+                errorDiv.style.display = 'block';
+            }
+        } else {
+            participantsSelect.classList.remove('is-invalid');
+            const errorDiv = participantsSelect.nextElementSibling;
+            if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                errorDiv.textContent = '';
+                errorDiv.style.display = 'none';
+            }
+        }
+    }
+}
+
+// Fonction pour vérifier la disponibilité de la salle en temps réel
+function checkSalleAvailability(tr) {
+    const salleSelect = tr.querySelector('select[name="salle"]');
+    const dateDebut = tr.querySelector('input[name="dateDebut"]');
+    const dateFin = tr.querySelector('input[name="dateFin"]');
+    
+    if (!salleSelect || !dateDebut || !dateFin || !salleSelect.value || !dateDebut.value || !dateFin.value) {
+        return;
+    }
+    
+    const formData = new FormData();
+    formData.append('salle', salleSelect.value);
+    formData.append('dateDebut', dateDebut.value);
+    formData.append('dateFin', dateFin.value);
+    formData.append('sessionId', tr.getAttribute('data-session-id') || '');
+    
+    fetch('/session/check-salle-availability', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.conflicts && data.conflicts.length > 0) {
+            salleSelect.classList.add('is-invalid');
+            const errorDiv = salleSelect.nextElementSibling;
+            if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                const conflictSessions = data.conflicts.map(c => c.titre).join(', ');
+                errorDiv.textContent = `Salle déjà réservée à cet horaire (Sessions : ${conflictSessions})`;
+                errorDiv.style.display = 'block';
+            }
+        } else {
+            salleSelect.classList.remove('is-invalid');
+            const errorDiv = salleSelect.nextElementSibling;
+            if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                errorDiv.textContent = '';
+                errorDiv.style.display = 'none';
+            }
+        }
+    })
+    .catch(error => {
+        console.error('Erreur lors de la vérification de la salle:', error);
+    });
+}
+
+// Fonction pour vérifier le chevauchement entre sessions de la même formation
+function checkSessionOverlap(tr) {
+    const dateDebut = tr.querySelector('input[name="dateDebut"]');
+    const dateFin = tr.querySelector('input[name="dateFin"]');
+    
+    if (!dateDebut || !dateFin || !dateDebut.value || !dateFin.value) {
+        return;
+    }
+    
+    const thisDateDebut = dateDebut.value;
+    const thisDateFin = dateFin.value;
+    const thisSessionId = tr.getAttribute('data-session-id');
+    let hasOverlap = false;
+    let overlapSessions = [];
+    
+    // Vérifier le chevauchement avec les autres sessions de la même formation
+    document.querySelectorAll('tr[data-session-id]').forEach(function(otherTr) {
+        if (otherTr === tr) return; // ignorer soi-même
+        
+        const otherDateDebut = otherTr.querySelector('input[name="dateDebut"]');
+        const otherDateFin = otherTr.querySelector('input[name="dateFin"]');
+        const otherSessionId = otherTr.getAttribute('data-session-id');
+        
+        if (otherDateDebut && otherDateFin && otherDateDebut.value && otherDateFin.value) {
+            // Si les intervalles se chevauchent
+            if (thisDateDebut < otherDateFin.value && thisDateFin > otherDateDebut.value) {
+                hasOverlap = true;
+                // Récupérer le titre de la session en conflit
+                const otherTitre = otherTr.querySelector('input[name="titre"]');
+                const titre = otherTitre ? otherTitre.value : `Session ${otherSessionId}`;
+                overlapSessions.push(titre);
+            }
+        }
+    });
+    
+    // Afficher ou masquer l'erreur
+    if (hasOverlap) {
+        dateDebut.classList.add('is-invalid');
+        dateFin.classList.add('is-invalid');
+        const errorDivDebut = dateDebut.nextElementSibling;
+        const errorDivFin = dateFin.nextElementSibling;
+        const errorMessage = `Chevauchement avec une autre session de la formation (Sessions : ${overlapSessions.join(', ')})`;
+        
+        if (errorDivDebut && errorDivDebut.classList.contains('invalid-feedback')) {
+            errorDivDebut.textContent = errorMessage;
+            errorDivDebut.style.display = 'block';
+        }
+        if (errorDivFin && errorDivFin.classList.contains('invalid-feedback')) {
+            errorDivFin.textContent = errorMessage;
+            errorDivFin.style.display = 'block';
+        }
+    } else {
+        // Ne masquer que si pas d'autres erreurs
+        if (!dateDebut.classList.contains('is-invalid') || dateDebut.nextElementSibling.textContent.includes('Chevauchement')) {
+            dateDebut.classList.remove('is-invalid');
+            const errorDivDebut = dateDebut.nextElementSibling;
+            if (errorDivDebut && errorDivDebut.classList.contains('invalid-feedback')) {
+                errorDivDebut.textContent = '';
+                errorDivDebut.style.display = 'none';
+            }
+        }
+        if (!dateFin.classList.contains('is-invalid') || dateFin.nextElementSibling.textContent.includes('Chevauchement')) {
+            dateFin.classList.remove('is-invalid');
+            const errorDivFin = dateFin.nextElementSibling;
+            if (errorDivFin && errorDivFin.classList.contains('invalid-feedback')) {
+                errorDivFin.textContent = '';
+                errorDivFin.style.display = 'none';
+            }
+        }
+    }
+}
+
+// Fonction pour ajouter les validations en temps réel pour la formation
+function addFormationRealTimeValidation() {
+    const form = document.getElementById('formation-edit-form');
+    if (!form) return;
+    
+    const sujet = form.querySelector('input[name="sujet"]');
+    const dateDebut = form.querySelector('input[name="dateDebut"]');
+    const duree = form.querySelector('input[name="duree"]');
+    const responsable = form.querySelector('select[name="responsable"]');
+    
+    // Validation sujet en temps réel
+    if (sujet) {
+        sujet.addEventListener('input', function() {
+            if (!this.value.trim()) {
+                this.classList.add('is-invalid');
+                const errorDiv = this.nextElementSibling;
+                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                    errorDiv.textContent = 'Le sujet est requis.';
+                    errorDiv.style.display = 'block';
+                }
+            } else {
+                this.classList.remove('is-invalid');
+                const errorDiv = this.nextElementSibling;
+                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                    errorDiv.textContent = '';
+                    errorDiv.style.display = 'none';
+                }
+            }
+        });
+    }
+    
+    // Validation dateDebut en temps réel
+    if (dateDebut) {
+        dateDebut.addEventListener('change', function() {
+            if (!this.value) {
+                this.classList.add('is-invalid');
+                const errorDiv = this.nextElementSibling;
+                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                    errorDiv.textContent = 'La date de début est requise.';
+                    errorDiv.style.display = 'block';
+                }
+            } else {
+                this.classList.remove('is-invalid');
+                const errorDiv = this.nextElementSibling;
+                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                    errorDiv.textContent = '';
+                    errorDiv.style.display = 'none';
+                }
+            }
+        });
+    }
+    
+    // Validation duree en temps réel
+    if (duree) {
+        duree.addEventListener('input', function() {
+            if (!this.value || isNaN(this.value) || parseInt(this.value) < 2) {
+                this.classList.add('is-invalid');
+                const errorDiv = this.nextElementSibling;
+                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                    errorDiv.textContent = 'La durée doit être un nombre supérieur ou égal à 2.';
+                    errorDiv.style.display = 'block';
+                }
+            } else {
+                this.classList.remove('is-invalid');
+                const errorDiv = this.nextElementSibling;
+                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                    errorDiv.textContent = '';
+                    errorDiv.style.display = 'none';
+                }
+            }
+        });
+    }
+    
+    // Validation responsable en temps réel
+    if (responsable) {
+        responsable.addEventListener('change', function() {
+            if (!this.value) {
+                this.classList.add('is-invalid');
+                const errorDiv = this.nextElementSibling;
+                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                    errorDiv.textContent = 'Le responsable est requis.';
+                    errorDiv.style.display = 'block';
+                }
+            } else {
+                this.classList.remove('is-invalid');
+                const errorDiv = this.nextElementSibling;
+                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                    errorDiv.textContent = '';
+                    errorDiv.style.display = 'none';
+                }
+            }
+        });
+    }
+}
+
+
+
+    </script>
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- END: Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="../../../app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- Script pour gérer le menu vertical -->
+    <script src="../../../app-assets/js/core/app-menu.js"></script>
+
+
+
+</body>
+<!-- END: Body-->
+
+</html>

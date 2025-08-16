@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="fr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   
+    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/jquery-jvectormap-2.0.3.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/morris.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/unslider.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/weather-icons/climacons.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
+    <!-- END: Theme CSS-->
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-overlay-menu.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-gradient.css">
+    <!-- link(rel='stylesheet', type='text/css', href=app_assets_path+'/css'+rtl+'/pages/users.css')-->
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
+    <!-- END: Custom CSS-->
+    
+    <!-- CSS pour les graphiques du tableau de bord -->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/dashboard.css">
+    
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Chart.js DataLabels Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-overlay-menu 2-columns   fixed-navbar" data-open="click" data-menu="vertical-overlay-menu" data-col="2-columns">
+{% include 'Admin/navBar.html.twig' %}
+
+  
+
+
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <!-- Tableau de bord dynamique -->
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-12">
+                        <div class="card">
+                            <div class="card-header border-0-bottom">
+                                <h4 class="card-title">Tableau de bord des formations</h4>
+                                <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+                                <div class="heading-elements">
+                                    <ul class="list-inline mb-0">
+                                        <li><a href="#" onclick="exportPDF()"><i class="ft-download"></i> PDF</a></li>
+                                        <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="row my-1">
+                                        <div class="col-lg-3 col-12">
+                                            <div class="text-center">
+                                                <h3>{{ totalFormations }}</h3>
+                                                <p class="text-muted">Total Formations <span class="success"><i class="ft-arrow-up"></i> Actif</span></p>
+                                                <div id="sp-tristate-bar-total-revenue"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-12">
+                                            <div class="text-center">
+                                                <h3>{{ tauxParticipation }}%</h3>
+                                                <p class="text-muted">Taux Participation <span class="success"><i class="ft-arrow-up"></i> {{ tauxParticipation > 70 ? 'Excellent' : 'Bon' }}</span></p>
+                                                <div id="sp-stacked-bar-total-sales"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-12">
+                                            <div class="text-center">
+                                                <h3>{{ tauxSatisfaction }}/5</h3>
+                                                <p class="text-muted">Satisfaction Moyenne <span class="warning"><i class="ft-arrow-up"></i> {{ tauxSatisfaction > 4 ? 'Excellent' : 'Bon' }}</span></p>
+                                                <div id="sp-bar-total-cost"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-12">
+                                            <div class="text-center">
+                                                <h3>{{ heuresFormation }}h</h3>
+                                                <p class="text-muted">Heures Formation <span class="info"><i class="ft-arrow-up"></i> Total</span></p>
+                                                <div id="sp-bar-total-hours"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                                <h5 class="mb-0">📊 Graphiques des formations</h5>
+                                                <div class="btn-group" role="group">
+                                                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="refreshCharts()">
+                                                        <i class="fa fa-refresh"></i> Actualiser
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Deuxième graphique pour les tendances détaillées -->
+                                    <div class="row mt-3">
+                                        <div class="col-xl-6 col-lg-12">
+                                            <div class="chartjs">
+                                                <canvas id="participation-trend-chart" height="250"></canvas>
+                                                <ul class="list-inline text-center mt-1">
+                                                    <li class="mr-1">
+                                                        <h6><i class="fa fa-circle primary"></i> <span>Nombre total de formations</span></h6>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-12">
+                                            <div class="chartjs">
+                                                <h6 class="text-center mb-2"><i class="fa fa-circle info"></i> <span>Distribution satisfaction</span></h6>
+                                                <canvas id="satisfaction-distribution-chart" height="250"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Troisième rangée de graphiques -->
+                                    <div class="row mt-3">
+                                        <div class="col-xl-6 col-lg-12">
+                                            <div class="chartjs">
+                                                <canvas id="top-formations-chart" height="250"></canvas>
+                                                <ul class="list-inline text-center mt-1">
+                                                    <li class="mr-1">
+                                                        <h6><i class="fa fa-circle success"></i> <span>Top formations par participation</span></h6>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-12">
+                                            <div class="chartjs">
+                                                <canvas id="statuts-participation-chart" height="250"></canvas>
+                                                <ul class="list-inline text-center mt-1">
+                                                    <li class="mr-1">
+                                                        <h6><i class="fa fa-circle warning"></i> <span>Répartition des statuts</span></h6>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/ Tableau de bord dynamique -->
+
+                <!-- Statistiques détaillées -->
+                <div class="row">
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media">
+                                        <div class="media-body text-left w-100">
+                                            <h3 class="primary">{{ formationsParResponsable }}</h3>
+                                            <span>Formations par responsable</span>
+                                        </div>
+                                        <div class="media-right media-middle">
+                                            <i class="icon-user primary font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                    <div class="progress progress-sm mt-1 mb-0">
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: {{ (formationsParResponsable / totalFormations * 100)|round }}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media">
+                                        <div class="media-body text-left w-100">
+                                            <h3 class="success">{{ tauxParticipation }}%</h3>
+                                            <span>Taux de participation</span>
+                                        </div>
+                                        <div class="media-right media-middle">
+                                            <i class="icon-users success font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                    <div class="progress progress-sm mt-1 mb-0">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ tauxParticipation }}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media">
+                                        <div class="media-body text-left w-100">
+                                            <h3 class="warning">{{ heuresParUtilisateur }}h</h3>
+                                            <span>Heures par utilisateur</span>
+                                        </div>
+                                        <div class="media-right media-middle">
+                                            <i class="icon-clock warning font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                    <div class="progress progress-sm mt-1 mb-0">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: {{ (heuresParUtilisateur / heuresFormation * 100)|round }}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media">
+                                        <div class="media-body text-left w-100">
+                                            <h3 class="danger">{{ tauxSatisfaction }}/5</h3>
+                                            <span>Taux de satisfaction</span>
+                                        </div>
+                                        <div class="media-right media-middle">
+                                            <i class="icon-star danger font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                    <div class="progress progress-sm mt-1 mb-0">
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: {{ (tauxSatisfaction / 5 * 100)|round }}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/stats-->
+
+                <!-- Audience by country & users visit-->
+                <div class="row match-height">
+                    <div class="col-xl-6 col-lg-12">
+                        <div class="card">
+                            <div class="card-header border-0">
+                                <h4 class="card-title">📚 Formations & Participation</h4>
+                                <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+                                <div class="heading-elements">
+                                    <ul class="list-inline mb-0">
+                                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div id="goal-list-scroll" class="table-responsive position-relative" style="height: 400px;">
+                                    <table class="table mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Formation</th>
+                                                <th>Date</th>
+                                                <th>Taux de Participation</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for formation in formationsAvecParticipation %}
+                                                <tr>
+                                                    <td>
+                                                        <strong>{{ formation.sujet }}</strong>
+                                                        {% if formation.duree %}
+                                                            <br><small class="text-muted">{{ formation.duree }} jour(s)</small>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        {% if formation.dateDebut %}
+                                                            {{ formation.dateDebut|date('d/m/Y') }}
+                                                        {% else %}
+                                                            <span class="text-muted">Non définie</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-center font-small-2">
+                                                        {% set tauxFormation = formation.tauxParticipation %}
+                                                        <div class="d-flex align-items-center justify-content-between mb-1">
+                                                            <span class="font-weight-bold">{{ formation.participantsValides }}/{{ formation.totalParticipants }}</span>
+                                                            <span class="badge {% if tauxFormation >= 70 %}badge-success{% elseif tauxFormation >= 40 %}badge-warning{% else %}badge-danger{% endif %}">
+                                                                {{ tauxFormation }}%
+                                                            </span>
+                                                        </div>
+                                                        <div class="progress progress-sm mt-1 mb-0">
+                                                            <div class="progress-bar {% if tauxFormation >= 70 %}bg-success{% elseif tauxFormation >= 40 %}bg-warning{% else %}bg-danger{% endif %}" 
+                                                                 role="progress-bar" 
+                                                                 style="width: {{ tauxFormation }}%" 
+                                                                 aria-valuenow="{{ tauxFormation }}" 
+                                                                 aria-valuemin="0" 
+                                                                 aria-valuemax="100">
+                                                            </div>
+                                                        </div>
+                                                        <small class="text-muted">
+                                                            {{ formation.participantsValides }} participant(s) accepté(s) sur {{ formation.totalParticipants }} inscrit(s)
+                                                        </small>
+                                                    </td>
+                                                </tr>
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="3" class="text-center text-muted">
+                                                        Aucune formation trouvée
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-12">
+                        <div class="card">
+                            <div class="card-header border-0">
+                                <h4 class="card-title">🔍 Recherche par Responsable</h4>
+                                <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+                                <div class="heading-elements">
+                                    <ul class="list-inline mb-0">
+                                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body" style="height: 400px; overflow-y: auto;">
+                                    <!-- Sélecteur de responsable -->
+                                    <form method="GET" class="mb-3">
+                                        <div class="form-group">
+                                            <label for="responsable">Choisir un responsable :</label>
+                                            <select name="responsable" id="responsable" class="form-control" onchange="this.form.submit()">
+                                                <option value="">-- Sélectionner un responsable --</option>
+                                                {% for responsable in responsables %}
+                                                    <option value="{{ responsable.id }}" {% if selectedResponsable == responsable.id %}selected{% endif %}>
+                                                        {{ responsable.prenom }} {{ responsable.nom }}
+                                                    </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </form>
+
+                                    {% if statsResponsable %}
+                                        <!-- Statistiques du responsable sélectionné -->
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="text-center p-2">
+                                                    <h4 class="primary">{{ statsResponsable.totalFormations }}</h4>
+                                                    <p class="text-muted mb-0">Total Formations</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="text-center p-2">
+                                                    <h4 class="success">{{ statsResponsable.totalSessions }}</h4>
+                                                    <p class="text-muted mb-0">Total Sessions</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="text-center p-2">
+                                                    <h4 class="warning">{{ statsResponsable.totalParticipants }}</h4>
+                                                    <p class="text-muted mb-0">Total Participants</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="text-center p-2">
+                                                    <h4 class="info">{{ statsResponsable.heuresFormation }}h</h4>
+                                                    <p class="text-muted mb-0">Heures Formation</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Taux de participation -->
+                                        <div class="mt-3">
+                                            <h5 class="text-center mb-2">Taux de Participation</h5>
+                                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                                <span class="font-weight-bold">{{ statsResponsable.participantsValides }}/{{ statsResponsable.totalParticipants }}</span>
+                                                <span class="badge {% if statsResponsable.tauxParticipation >= 70 %}badge-success{% elseif statsResponsable.tauxParticipation >= 40 %}badge-warning{% else %}badge-danger{% endif %}">
+                                                    {{ statsResponsable.tauxParticipation }}%
+                                                </span>
+                                            </div>
+                                            <div class="progress progress-sm mt-1 mb-0">
+                                                <div class="progress-bar {% if statsResponsable.tauxParticipation >= 70 %}bg-success{% elseif statsResponsable.tauxParticipation >= 40 %}bg-warning{% else %}bg-danger{% endif %}" 
+                                                     role="progress-bar" 
+                                                     style="width: {{ statsResponsable.tauxParticipation }}%" 
+                                                     aria-valuenow="{{ statsResponsable.tauxParticipation }}" 
+                                                     aria-valuemin="0" 
+                                                     aria-valuemax="100">
+                                                </div>
+                                            </div>
+                                            <small class="text-muted text-center d-block mt-1">
+                                                {{ statsResponsable.participantsValides }} participant(s) accepté(s) sur {{ statsResponsable.totalParticipants }} inscrit(s)
+                                            </small>
+                                        </div>
+                                    {% else %}
+                                        <!-- Message d'instruction -->
+                                        <div class="text-center text-muted py-4">
+                                            <i class="fa fa-search fa-3x mb-3"></i>
+                                            <h5>Sélectionnez un responsable pour voir ses statistiques</h5>
+                                            <p>Choisissez un responsable dans la liste ci-dessus pour afficher :</p>
+                                            <ul class="list-unstyled">
+                                                <li>• Total des formations</li>
+                                                <li>• Total des sessions</li>
+                                                <li>• Total des participants</li>
+                                                <li>• Taux de participation</li>
+                                                <li>• Heures de formation</li>
+                                            </ul>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             
+            
+                    
+    </div>
+    <!-- END: Content-->
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+<script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+<script src="../../../app-assets/js/core/app-menu.js"></script>
+<script src="../../../app-assets/js/core/app.js"></script>
+
+<!-- Scripts pour le tableau de bord -->
+<script>
+// Enregistrer le plugin DataLabels
+Chart.register(ChartDataLabels);
+
+// Fonction d'export PDF
+function exportPDF() {
+    // Rediriger vers la route d'export PDF
+    window.open('/admin/stats-dashboard/pdf', '_blank');
+}
+
+// Fonction d'export Excel
+function exportExcel() {
+    alert('Export Excel en cours de développement...');
+    // Ici vous pouvez intégrer une bibliothèque comme SheetJS
+}
+
+// Variables globales pour les graphiques
+var charts = {};
+
+// Fonction pour actualiser les graphiques
+function refreshCharts() {
+    location.reload();
+}
+
+// Graphique des formations
+document.addEventListener('DOMContentLoaded', function() {
+    // Données réelles du serveur
+    var monthlyData = {{ monthlyStats|json_encode|raw }};
+    
+    // Deuxième graphique : Tendance du taux de participation
+    var ctxParticipation = document.getElementById('participation-trend-chart').getContext('2d');
+    var participationChart = new Chart(ctxParticipation, {
+        type: 'line',
+        data: {
+            labels: monthlyData.map(item => item.month),
+            datasets: [{
+                label: 'Nombre total de formations', // Changed label
+                data: monthlyData.map(item => item.formations), // Changed data to formations count
+                borderColor: 'rgb(54, 162, 235)',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                tension: 0.4,
+                fill: true,
+                pointRadius: 5, // Larger points
+                pointHoverRadius: 7
+            }]
+        },
+        options: {
+            responsive: true,
+            animation: true, // Keep animations enabled
+            plugins: {
+                legend: {
+                    display: false // Hide legend as there's only one dataset
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            var label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            label += context.parsed.y + ' formations'; // Adjusted tooltip label
+                            return label;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Mois'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Nombre de formations' // Changed Y-axis title
+                    }
+                    // Removed min: 0 and max: 100 to allow auto-scaling
+                }
+            }
+        }
+    });
+    
+    // Stocker le graphique dans l'objet global
+    charts.participationChart = participationChart;
+    
+    // Troisième graphique : Distribution de la satisfaction
+    var ctxSatisfaction = document.getElementById('satisfaction-distribution-chart').getContext('2d');
+    
+    // Détruire l'ancien graphique s'il existe
+    if (window.satisfactionChart) {
+        window.satisfactionChart.destroy();
+    }
+    
+    var satisfactionChart = new Chart(ctxSatisfaction, {
+        type: 'doughnut',
+        data: {
+            labels: ['Très satisfait (4-5)', 'Satisfait (2-3)', 'Non satisfait (1)'],
+            datasets: [{
+                        data: [
+            {{ satisfactionStats['Très satisfait (4-5)'] ?? 0 }},
+            {{ satisfactionStats['Satisfait (2-3)'] ?? 0 }},
+            {{ satisfactionStats['Non satisfait (1)'] ?? 0 }}
+        ],
+        // Ajouter un timestamp pour éviter le cache
+        _timestamp: {{ "now"|date("U") }},
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.8)',
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(255, 99, 132, 0.8)'
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            animation: true, // Keep animations enabled
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                },
+                title: {
+                    display: true,
+                    text: 'Distribution de la satisfaction'
+                }
+            }
+        }
+    });
+    
+    // Stocker le graphique dans l'objet global et window
+    charts.satisfactionChart = satisfactionChart;
+    window.satisfactionChart = satisfactionChart;
+    
+    // Quatrième graphique : Top formations par participation
+    var ctxTopFormations = document.getElementById('top-formations-chart').getContext('2d');
+    var topFormationsChart = new Chart(ctxTopFormations, {
+        type: 'bar',
+        data: {
+            labels: {{ additionalStats.topFormations|map(f => f.sujet)|json_encode|raw }} || ['Aucune donnée'],
+            datasets: [{
+                label: 'Nombre de participants',
+                data: {{ additionalStats.topFormations|map(f => f.participantCount)|json_encode|raw }} || [0],
+                backgroundColor: 'rgba(75, 192, 192, 0.8)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2,
+                borderRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            animation: true, // Keep animations enabled
+            plugins: {
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: true,
+                    text: 'Top 5 des formations par participation'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Nombre de participants'
+                    },
+                    ticks: {
+                        stepSize: 1,
+                        maxTicksLimit: 10,
+                        callback: function(value) {
+                            return Math.floor(value);
+                        }
+                    }
+                }
+            }
+        }
+    });
+    
+    // Stocker le graphique dans l'objet global
+    
+    // Cinquième graphique : Répartition des statuts de participation
+    var ctxStatuts = document.getElementById('statuts-participation-chart').getContext('2d');
+    var statutsChart = new Chart(ctxStatuts, {
+        type: 'pie',
+        data: {
+            labels: {{ additionalStats.statutsParticipation|map(s => s.statutParticipation)|json_encode|raw }} || ['Aucune donnée'],
+            datasets: [{
+                data: {{ additionalStats.statutsParticipation|map(s => s.count)|json_encode|raw }} || [0],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.8)',
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(255, 205, 86, 0.8)',
+                    'rgba(255, 99, 132, 0.8)',
+                    'rgba(153, 102, 255, 0.8)'
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 205, 86, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            animation: true, // Keep animations enabled
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                },
+                title: {
+                    display: true,
+                    text: 'Répartition des statuts de participation'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            var label = context.label || '';
+                            var value = context.parsed;
+                            var total = context.dataset.data.reduce((a, b) => a + b, 0);
+                            var percentage = ((value / total) * 100).toFixed(1);
+                            return label + ': ' + value + ' (' + percentage + '%)';
+                        }
+                    }
+                },
+                datalabels: {
+                    color: '#fff',
+                    font: {
+                        weight: 'bold',
+                        size: 14
+                    },
+                    formatter: function(value, context) {
+                        var total = context.dataset.data.reduce((a, b) => a + b, 0);
+                        var percentage = ((value / total) * 100).toFixed(1);
+                        return percentage + '%';
+                    }
+                }
+            }
+        }
+    });
+    
+   
+});
+
+
+</script>
+</body>
+<!-- END: Body-->
+
+</html>

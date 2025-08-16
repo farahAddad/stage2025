@@ -1,0 +1,205 @@
+{# templates/security/register.html.twig #}
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" />
+
+    <meta name="author" content="PIXINVENT" />
+    <title>Inscription - Stack Responsive Bootstrap 4 Admin Template</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500|Open+Sans:300,400,600,700" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/vendors.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/forms/icheck/icheck.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/forms/icheck/custom.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/css/bootstrap.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/css/bootstrap-extended.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/css/colors.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/css/components.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/css/core/menu/menu-types/vertical-menu.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/css/core/colors/palette-gradient.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/css/pages/login-register.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
+</head>
+<body class="vertical-layout vertical-menu 1-column blank-page blank-page" data-open="click" data-menu="vertical-menu" data-col="1-column">
+    <div class="app-content content">
+        <div class="content-wrapper">
+            <div class="content-header row"></div>
+            <div class="content-body">
+                <section class="flexbox-container">
+                    <div class="col-12 d-flex align-items-center justify-content-center">
+                        <div class="col-lg-6 col-md-8 col-10 box-shadow-2 p-0">
+                            <div class="card border-grey border-lighten-3 m-0">
+                                <div class="card-header border-0">
+                                    <div class="card-title text-center">
+                                        <div class="p-1">
+                                            <img src="{{ asset('app-assets/images/logo/stack-logo-dark.png') }}" alt="branding logo" />
+                                        </div>
+                                    </div>
+                                    <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2">
+                                        <span>Créer un compte</span>
+                                    </h6>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        {% if error is defined and error %}
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ error }}
+                                            </div>
+                                        {% endif %}
+                                        
+                                        <form class="form-horizontal form-simple" action="{{ path('app_register') }}" method="post" novalidate>
+                                            <fieldset class="form-group position-relative has-icon-left mb-0">
+                                                <input
+                                                    type="text"
+                                                    class="form-control form-control-lg"
+                                                    id="prenom"
+                                                    name="prenom"
+                                                    placeholder="Prénom"
+                                                    required
+                                                    autofocus
+                                                />
+                                                <div class="form-control-position">
+                                                    <i class="ft-user"></i>
+                                                </div>
+                                            </fieldset>
+                                            
+                                            <fieldset class="form-group position-relative has-icon-left mb-0">
+                                                <input
+                                                    type="text"
+                                                    class="form-control form-control-lg"
+                                                    id="nom"
+                                                    name="nom"
+                                                    placeholder="Nom"
+                                                    required
+                                                />
+                                                <div class="form-control-position">
+                                                    <i class="ft-user"></i>
+                                                </div>
+                                            </fieldset>
+                                            
+                                            <fieldset class="form-group position-relative has-icon-left mb-0">
+                                                <input
+                                                    type="email"
+                                                    class="form-control form-control-lg"
+                                                    id="email"
+                                                    name="email"
+                                                    placeholder="Email"
+                                                    required
+                                                />
+                                                <div class="form-control-position">
+                                                    <i class="ft-mail"></i>
+                                                </div>
+                                            </fieldset>
+                                            
+                                            <fieldset class="form-group position-relative has-icon-left">
+                                                <input
+                                                    type="password"
+                                                    class="form-control form-control-lg"
+                                                    id="password"
+                                                    name="password"
+                                                    placeholder="Mot de passe"
+                                                    required
+                                                />
+                                                <div class="form-control-position">
+                                                    <i class="fa fa-key"></i>
+                                                </div>
+                                            </fieldset>
+                                            
+                                            <fieldset class="form-group position-relative has-icon-left">
+                                                <select
+                                                    class="form-control form-control-lg"
+                                                    id="role"
+                                                    name="role"
+                                                    onchange="toggleCustomRole()"
+                                                >
+                                                    <option value="">Sélectionner un rôle</option>
+                                                    <option value="ROLE_RH">Ressources Humaines</option>
+                                                    <option value="ROLE_RESPONSABLE">Responsable de formation</option>
+                                                    <option value="custom">Autre rôle (personnalisé)</option>
+                                                </select>
+                                                <div class="form-control-position">
+                                                    <i class="ft-users"></i>
+                                                </div>
+                                            </fieldset>
+                                            
+                                            <fieldset class="form-group position-relative has-icon-left" id="customRoleField" style="display: none;">
+                                                <input
+                                                    type="text"
+                                                    class="form-control form-control-lg"
+                                                    id="customRole"
+                                                    name="customRole"
+                                                    placeholder="Ex: ingenieur, formateur, manager..."
+                                                />
+                                                <div class="form-control-position">
+                                                    <i class="ft-edit"></i>
+                                                </div>
+                                            </fieldset>
+                                            
+                                            <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                                <i class="ft-user-plus"></i> S'inscrire
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div>
+                                        <p class="float-sm-left text-center m-0">
+                                            <a href="{{ path('app_login') }}" class="card-link">Déjà un compte ? Se connecter</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ asset('app-assets/vendors/js/vendors.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/forms/icheck/icheck.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/forms/validation/jqBootstrapValidation.js') }}"></script>
+    <script src="{{ asset('app-assets/js/core/app-menu.js') }}"></script>
+    <script src="{{ asset('app-assets/js/core/app.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/forms/form-login-register.js') }}"></script>
+    <script>
+        function toggleCustomRole() {
+            const roleSelect = document.getElementById('role');
+            const customRoleField = document.getElementById('customRoleField');
+            const customRoleInput = document.getElementById('customRole');
+            
+            if (roleSelect.value === 'custom') {
+                customRoleField.style.display = 'block';
+                customRoleInput.required = true;
+                customRoleInput.focus();
+            } else {
+                customRoleField.style.display = 'none';
+                customRoleInput.required = false;
+                customRoleInput.value = '';
+            }
+        }
+        
+        // Validation du formulaire
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const roleSelect = document.getElementById('role');
+            const customRoleInput = document.getElementById('customRole');
+            
+            if (roleSelect.value === 'custom' && !customRoleInput.value.trim()) {
+                e.preventDefault();
+                alert('Veuillez saisir un rôle personnalisé');
+                customRoleInput.focus();
+                return false;
+            }
+            
+            if (roleSelect.value === '') {
+                e.preventDefault();
+                alert('Veuillez sélectionner un rôle ou choisir "Autre rôle (personnalisé)"');
+                roleSelect.focus();
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>

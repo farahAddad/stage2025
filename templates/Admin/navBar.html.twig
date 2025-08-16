@@ -1,0 +1,161 @@
+  <!-- BEGIN: Header-->
+    <nav class="header-navbar navbar-expand-md navbar navbar-with-menu fixed-top navbar-dark bg-primary navbar-shadow navbar-brand-center">
+        <div class="navbar-wrapper">
+            <div class="navbar-header">
+                <ul class="nav navbar-nav flex-row">
+                    <li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
+                    <li class="nav-item"><a class="navbar-brand" href="../../../html/ltr/vertical-overlay-menu-template/index.html"><img class="brand-logo" alt="stack admin logo" src="../../../app-assets/images/logo/stack-logo-light.png">
+                            <h2 class="brand-text">Stack</h2>
+                        </a></li>
+                    <li class="nav-item d-md-none"><a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile"><i class="fa fa-ellipsis-v"></i></a></li>
+                </ul>
+            </div>
+            <div class="navbar-container content">
+                <div class="collapse navbar-collapse" id="navbar-mobile">
+                    <ul class="nav navbar-nav mr-auto float-left">
+                        <li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu"></i></a></li>
+                     
+                              {{ include('Admin/menuVertical.html.twig') }}
+
+                               
+        
+                     
+
+                        <li class="nav-item d-none d-md-block"><a class="nav-link nav-link-expand" href="#"><i class="ficon ft-maximize"></i></a></li>
+                       
+                    </ul>
+                    <ul class="nav navbar-nav float-right">
+                       
+                        <li class="dropdown dropdown-notification nav-item">
+                            <a class="nav-link nav-link-label" href="#" data-toggle="dropdown">
+                                <i class="ficon ft-bell"></i>
+                                {% if countNonLues is defined and countNonLues > 0 %}
+                                    <span class="badge badge-pill badge-danger badge-up">{{ countNonLues }}</span>
+                                {% endif %}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
+                                <li class="dropdown-menu-header">
+                                    <h6 class="dropdown-header m-0">
+                                        <span class="grey darken-2">Notifications</span>
+                                        {% if countNonLues is defined and countNonLues > 0 %}
+                                            <span class="notification-tag badge badge-danger float-right m-0">{{ countNonLues }} Nouveau(x)</span>
+                                        {% endif %}
+                                    </h6>
+                                </li>
+                                <li class="scrollable-container media-list w-100">
+                                    {% if notifications is defined and notifications|length > 0 %}
+                                        {% for notification in notifications %}
+                                            <a href="javascript:void(0)" class="media-list-item" data-notification-id="{{ notification.id }}">
+                                                <div class="media">
+                                                    <div class="media-left align-self-center">
+                                                        {% if notification.type == 'formation' %}
+                                                            <i class="ft-plus-square icon-bg-circle bg-primary"></i>
+                                                        {% elseif notification.type == 'inscription' %}
+                                                            <i class="ft-user-plus icon-bg-circle bg-success"></i>
+                                                        {% elseif notification.type == 'validation' %}
+                                                            <i class="ft-check-circle icon-bg-circle bg-info"></i>
+                                                        {% elseif notification.type == 'rappel' %}
+                                                            <i class="ft-clock icon-bg-circle bg-warning"></i>
+                                                        {% elseif notification.type == 'annulation' %}
+                                                            <i class="ft-x-circle icon-bg-circle bg-danger"></i>
+                                                        {% else %}
+                                                            <i class="ft-info icon-bg-circle bg-secondary"></i>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h6 class="media-heading">{{ notification.titre }}</h6>
+                                                        <p class="notification-text font-small-3 text-muted">{{ notification.message }}</p>
+                                                        <small>
+                                                            <time class="media-meta text-muted">{{ notification.dateCreation|date('d/m/Y H:i') }}</time>
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        {% endfor %}
+                                    {% else %}
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p class="text-muted text-center">Aucune nouvelle notification</p>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </li>
+                                {% if countNonLues is defined and countNonLues > 0 %}
+                                    <li class="dropdown-menu-footer">
+                                        <a class="dropdown-item text-muted text-center" href="/admin/notifications">
+                                            Voir toutes les notifications
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                      
+                        <li class="dropdown dropdown-user nav-item">
+                            <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
+                                <span class="avatar avatar-online">
+                                    <img src="../../../app-assets/images/portrait/small/avatar-s-1.png" alt="avatar">
+                                    <i></i>
+                                </span>
+                                <span class="user-name">{{ app.user.nom }} {{app.user.prenom }}</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="/admin/formations">
+                                    <i class="ft-graduation-cap"></i> Gérer les formations
+                                </a>
+                                <a class="dropdown-item" href="/admin/notifications">
+                                    <i class="ft-bell"></i> Mes notifications
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/logout">
+                                    <i class="ft-power"></i> Déconnexion
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- END: Header-->
+    
+    <!-- Script pour gérer les notifications -->
+    <script>
+        $(document).ready(function() {
+            // Marquer une notification comme lue quand on clique dessus
+            $('.media-list-item').on('click', function() {
+                const notificationId = $(this).data('notification-id');
+                
+                $.ajax({
+                    url: '/admin/notification/marquer-lue/' + notificationId,
+                    method: 'POST',
+                    success: function(response) {
+                        if (response.success) {
+                            // Mettre à jour le compteur
+                            const currentCount = parseInt($('.badge-up').text()) || 0;
+                            if (currentCount > 1) {
+                                $('.badge-up').text(currentCount - 1);
+                            } else {
+                                $('.badge-up').hide();
+                            }
+                            
+                            // Supprimer la notification de la liste
+                            $('[data-notification-id="' + notificationId + '"]').fadeOut(300, function() {
+                                $(this).remove();
+                                
+                                // Si plus de notifications, afficher le message "aucune"
+                                if ($('.media-list-item').length === 0) {
+                                    $('.scrollable-container').html('<div class="media"><div class="media-body"><p class="text-muted text-center">Aucune nouvelle notification</p></div></div>');
+                                }
+                            });
+                        }
+                    },
+                    error: function() {
+                        console.error('Erreur lors du marquage de la notification');
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!-- Scheduler global inclus depuis le fichier scheduler.html.twig -->
+    {% include 'scheduler.html.twig' %}

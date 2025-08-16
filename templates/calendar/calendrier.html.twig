@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="fr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   
+    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/jquery-jvectormap-2.0.3.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/morris.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/unslider.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/weather-icons/climacons.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
+    <!-- END: Theme CSS-->
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-overlay-menu.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-gradient.css">
+    <!-- link(rel='stylesheet', type='text/css', href=app_assets_path+'/css'+rtl+'/pages/users.css')-->
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
+    <!-- END: Custom CSS-->
+    
+    <!-- CSS pour le calendrier -->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/calendar.css">
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-overlay-menu 2-columns   fixed-navbar" data-open="click" data-menu="vertical-overlay-menu" data-col="2-columns">
+{% set roles_str = app.user.roles|join(' ') %}
+
+{% if roles_str matches '/ROLE_RH/' or roles_str matches '/ROLE_RESSOURCE_HUMAINES/' %}
+    {% include 'Admin/navBar.html.twig' %}
+{% elseif roles_str matches '/RESPONSABLE/' %}
+    {% include 'Responsable/navBar.html.twig' %}
+{% else %}
+    {% include 'User/navBar.html.twig' %}
+{% endif %}
+
+
+  
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="calendar-container">
+                         
+                            
+                            <!-- En-tête du calendrier -->
+                            <div class="calendar-header">
+                                <div class="calendar-nav">
+                                    <a href="/calendar?month={{ currentMonth - 1 }}&year={{ currentYear }}" class="btn btn-outline-primary">
+                                        ←
+                                    </a>
+                                    <a href="/calendar?month={{ 'now'|date('n') }}&year={{ 'now'|date('Y') }}&today=true" class="btn btn-outline-primary">
+                                        Aujourd'hui
+                                    </a>
+                                    <a href="/calendar?month={{ currentMonth + 1 }}&year={{ currentYear }}" class="btn btn-outline-primary">
+                                        →
+                                    </a>
+                                </div>
+                                
+                                <div class="calendar-title">
+                                    {{ monthName }} {{ currentYear }}
+                                </div>
+                                
+                                <div class="calendar-views">
+                                    <button class="btn btn-primary active">Mois</button>
+                                    <button class="btn btn-outline-primary">Semaine</button>
+                                    <button class="btn btn-outline-primary">Jour</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Grille du calendrier -->
+                            <div class="calendar-grid">
+                                <!-- En-têtes des jours -->
+                                <div class="calendar-header-cell">Lun</div>
+                                <div class="calendar-header-cell">Mar</div>
+                                <div class="calendar-header-cell">Mer</div>
+                                <div class="calendar-header-cell">Jeu</div>
+                                <div class="calendar-header-cell">Ven</div>
+                                <div class="calendar-header-cell">Sam</div>
+                                <div class="calendar-header-cell">Dim</div>
+                                
+                                <!-- Cellules des jours -->
+                                {% for week in calendarData.weeks %}
+                                    {% for day in week %}
+                                        {% set dateKey = day|date('Y-m-d') %}
+                                        {% set isCurrentMonth = day|date('n') == currentMonth %}
+                                        {% set isToday = showToday and day|date('Y-m-d') == today|date('Y-m-d') %}
+                                        
+                                        <div class="day-cell {% if not isCurrentMonth %}other-month{% endif %} {% if isToday %}today{% endif %}">
+                                            <div class="day-number">{{ day|date('j') }}</div>
+                                            
+                                            {% if calendarData.sessionsByDate[dateKey] is defined %}
+                                                {% for sessionData in calendarData.sessionsByDate[dateKey] %}
+                                                    <!-- Debug: {{ sessionData.participants|length }} participants -->
+                                                    <div class="activity-item" 
+                                                         title="{{ sessionData.title }} ({{ sessionData.participants|length }} participant{{ sessionData.participants|length > 1 ? 's' : '' }})"
+                                                         data-session-title="{{ sessionData.title }}"
+                                                         data-session-debut="{{ sessionData.session.dateDebut|date('d/m/Y H:i') }}"
+                                                         data-session-fin="{{ sessionData.session.dateFin|date('d/m/Y H:i') }}"
+                                                         data-session-participants="{{ sessionData.participants|map(p => p.prenom ~ ' ' ~ p.nom)|join(', ') }}"
+                                                         data-session-salle="{{ sessionData.session.salle ? sessionData.session.salle.nom : 'Non définie' }}">
+                                                        <div class="session-title">{{ sessionData.title|length > 15 ? sessionData.title|slice(0, 15) ~ '...' : sessionData.title }}</div>
+                                                        <div class="participants-count">
+                                                            {% if sessionData.participants|length > 0 %}
+                                                                {{ sessionData.participants|length }} participant{{ sessionData.participants|length > 1 ? 's' : '' }}
+                                                            {% else %}
+                                                                Aucun participant
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: content-->
+
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+
+
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/extensions/jquery.knob.min.js"></script>
+    <script src="../../../app-assets/js/scripts/extensions/knob.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/raphael-min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/morris.min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/jvector/jquery-jvectormap-2.0.3.min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/jvector/jquery-jvectormap-world-mill.js"></script>
+    <script src="../../../app-assets/data/jvector/visitor-data.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/chart.min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/jquery.sparkline.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/unslider-min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-climacon.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/fonts/simple-line-icons/style.min.css">
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="../../../app-assets/js/core/app-menu.js"></script>
+    <script src="../../../app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/pages/dashboard-analytics.js"></script>
+    <!-- END: Page JS-->
+    
+    <!-- Modal pour afficher les détails de la session -->
+    <div class="modal fade" id="sessionModal" tabindex="-1" aria-labelledby="sessionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="sessionModalLabel">Détails de la session</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="text-primary mb-3">Informations de la session</h6>
+                            <p><strong>Titre :</strong> <span id="sessionTitle"></span></p>
+                            <p><strong>Date début :</strong> <span id="sessionDateDebut"></span></p>
+                            <p><strong>Date fin :</strong> <span id="sessionDateFin"></span></p>
+                            <p><strong>Salle :</strong> <span id="sessionSalle"></span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-success mb-3">Participants validés</h6>
+                            <div id="sessionParticipantsList"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript pour la mise à jour automatique du calendrier et le modal -->
+    <script>
+       
+        function refreshCalendar() {
+            const currentUrl = new URL(window.location);
+            const month = currentUrl.searchParams.get('month') || new Date().getMonth() + 1;
+            const year = currentUrl.searchParams.get('year') || new Date().getFullYear();
+            
+            // Recharger la page avec les mêmes paramètres
+            window.location.href = `/calendar?month=${month}&year=${year}`;
+        }
+        
+     
+        // Rafraîchissement intelligent du calendrier
+        function startSmartRefresh() {
+            // Rafraîchir quand l'utilisateur revient sur l'onglet
+            document.addEventListener('visibilitychange', function() {
+                if (!document.hidden) {
+                    // L'utilisateur est revenu sur l'onglet
+                    refreshCalendar();
+                }
+            });
+            
+            // Rafraîchir quand la page redevient active (après acceptation de participation)
+            window.addEventListener('focus', function() {
+                refreshCalendar();
+            });
+        }
+        
+        // Gestion du modal pour afficher les détails de la session
+        function initializeSessionModal() {
+            // Ajouter les événements de clic sur les sessions avec délégation d'événements
+            document.addEventListener('click', function(e) {
+                
+                // Trouver l'élément .activity-item parent
+                let targetElement = e.target;
+                while (targetElement && !targetElement.classList.contains('activity-item')) {
+                    targetElement = targetElement.parentElement;
+                }
+                
+                if (targetElement && targetElement.classList.contains('activity-item')) {
+                    const sessionTitle = targetElement.getAttribute('data-session-title');
+                    const sessionDebut = targetElement.getAttribute('data-session-debut');
+                    const sessionFin = targetElement.getAttribute('data-session-fin');
+                    const sessionSalle = targetElement.getAttribute('data-session-salle');
+                    const sessionParticipants = targetElement.getAttribute('data-session-participants');
+                    
+                    // Remplir le modal avec les informations
+                    document.getElementById('sessionTitle').textContent = sessionTitle || 'Titre non défini';
+                    document.getElementById('sessionDateDebut').textContent = sessionDebut || 'Date non définie';
+                    document.getElementById('sessionDateFin').textContent = sessionFin || 'Date non définie';
+                    document.getElementById('sessionSalle').textContent = sessionSalle || 'Salle non définie';
+                    
+                    // Afficher la liste des participants
+                    const participantsList = document.getElementById('sessionParticipantsList');
+                    if (sessionParticipants && sessionParticipants.trim() !== '') {
+                        const participants = sessionParticipants.split(', ');
+                        let participantsHtml = '<ul class="list-unstyled">';
+                        participants.forEach((participant, index) => {
+                            participantsHtml += `<li class="participant-item">
+                                <i class="icon-user text-success"></i> 
+                                <span class="participant-name">${participant}</span>
+                                <span class="participant-number">#${index + 1}</span>
+                            </li>`;
+                        });
+                        participantsHtml += '</ul>';
+                        participantsList.innerHTML = participantsHtml;
+                    } else {
+                        participantsList.innerHTML = '<p class="text-muted">Aucun participant validé</p>';
+                    }
+                    
+                  
+                    try {
+                        const modalElement = document.getElementById('sessionModal');
+                        
+                        if (modalElement) {
+                            // Essayer d'abord Bootstrap 4 (jQuery)
+                            if (typeof $ !== 'undefined' && $.fn.modal) {
+                                $(modalElement).modal('show');
+                            }
+                            // Sinon essayer Bootstrap 5
+                            else if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                                const modal = new bootstrap.Modal(modalElement);
+                                modal.show();
+                            }
+                            // Fallback : afficher les informations dans une alerte
+                            else {
+                                alert(`Session: ${sessionTitle}\nDébut: ${sessionDebut}\nFin: ${sessionFin}\nSalle: ${sessionSalle}\nParticipants: ${sessionParticipants}`);
+                            }
+                        }
+                    } catch (error) {
+                        // Fallback : afficher les informations dans une alerte
+                        alert(`Session: ${sessionTitle}\nDébut: ${sessionDebut}\nFin: ${sessionFin}\nSalle: ${sessionSalle}\nParticipants: ${sessionParticipants}`);
+                    }
+                }
+            });
+            
+            // Gérer la fermeture du modal
+            document.querySelectorAll('[data-bs-dismiss="modal"]').forEach(button => {
+                button.addEventListener('click', function() {
+                    try {
+                        const modalElement = document.getElementById('sessionModal');
+                        
+                        // Essayer d'abord Bootstrap 4 (jQuery)
+                        if (typeof $ !== 'undefined' && $.fn.modal) {
+                            $(modalElement).modal('hide');
+                        }
+                        // Sinon essayer Bootstrap 5
+                        else if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                            const modal = bootstrap.Modal.getInstance(modalElement);
+                            if (modal) {
+                                modal.hide();
+                            } else {
+                                // Créer une nouvelle instance si nécessaire
+                                const newModal = new bootstrap.Modal(modalElement);
+                                newModal.hide();
+                            }
+                        }
+                        // Fallback : masquer manuellement
+                        else {
+                            modalElement.style.display = 'none';
+                            modalElement.classList.remove('show');
+                            document.body.classList.remove('modal-open');
+                            const backdrop = document.querySelector('.modal-backdrop');
+                            if (backdrop) backdrop.remove();
+                        }
+                    } catch (error) {
+                        // Fallback manuel en cas d'erreur
+                        const modalElement = document.getElementById('sessionModal');
+                        if (modalElement) {
+                            modalElement.style.display = 'none';
+                            modalElement.classList.remove('show');
+                        }
+                    }
+                });
+            });
+            
+            // Gérer aussi la fermeture avec la touche Escape et le clic sur l'arrière-plan
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    const modalElement = document.getElementById('sessionModal');
+                    if (modalElement && modalElement.classList.contains('show')) {
+                        // Fermer le modal
+                        if (typeof $ !== 'undefined' && $.fn.modal) {
+                            $(modalElement).modal('hide');
+                        } else if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                            const modal = bootstrap.Modal.getInstance(modalElement);
+                            if (modal) modal.hide();
+                        } else {
+                            modalElement.style.display = 'none';
+                            modalElement.classList.remove('show');
+                        }
+                    }
+                }
+            });
+            
+            // Fermer le modal en cliquant sur l'arrière-plan
+            document.getElementById('sessionModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    if (typeof $ !== 'undefined' && $.fn.modal) {
+                        $(this).modal('hide');
+                    } else if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                        const modal = bootstrap.Modal.getInstance(this);
+                        if (modal) modal.hide();
+                    } else {
+                        this.style.display = 'none';
+                        this.classList.remove('show');
+                    }
+                }
+            });
+        }
+        
+        // Démarrer le rafraîchissement intelligent et le modal quand la page se charge
+        document.addEventListener('DOMContentLoaded', function() {
+            startSmartRefresh();
+            initializeSessionModal();
+        });
+    </script>
+
+</body>
+<!-- END: Body-->
+
+</html>

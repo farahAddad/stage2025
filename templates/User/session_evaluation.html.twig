@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="fr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   
+    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/jquery-jvectormap-2.0.3.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/morris.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/unslider.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/weather-icons/climacons.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
+    <!-- END: Theme CSS-->
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-overlay-menu.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-gradient.css">
+    <!-- link(rel='stylesheet', type='text/css', href=app_assets_path+'/css'+rtl+'/pages/users.css')-->
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- END: Custom CSS-->
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-overlay-menu 2-columns   fixed-navbar" data-open="click" data-menu="vertical-overlay-menu" data-col="2-columns">
+{% include 'User/navBar.html.twig' %}
+
+  
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-md-6 col-12 mb-2">
+                <h3 class="content-header-title">
+                    <i class="fas fa-star text-warning"></i> 
+                    Évaluation Post-Formation
+                </h3>
+            </div>
+        </div>
+        
+        <div class="content-body">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Informations de la session -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">
+                                <i class="fas fa-graduation-cap text-info"></i> 
+                                Détails de la Formation
+                            </h4>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><strong>Formation :</strong> {{ formation.sujet }}</p>
+                                        <p><strong>Session :</strong> {{ session.titre }}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><strong>Date :</strong> {{ session.dateDebut|date('d/m/Y') }}</p>
+                                        <p><strong>Horaires :</strong> {{ session.dateDebut|date('H:i') }} - {{ session.dateFin|date('H:i') }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Formulaire d'évaluation -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">
+                                <i class="fas fa-clipboard-list text-primary"></i> 
+                                Questionnaire d'Évaluation
+                            </h4>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body">
+                                <form method="POST" action="{{ path('user_session_evaluation', {'id': session.id}) }}">
+                                    
+                                    <!-- Note globale -->
+                                    <div class="form-group mb-4">
+                                        <label for="noteGlobale" class="form-label fw-bold">
+                                            <i class="fas fa-star text-warning"></i> 
+                                            Note globale de la formation (1-5)
+                                        </label>
+                                        <div class="rating-buttons">
+                                            <div class="btn-group" role="group">
+                                                <input type="radio" class="btn-check" name="noteGlobale" value="1" id="note1" required>
+                                                <label class="btn btn-outline-secondary" for="note1">1</label>
+                                                
+                                                <input type="radio" class="btn-check" name="noteGlobale" value="2" id="note2">
+                                                <label class="btn btn-outline-secondary" for="note2">2</label>
+                                                
+                                                <input type="radio" class="btn-check" name="noteGlobale" value="3" id="note3">
+                                                <label class="btn btn-outline-secondary" for="note3">3</label>
+                                                
+                                                <input type="radio" class="btn-check" name="noteGlobale" value="4" id="note4">
+                                                <label class="btn btn-outline-secondary" for="note4">4</label>
+                                                
+                                                <input type="radio" class="btn-check" name="noteGlobale" value="5" id="note5">
+                                                <label class="btn btn-outline-secondary" for="note5">5</label>
+                                            </div>
+                                        </div>
+                                        <div class="rating-labels mt-2">
+                                            <small class="text-muted">
+                                                <span class="me-3">1 = Très insatisfait</span>
+                                                <span class="me-3">3 = Moyen</span>
+                                                <span>5 = Très satisfait</span>
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <!-- Clarté des explications -->
+                                    <div class="form-group mb-4">
+                                        <label for="clarte" class="form-label fw-bold">
+                                            <i class="fas fa-lightbulb text-info"></i> 
+                                            Clarté des explications (1-5)
+                                        </label>
+                                        <div class="rating-buttons">
+                                            <div class="btn-group" role="group">
+                                                <input type="radio" class="btn-check" name="clarte" value="1" id="clarte1" required>
+                                                <label class="btn btn-outline-secondary" for="clarte1">1</label>
+                                                
+                                                <input type="radio" class="btn-check" name="clarte" value="2" id="clarte2">
+                                                <label class="btn btn-outline-secondary" for="clarte2">2</label>
+                                                
+                                                <input type="radio" class="btn-check" name="clarte" value="3" id="clarte3">
+                                                <label class="btn btn-outline-secondary" for="clarte3">3</label>
+                                                
+                                                <input type="radio" class="btn-check" name="clarte" value="4" id="clarte4">
+                                                <label class="btn btn-outline-secondary" for="clarte4">4</label>
+                                                
+                                                <input type="radio" class="btn-check" name="clarte" value="5" id="clarte5">
+                                                <label class="btn btn-outline-secondary" for="clarte5">5</label>
+                                            </div>
+                                        </div>
+                                        <div class="rating-labels mt-2">
+                                            <small class="text-muted">
+                                                <span class="me-3">1 = Très confus</span>
+                                                <span class="me-3">3 = Assez clair</span>
+                                                <span>5 = Très clair</span>
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <!-- Pertinence du contenu -->
+                                    <div class="form-group mb-4">
+                                        <label for="pertinence" class="form-label fw-bold">
+                                            <i class="fas fa-target text-success"></i> 
+                                            Pertinence du contenu (1-5)
+                                        </label>
+                                        <div class="rating-buttons">
+                                            <div class="btn-group" role="group">
+                                                <input type="radio" class="btn-check" name="pertinence" value="1" id="pertinence1" required>
+                                                <label class="btn btn-outline-secondary" for="pertinence1">1</label>
+                                                
+                                                <input type="radio" class="btn-check" name="pertinence" value="2" id="pertinence2">
+                                                <label class="btn btn-outline-secondary" for="pertinence2">2</label>
+                                                
+                                                <input type="radio" class="btn-check" name="pertinence" value="3" id="pertinence3">
+                                                <label class="btn btn-outline-secondary" for="pertinence3">3</label>
+                                                
+                                                <input type="radio" class="btn-check" name="pertinence" value="4" id="pertinence4">
+                                                <label class="btn btn-outline-secondary" for="pertinence4">4</label>
+                                                
+                                                <input type="radio" class="btn-check" name="pertinence" value="5" id="pertinence5">
+                                                <label class="btn btn-outline-secondary" for="pertinence5">5</label>
+                                            </div>
+                                        </div>
+                                        <div class="rating-labels mt-2">
+                                            <small class="text-muted">
+                                                <span class="me-3">1 = Pas pertinent</span>
+                                                <span class="me-3">3 = Assez pertinent</span>
+                                                <span>5 = Très pertinent</span>
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <!-- Suggestions et commentaires -->
+                                    <div class="form-group mb-4">
+                                        <label for="suggestion" class="form-label fw-bold">
+                                            <i class="fas fa-comment text-primary"></i> 
+                                            Suggestions et commentaires
+                                        </label>
+                                        <textarea 
+                                            name="suggestion" 
+                                            id="suggestion" 
+                                            class="form-control" 
+                                            rows="4" 
+                                            placeholder="Partagez vos suggestions d'amélioration, vos impressions et vos commentaires sur cette formation..."
+                                        ></textarea>
+                                        <small class="form-text text-muted">
+                                            Vos suggestions nous aident à améliorer nos formations
+                                        </small>
+                                    </div>
+
+                                    <!-- Boutons d'action -->
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn btn-primary btn-lg">
+                                            <i class="fas fa-paper-plane"></i> 
+                                            Envoyer l'Évaluation
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions supplémentaires -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">
+                                <i class="fas fa-cogs text-secondary"></i> 
+                                Actions Disponibles
+                            </h4>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 mb-2">
+                                        <a href="{{ path('user_session_evaluation_show', {'id': session.id}) }}" class="btn btn-outline-info btn-block">
+                                            <i class="fas fa-eye"></i> 
+                                            Voir Mon Évaluation
+                                        </a>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <a href="{{ path('user_session_certificat', {'id': session.id}) }}" class="btn btn-outline-success btn-block">
+                                            <i class="fas fa-certificate"></i> 
+                                            Télécharger Certificat
+                                        </a>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <a href="{{ path('user_session_feedback', {'id': session.id}) }}" class="btn btn-outline-warning btn-block">
+                                            <i class="fas fa-comment-dots"></i> 
+                                            Donner un Feedback
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Styles personnalisés pour les boutons de notation -->
+<style>
+.rating-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-group {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-check {
+    display: none;
+}
+
+.btn-outline-secondary {
+    font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    min-width: 50px;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #e9ecef;
+    border-color: #ced4da;
+    transform: translateY(-2px);
+}
+
+.btn-check:checked + .btn-outline-secondary {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #212529;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(255, 193, 7, 0.3);
+}
+
+.rating-labels {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.form-actions {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.btn-lg {
+    padding: 12px 30px;
+    font-size: 1.1rem;
+}
+</style>
+
+<!-- JavaScript pour les boutons de notation -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('✅ Système de notation par boutons initialisé !');
+    
+    // Ajouter des effets visuels pour les boutons cochés
+    const allButtons = document.querySelectorAll('.btn-check');
+    allButtons.forEach(button => {
+        button.addEventListener('change', function() {
+            if (this.checked) {
+                console.log(`🎯 Bouton sélectionné: ${this.name} = ${this.value}`);
+            }
+        });
+    });
+});
+</script>
+<!-- END: content-->
+
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+
+
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/extensions/jquery.knob.min.js"></script>
+    <script src="../../../app-assets/js/scripts/extensions/knob.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/raphael-min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/morris.min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/jvector/jquery-jvectormap-2.0.3.min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/jvector/jquery-jvectormap-world-mill.js"></script>
+    <script src="../../../app-assets/data/jvector/visitor-data.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/chart.min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/jquery.sparkline.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/unslider-min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-climacon.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/fonts/simple-line-icons/style.min.css">
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="../../../app-assets/js/core/app-menu.js"></script>
+    <script src="../../../app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/pages/dashboard-analytics.js"></script>
+    <!-- END: Page JS-->
+
+</body>
+<!-- END: Body-->
+
+</html>

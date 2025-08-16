@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="fr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   
+    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/jquery-jvectormap-2.0.3.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/morris.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/unslider.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/weather-icons/climacons.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
+    <!-- END: Theme CSS-->
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-overlay-menu.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-gradient.css">
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
+    
+    <!-- CSS personnalisé pour le design des modals -->
+    <style>
+        .notification-content-box {
+            background: white;
+            border: 2px solid #17a2b8;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+        
+        .notification-subtitle {
+            color: #333;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .field-item {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+        
+        .field-label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .field-value {
+            color: #333;
+            font-size: 14px;
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            border-left: 3px solid #17a2b8;
+        }
+        
+        .destinataire-label {
+            color: #28a745;
+        }
+        
+        .type-label {
+            color: #17a2b8;
+        }
+        
+        .titre-label {
+            color: #28a745;
+        }
+        
+        .message-label {
+            color: #fd7e14;
+        }
+        
+        .notification-details h6 {
+            color: #17a2b8;
+            font-weight: 600;
+        }
+        
+        .notification-details .icon-bell {
+            color: #17a2b8;
+            margin-right: 8px;
+        }
+        
+        .field-label i {
+            margin-right: 5px;
+        }
+        
+        .modal-content {
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .modal-header {
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            border-radius: 12px 12px 0 0;
+        }
+        
+        .modal-title {
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .modal-body {
+            padding: 25px;
+        }
+    </style>
+    <!-- END: Custom CSS-->
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-overlay-menu 2-columns   fixed-navbar" data-open="click" data-menu="vertical-overlay-menu" data-col="2-columns">
+{% include 'Admin/navBar.html.twig' %}
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-md-6 col-12 mb-2">
+                <h3 class="content-header-title">Logs d'Audit</h3>
+            </div>
+        </div>
+
+        <div class="content-body">
+            <!-- Lignes d'espace pour aérer avant le tableau -->
+            <div style="height: 40px;"></div>
+            
+            <!-- Tableau des logs -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Liste des Logs d'Audit</h4>
+                            <div class="heading-elements">
+                                <span class="badge badge-info">{{ audit_logs|length }} logs trouvés</span>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body">
+                                {% if audit_logs is empty %}
+                                    <div class="text-center py-4">
+                                        <i class="icon-file-text font-large-2 text-muted"></i>
+                                        <h5 class="mt-2">Aucun log d'audit</h5>
+                                        <p class="text-muted">Aucun log d'audit n'est enregistré pour le moment.</p>
+                                    </div>
+                                {% else %}
+                                    <div class="table-responsive">
+                                        <table class="table table-hover" id="auditLogsTable">
+                                            <thead>
+                                                <tr>
+                                                    <th><i class="icon-activity"></i> Action</th>
+                                                    <th><i class="icon-user"></i> Utilisateur</th>
+                                                    <th><i class="icon-edit"></i> Changements</th>
+                                                    <th><i class="icon-calendar"></i> Date</th>
+                                                    <th><i class="icon-settings"></i> Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for audit_log in audit_logs %}
+                                                    <tr class="audit-log-row">
+                                                                                                                 <td>
+                                                             <span class="text-dark">
+                                                                 {{ audit_log.action|split('(')|first }}
+                                                             </span>
+                                                         </td>
+                                                                                                                 <td>
+                                                             {% if audit_log.user %}
+                                                                 <div>
+                                                                     <strong>{{ audit_log.user.nom }} {{ audit_log.user.prenom }}</strong><br>
+                                                                     <small class="text-muted">{{ audit_log.user.email }}</small>
+                                                                 </div>
+                                                             {% else %}
+                                                                 <span class="text-muted"><i class="icon-user-x"></i> Utilisateur supprimé</span>
+                                                             {% endif %}
+                                                         </td>
+                                                        <td>
+                                                                                                                            {% if 'notification' in audit_log.action|lower %}
+                                                                    <!-- Affichage spécial pour les notifications -->
+                                                                    <button type="button" class="btn btn-sm btn-outline-info" 
+                                                                            data-toggle="modal" 
+                                                                            data-target="#modalDiff{{ audit_log.id }}">
+                                                                        <i class="icon-bell"></i> Voir notification
+                                                                    </button>
+                                                                {% elseif 'acceptation' in audit_log.action|lower %}
+                                                                    <!-- Affichage spécial pour les acceptations -->
+                                                                    <button type="button" class="btn btn-sm btn-outline-success" 
+                                                                            data-toggle="modal" 
+                                                                            data-target="#modalDiff{{ audit_log.id }}">
+                                                                        <i class="icon-check-circle"></i> Voir acceptation
+                                                                    </button>
+                                                            {% elseif audit_log.action == 'CREATE' or 'création' in audit_log.action|lower or 'création' in audit_log.action or 'réservation' in audit_log.action|lower %}
+                                                                    <!-- Création : toujours afficher un bouton -->
+                                                                    <button type="button" class="btn btn-sm btn-outline-success" 
+                                                                            data-toggle="modal" 
+                                                                            data-target="#modalDiff{{ audit_log.id }}">
+                                                                        <i class="icon-plus-circle"></i> Voir détails
+                                                                    </button>
+                                                                {% elseif audit_log.action == 'DELETE' %}
+                                                                    <!-- Suppression : toujours afficher "Supprimé" -->
+                                                                    <span class="text-danger"><i class="icon-trash"></i> Supprimé</span>
+                                                                                                                                    {% elseif audit_log.action == 'UPDATE' %}
+                                                                    <!-- Modification : afficher selon les valeurs -->
+                                                                    {% if audit_log.valeurAvant and audit_log.valeurApres %}
+                                                                        {% if audit_log.valeurAvant != audit_log.valeurApres %}
+                                                                            <button type="button" class="btn btn-sm btn-outline-warning" 
+                                                                                    data-toggle="modal" 
+                                                                                    data-target="#modalDiff{{ audit_log.id }}">
+                                                                                <i class="icon-edit"></i> Voir changements
+                                                                            </button>
+                                                                        {% else %}
+                                                                            <span class="text-muted"><i class="icon-minus"></i> Aucun changement</span>
+                                                                        {% endif %}
+                                                                    {% else %}
+                                                                        <span class="text-muted">-</span>
+                                                                    {% endif %}
+                                                                {% else %}
+                                                                    <!-- Autres cas : afficher selon les valeurs -->
+                                                                    {% if audit_log.valeurAvant and audit_log.valeurApres %}
+                                                                        {% if audit_log.valeurAvant != audit_log.valeurApres %}
+                                                                            <button type="button" class="btn btn-sm btn-outline-warning" 
+                                                                                    data-toggle="modal" 
+                                                                                    data-target="#modalDiff{{ audit_log.id }}">
+                                                                                <i class="icon-edit"></i> Voir changements
+                                                                            </button>
+                                                                        {% else %}
+                                                                            <span class="text-muted"><i class="icon-minus"></i> Aucun changement</span>
+                                                                        {% endif %}
+                                                                    {% else %}
+                                                                        <span class="text-muted">-</span>
+                                                                {% endif %}
+                                                            {% endif %}
+                                                        </td>
+                                                                                                                 <td>
+                                                             {{ audit_log.horodatage|date('d/m/Y H:i:s') }}
+                                                         </td>
+                                                        <td>
+                                                            <div class="btn-group" role="group">
+                                                                {% if 'notification' in audit_log.action|lower or 'acceptation' in audit_log.action|lower or audit_log.action == 'CREATE' or 'création' in audit_log.action|lower or 'création' in audit_log.action or 'réservation' in audit_log.action|lower or (audit_log.valeurAvant and audit_log.valeurApres and audit_log.valeurAvant != audit_log.valeurApres) %}
+                                                                    <button type="button" class="btn btn-sm btn-primary" 
+                                                                            data-toggle="modal" 
+                                                                            data-target="#modalDiff{{ audit_log.id }}"
+                                                                            title="Voir les détails">
+                                                                        <i class="icon-eye"></i>
+                                                                    </button>
+                                                                {% endif %}
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                    <!-- Modal pour différences -->
+                                                    {% if 'notification' in audit_log.action|lower or 'acceptation' in audit_log.action|lower or audit_log.action == 'CREATE' or 'création' in audit_log.action|lower or 'création' in audit_log.action or 'réservation' in audit_log.action|lower or (audit_log.valeurAvant and audit_log.valeurApres and audit_log.valeurAvant != audit_log.valeurApres) %}
+                                                    <div class="modal fade" id="modalDiff{{ audit_log.id }}" tabindex="-1">
+                                                        <div class="modal-dialog modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title">
+                                                                        <i class="icon-file-text"></i> 
+                                                                        Changements - Audit Log #{{ audit_log.id }}
+                                                                    </h5>
+                                                                    <button type="button" class="close" data-dismiss="modal">
+                                                                        <span>&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                                       {% if 'notification' in audit_log.action|lower %}
+                                                                                           <!-- Affichage spécial pour les notifications -->
+                                                                                           <div class="notification-details">
+                                                                            <h6 class="text-info mb-3">
+                                                                                                   <i class="icon-bell"></i> Détails de la notification
+                                                                                               </h6>
+                                                                            {% if audit_log.valeurApres %}
+                                                                                {% set notificationData = audit_log.valeurApres|replace({'"': '', '{': '', '}': ''})|split(',') %}
+                                                                                {% if notificationData is not empty %}
+                                                                                    <div class="notification-content-box">
+                                                                                        <h6 class="notification-subtitle mb-3">Détails de la notification :</h6>
+                                                                                               <div class="row">
+                                                                                            {% set destinataire = '' %}
+                                                                                            {% set type = '' %}
+                                                                                            {% set titre = '' %}
+                                                                                            {% set message = '' %}
+                                                                                            {% set formation_id = '' %}
+                                                                                            {% set session_id = '' %}
+                                                                                            
+                                                                                            {% for item in notificationData %}
+                                                                                                {% if ':' in item %}
+                                                                                                    {% set parts = item|split(':') %}
+                                                                                                    {% if parts|length >= 2 %}
+                                                                                                       {% set key = parts[0]|trim %}
+                                                                                                       {% set value = parts[1]|trim %}
+                                                                                                        {% if value != 'null' %}
+                                                                                                            {% if 'destinataire' in key|lower %}
+                                                                                                                {% set destinataire = value %}
+                                                                                                            {% elseif 'type' in key|lower %}
+                                                                                                                {% set type = value %}
+                                                                                                            {% elseif 'titre' in key|lower %}
+                                                                                                                {% set titre = value %}
+                                                                                                            {% elseif 'message' in key|lower %}
+                                                                                                                {% set message = value %}
+                                                                                                            {% elseif 'formation' in key|lower and 'id' in key|lower %}
+                                                                                                                {% set formation_id = value %}
+                                                                                                            {% elseif 'session' in key|lower and 'id' in key|lower %}
+                                                                                                                {% set session_id = value %}
+                                                                                                            {% endif %}
+                                                                                                        {% endif %}
+                                                                                                       {% endif %}
+                                                                                                   {% endif %}
+                                                                                               {% endfor %}
+                                                                                                   
+                                                                                            <!-- Première ligne : Destinataire et Type -->
+                                                                                            <div class="col-md-6 mb-3">
+                                                                                                <div class="field-item">
+                                                                                                    <span class="field-label destinataire-label">{{ 'Destinataire'|title }} :</span>
+                                                                                                    <span class="field-value">{{ destinataire }}</span>
+                                                                                               </div>
+                                                                                           </div>
+                                                                                            <div class="col-md-6 mb-3">
+                                                                                                <div class="field-item">
+                                                                                                    <span class="field-label type-label">
+                                                                                                        <i class="icon-tag"></i> {{ 'Type'|title }} :
+                                                                                                    </span>
+                                                                                                    <span class="field-value">{{ type }}</span>
+                                                                                                   </div>
+                                                                                               </div>
+                                                                                               
+                                                                                            <!-- Deuxième ligne : Titre -->
+                                                                                            <div class="col-12 mb-3">
+                                                                                                <div class="field-item">
+                                                                                                    <span class="field-label titre-label">{{ 'Titre'|title }} :</span>
+                                                                                                    <span class="field-value">{{ titre }}</span>
+                                                                                                  </div>
+                                                                                              </div>
+                                                                                            
+                                                                                            <!-- Troisième ligne : Message -->
+                                                                                            <div class="col-12 mb-3">
+                                                                                                <div class="field-item">
+                                                                                                    <span class="field-label message-label">{{ 'Message'|title }} :</span>
+                                                                                                    <span class="field-value">{{ message }}</span>
+                                                                                   </div>
+                                                                               </div>
+                                                                                            
+                                                                                            <!-- Quatrième ligne : Formation ID et Session ID -->
+                                                                                            <div class="col-md-6 mb-3">
+                                                                                                <div class="field-item">
+                                                                                                    <span class="field-label">{{ 'Formation ID'|title }} :</span>
+                                                                                                    <span class="field-value">{{ formation_id }}</span>
+                                                                                   </div>
+                                                                               </div>
+                                                                                            <div class="col-md-6 mb-3">
+                                                                                                <div class="field-item">
+                                                                                                    <div class="field-item">
+                                                                                                        <span class="field-label">
+                                                                                                            <i class="icon-calendar"></i> {{ 'Session ID'|title }} :
+                                                                                                        </span>
+                                                                                                        <span class="field-value">{{ session_id }}</span>
+                                                                                           </div>
+                                                                                       </div>
+                                                                                   </div>
+                                                                               </div>
+                                                                           </div>
+                                                                       {% else %}
+                                                                                    <div class="text-muted">
+                                                                                        <i class="icon-info"></i> Données de notification non disponibles
+                                                                                    </div>
+                                                                                {% endif %}
+                                                                            {% else %}
+                                                                                <div class="text-muted">
+                                                                                    <i class="icon-info"></i> Aucune donnée de notification disponible
+                                                                                </div>
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    {% elseif 'acceptation' in audit_log.action|lower %}
+                                                                        <!-- Affichage spécial pour les acceptations -->
+                                                                        <div class="acceptation-details">
+                                                                            <h6 class="text-success mb-3">
+                                                                                <i class="icon-check-circle"></i> Détails de l'acceptation
+                                                                            </h6>
+                                                                            {% if audit_log.valeurApres %}
+                                                                                {% set acceptationData = audit_log.valeurApres|replace({'"': '', '{': '', '}': ''})|split(',') %}
+                                                                                {% if acceptationData is not empty %}
+                                                                                    <div class="notification-content-box">
+                                                                                        <h6 class="notification-subtitle mb-3">Détails de l'acceptation :</h6>
+                                                                                        <div class="row">
+                                                                                            {% set destinataire = '' %}
+                                                                                            {% set type = '' %}
+                                                                                            {% set titre = '' %}
+                                                                                            {% set message = '' %}
+                                                                                            {% set formation_id = '' %}
+                                                                                            {% set session_id = '' %}
+                                                                                            
+                                                                                            {% for item in acceptationData %}
+                                                                                                {% if ':' in item %}
+                                                                                                    {% set parts = item|split(':') %}
+                                                                                                    {% if parts|length >= 2 %}
+                                                                                                        {% set key = parts[0]|trim %}
+                                                                                                        {% set value = parts[1]|trim %}
+                                                                                                        {% if value != 'null' %}
+                                                                                                            {% if 'destinataire' in key|lower %}
+                                                                                                                {% set destinataire = value %}
+                                                                                                            {% elseif 'type' in key|lower %}
+                                                                                                                {% set type = value %}
+                                                                                                            {% elseif 'titre' in key|lower %}
+                                                                                                                {% set titre = value %}
+                                                                                                            {% elseif 'message' in key|lower %}
+                                                                                                                {% set message = value %}
+                                                                                                            {% elseif 'formation' in key|lower and 'id' in key|lower %}
+                                                                                                                {% set formation_id = value %}
+                                                                                                            {% elseif 'session' in key|lower and 'id' in key|lower %}
+                                                                                                                {% set session_id = value %}
+                                                                                                            {% endif %}
+                                                                                                        {% endif %}
+                                                                                                    {% endif %}
+                                                                                                {% endif %}
+                                                                                            {% endfor %}
+                                                                                            
+                                                                                            <!-- Première ligne : Destinataire et Type -->
+                                                                                            <div class="col-md-6 mb-3">
+                                                                                                <div class="field-item">
+                                                                                                    <span class="field-label destinataire-label">{{ 'Destinataire'|title }} :</span>
+                                                                                                    <span class="field-value">{{ destinataire }}</span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-6 mb-3">
+                                                                                                <div class="field-item">
+                                                                                                    <span class="field-label type-label">
+                                                                                                        <i class="icon-tag"></i> {{ 'Type'|title }} :
+                                                                                                    </span>
+                                                                                                    <span class="field-value">{{ type }}</span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            
+                                                                                            <!-- Deuxième ligne : Titre -->
+                                                                                            <div class="col-12 mb-3">
+                                                                                                <div class="field-item">
+                                                                                                    <span class="field-label titre-label">{{ 'Titre'|title }} :</span>
+                                                                                                    <span class="field-value">{{ titre }}</span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            
+                                                                                            <!-- Troisième ligne : Message -->
+                                                                                            <div class="col-12 mb-3">
+                                                                                                <div class="field-item">
+                                                                                                    <span class="field-label message-label">{{ 'Message'|title }} :</span>
+                                                                                                    <span class="field-value">{{ message }}</span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            
+                                                                                            <!-- Quatrième ligne : Formation ID et Session ID -->
+                                                                                            <div class="col-md-6 mb-3">
+                                                                                                <div class="field-item">
+                                                                                                    <span class="field-label">{{ 'Formation ID'|title }} :</span>
+                                                                                                    <span class="field-value">{{ formation_id }}</span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-6 mb-3">
+                                                                                                <div class="field-item">
+                                                                                                    <span class="field-label">
+                                                                                                        <i class="icon-calendar"></i> {{ 'Session ID'|title }} :
+                                                                                                    </span>
+                                                                                                    <span class="field-value">{{ session_id }}</span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                {% else %}
+                                                                                    <div class="text-muted">
+                                                                                        <i class="icon-info"></i> Données d'acceptation non disponibles
+                                                                                    </div>
+                                                                                {% endif %}
+                                                                            {% else %}
+                                                                                <div class="text-muted">
+                                                                                    <i class="icon-info"></i> Aucune donnée d'acceptation disponible
+                                                                                </div>
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    {% else %}
+                                                                        <!-- Affichage générique pour les autres types (créations, réservations, etc.) -->
+                                                                        <div class="generic-details">
+                                                                            <h6 class="text-primary mb-3">
+                                                                                <i class="icon-info"></i> Détails de l'action
+                                                                            </h6>
+                                                                            {% if audit_log.valeurApres %}
+                                                                                {% set genericData = audit_log.valeurApres|replace({'"': '', '{': '', '}': ''})|split(',') %}
+                                                                                {% if genericData is not empty %}
+                                                                                    <div class="notification-content-box">
+                                                                                        <h6 class="notification-subtitle mb-3">Détails de l'action :</h6>
+                                                                                        <div class="row">
+                                                                                            {% for item in genericData %}
+                                                                                                {% if ':' in item %}
+                                                                                                    {% set parts = item|split(':') %}
+                                                                                                    {% if parts|length >= 2 %}
+                                                                                                        {% set key = parts[0]|trim %}
+                                                                                                        {% set value = parts[1]|trim %}
+                                                                                                        {% if value != 'null' %}
+                                                                                                            <div class="col-md-6 mb-3">
+                                                                                                                <div class="field-item">
+                                                                                                                    <span class="field-label">{{ key|title }} :</span>
+                                                                                                                    <span class="field-value">{{ value }}</span>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        {% endif %}
+                                                                                                    {% endif %}
+                                                                                                {% endif %}
+                                                                                            {% endfor %}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                {% else %}
+                                                                                    <div class="text-muted">
+                                                                                        <i class="icon-info"></i> Aucune donnée disponible
+                                                                                    </div>
+                                                                                {% endif %}
+                                                                            {% else %}
+                                                                                <div class="text-muted">
+                                                                                    <i class="icon-info"></i> Aucune donnée disponible
+                                                                                </div>
+                                                                            {% endif %}
+                                                                        </div>
+                                                                       {% endif %}
+                                                               </div>
+                                                           </div>
+                                                       </div>
+                                                   </div>
+                                                   {% endif %}
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                {% endif %}
+
+                                <!-- Pagination -->
+                                {% if total_pages > 1 %}
+                                <nav aria-label="Pagination des audit logs" class="mt-3">
+                                    <ul class="pagination justify-content-center">
+                                        {% if current_page > 1 %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="{{ path('admin_audit_logs', {'page': current_page - 1}) }}">
+                                                    <i class="icon-chevron-left"></i> Précédent
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        
+                                        {% for page in 1..total_pages %}
+                                            {% if page == current_page %}
+                                                <li class="page-item active">
+                                                    <span class="page-link">{{ page }}</span>
+                                                </li>
+                                            {% else %}
+                                                <li class="page-item">
+                                                    <a class="page-link" href="{{ path('admin_audit_logs', {'page': page}) }}">{{ page }}</a>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+                                        
+                                        {% if current_page < total_pages %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="{{ path('admin_audit_logs', {'page': current_page + 1}) }}">
+                                                    Suivant <i class="icon-chevron-right"></i>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: content-->
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/extensions/jquery.knob.min.js"></script>
+    <script src="../../../app-assets/js/scripts/extensions/knob.js"></script>
+    <script src="../../../app-assets/js/charts/raphael-min.js"></script>
+    <script src="../../../app-assets/js/charts/morris.min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/jvector/jquery-jvectormap-2.0.3.min.js"></script>
+    <script src="../../../app-assets/js/charts/jvector/jquery-jvectormap-world-mill.js"></script>
+    <script src="../../../app-assets/data/jvector/visitor-data.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/chart.min.js"></script>
+    <script src="../../../app-assets/js/charts/jquery.sparkline.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/unslider-min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-climacon.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/fonts/simple-line-icons/style.min.css">
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="../../../app-assets/js/core/app-menu.js"></script>
+    <script src="../../../app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/pages/dashboard-analytics.js"></script>
+    <!-- END: Page JS-->
+
+</body>
+<!-- END: Body-->
+
+</html>

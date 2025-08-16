@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="fr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   
+    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/jquery-jvectormap-2.0.3.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/morris.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/unslider.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/weather-icons/climacons.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
+    <!-- END: Theme CSS-->
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-overlay-menu.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-gradient.css">
+    <!-- link(rel='stylesheet', type='text/css', href=app_assets_path+'/css'+rtl+'/pages/users.css')-->
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- END: Custom CSS-->
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-overlay-menu 2-columns   fixed-navbar" data-open="click" data-menu="vertical-overlay-menu" data-col="2-columns">
+{% include 'Admin/navBar.html.twig' %}
+
+  <!-- BEGIN: Content-->
+  
+  <div class="app-content content">
+    <div class="content-wrapper">
+      <div class="content-body">
+        <section id="salles">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title">Gestion des Salles</h4>
+                </div>
+                <div class="card-content collapse show">
+                  <div class="card-body card-dashboard">
+      <table class="table table-sm table-bordered mt-3 w-75 mx-auto">
+
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Nom</th>
+                          <th>Capacité</th>
+                          <th style="width: 100px;">
+                           <a href="#" id="btnAddSalle" class="text-success" title="Ajouter une salle" style="font-size: 1.5rem; font-weight: bold; cursor: pointer;">
+  <i class="fas fa-plus"></i>
+</a>
+
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody id="salleTableBody">
+                        <!-- Ligne ajout cachée au départ -->
+                        <tr id="addRow" style="display:none;">
+                          <td>--</td>
+                          <td><input type="text" id="inputNom" class="form-control form-control-sm" placeholder="Nom de la salle" /></td>
+                          <td><input type="number" id="inputCapacite" class="form-control form-control-sm" placeholder="Capacité" min="1" /></td>
+                          <td>
+<button id="btnConfirmAdd" class="btn p-0 m-0 text-success" title="Confirmer">
+  <i class="fas fa-check fa-lg"></i>
+</button>
+                            <i id="btnCancelAdd" class="fas fa-times text-danger" style="cursor: pointer; font-size: 1.3rem;" title="Annuler"></i>
+
+                          </td>
+                        </tr>
+                        <!-- Liste des salles -->
+                        {% for salle in salles %}
+                          <tr data-id="{{ salle.id }}">
+                            <td class="td-id">{{ salle.id }}</td>
+                            <td class="td-nom">{{ salle.nom }}</td>
+                            <td class="td-capacite">{{ salle.capacite }}</td>
+                            <td class="actions">
+                              <a href="#" title="Modifier" class="edit-btn" style="color: #1c60c7; text-decoration: none; cursor: pointer; margin-right: 10px;">
+                                <i class="fas fa-pencil-alt"></i>
+                              </a>
+                              <a href="#" title="Supprimer" class="delete-btn" style="color: #ff0000; text-decoration: none; cursor: pointer;">
+                                <i class="fas fa-trash-alt"></i>
+                              </a>
+                            </td>
+                          </tr>
+                        {% else %}
+                          <tr>
+                            <td colspan="4" class="text-center">Aucune salle trouvée</td>
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- BEGIN: Vendor JS-->
+  <script src="{{ asset('app-assets/vendors/js/vendors.min.js') }}"></script>
+  <!-- END: Vendor JS-->
+
+  <!-- BEGIN: Theme JS-->
+  <script src="{{ asset('app-assets/js/core/app-menu.js') }}"></script>
+  <script src="{{ asset('app-assets/js/core/app.js') }}"></script>
+  <!-- END: Theme JS-->
+
+  <!-- BEGIN: Page Vendor JS-->
+  <script src="../../../app-assets/vendors/js/extensions/jquery.knob.min.js"></script>
+  <script src="../../../app-assets/js/scripts/extensions/knob.js"></script>
+  <script src="../../../app-assets/vendors/js/charts/raphael-min.js"></script>
+  <script src="../../../app-assets/vendors/js/charts/morris.min.js"></script>
+  <script src="../../../app-assets/vendors/js/charts/jvector/jquery-jvectormap-2.0.3.min.js"></script>
+  <script src="../../../app-assets/vendors/js/charts/jvector/jquery-jvectormap-world-mill.js"></script>
+  <script src="../../../app-assets/data/jvector/visitor-data.js"></script>
+  <script src="../../../app-assets/vendors/js/charts/chart.min.js"></script>
+  <script src="../../../app-assets/vendors/js/charts/jquery.sparkline.min.js"></script>
+  <script src="../../../app-assets/vendors/js/extensions/unslider-min.js"></script>
+  <!-- END: Page Vendor JS-->
+
+  <!-- BEGIN: Page JS-->
+  <script src="../../../app-assets/js/scripts/pages/dashboard-analytics.js"></script>
+  <!-- END: Page JS-->
+
+  <!-- Script personnalisé encapsulé dans $(document).ready(...) -->
+  <script>
+  $(document).ready(function() {
+    const btnAddSalle = document.getElementById('btnAddSalle');
+    const addRow = document.getElementById('addRow');
+    const btnCancelAdd = document.getElementById('btnCancelAdd');
+    const btnConfirmAdd = document.getElementById('btnConfirmAdd');
+    const salleTableBody = document.getElementById('salleTableBody');
+
+    // Afficher la ligne d'ajout
+    btnAddSalle.addEventListener('click', () => {
+      addRow.style.display = 'table-row';
+      btnAddSalle.style.display = 'none';
+    });
+
+    // Annuler ajout
+    btnCancelAdd.addEventListener('click', () => {
+      addRow.style.display = 'none';
+      btnAddSalle.style.display = 'inline-block';
+      document.getElementById('inputNom').value = '';
+      document.getElementById('inputCapacite').value = '';
+    });
+
+    // Confirmer ajout
+    btnConfirmAdd.addEventListener('click', () => {
+      const nom = document.getElementById('inputNom').value.trim();
+      const capacite = document.getElementById('inputCapacite').value.trim();
+
+      if (!nom || !capacite) {
+        alert('Veuillez remplir tous les champs');
+        return;
+      }
+
+      fetch('{{ path('add_salle') }}', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+        body: new URLSearchParams({ nom: nom, capacite: capacite }),
+      })
+      .then(response => {
+        if (!response.ok) throw new Error('Erreur lors de l\'ajout');
+        return response.json();
+      })
+      .then(data => {
+        // Supprimer message "Aucune salle" si présent
+        const noDataRow = salleTableBody.querySelector('tr td[colspan="4"]');
+        if (noDataRow) noDataRow.parentElement.remove();
+
+        // Ajouter nouvelle ligne
+        const tr = document.createElement('tr');
+        tr.dataset.id = data.id;
+        tr.innerHTML = `
+          <td class="td-id">${data.id}</td>
+          <td class="td-nom">${data.nom}</td>
+          <td class="td-capacite">${data.capacite}</td>
+          <td class="actions">
+            <a href="#" title="Modifier" class="edit-btn" style="color: #1c60c7; cursor: pointer; margin-right: 10px;">
+              <i class="fas fa-pencil-alt"></i>
+            </a>
+            <a href="#" title="Supprimer" class="delete-btn" style="color: #ff0000; cursor: pointer;">
+              <i class="fas fa-trash-alt"></i>
+            </a>
+          </td>
+        `;
+        salleTableBody.appendChild(tr);
+
+        addRow.style.display = 'none';
+        btnAddSalle.style.display = 'inline-block';
+        document.getElementById('inputNom').value = '';
+        document.getElementById('inputCapacite').value = '';
+      })
+      .catch(err => alert(err.message));
+    });
+
+    // Gestion des événements sur le tableau : édition, annulation, sauvegarde, suppression
+    salleTableBody.addEventListener('click', (event) => {
+      const target = event.target.closest('a');
+      if (!target) return;
+
+      const tr = target.closest('tr');
+      if (!tr) return;
+
+      const id = tr.dataset.id;
+
+      // Éditer
+      if (target.classList.contains('edit-btn')) {
+        if (tr.classList.contains('editing')) return; // déjà en édition
+
+        tr.classList.add('editing');
+
+        const nom = tr.querySelector('.td-nom').textContent.trim();
+        const capacite = tr.querySelector('.td-capacite').textContent.trim();
+
+        tr.querySelector('.td-nom').innerHTML = `<input type="text" class="form-control form-control-sm edit-nom  style="width: 120px;"  value="${nom}" />`;
+        tr.querySelector('.td-capacite').innerHTML = `<input type="number" min="1" class="form-control form-control-sm edit-capacite  style="width: 120px;" value="${capacite}" />`;
+
+        tr.querySelector('.actions').innerHTML = `
+          <a href="#" class="save-btn" title="Valider" style="color: #28a745; cursor: pointer; margin-right: 10px;">
+            <i class="fas fa-check"></i>
+          </a>
+          <a href="#" class="cancel-btn" title="Annuler" style="color: #ff0000ff; cursor: pointer;">
+            <i class="fas fa-times"></i>
+          </a>
+        `;
+      }
+
+      // Annuler édition
+      else if (target.classList.contains('cancel-btn')) {
+        tr.classList.remove('editing');
+
+        // Récupérer valeurs d'origine via defaultValue
+        const nomInput = tr.querySelector('.edit-nom');
+        const capaciteInput = tr.querySelector('.edit-capacite');
+
+        const nom = nomInput.defaultValue;
+        const capacite = capaciteInput.defaultValue;
+
+        tr.querySelector('.td-nom').textContent = nom;
+        tr.querySelector('.td-capacite').textContent = capacite;
+
+        tr.querySelector('.actions').innerHTML = `
+          <a href="#" title="Modifier" class="edit-btn" style="color: #1c60c7; cursor: pointer; margin-right: 10px;">
+            <i class="fas fa-pencil-alt"></i>
+          </a>
+          <a href="#" title="Supprimer" class="delete-btn" style="color: #ff0000; cursor: pointer;">
+            <i class="fas fa-trash-alt"></i>
+          </a>
+        `;
+      }
+
+      // Sauvegarder édition
+      else if (target.classList.contains('save-btn')) {
+        const newNom = tr.querySelector('.edit-nom').value.trim();
+        const newCapacite = tr.querySelector('.edit-capacite').value.trim();
+
+        if (!newNom || !newCapacite) {
+          alert('Veuillez remplir tous les champs');
+          return;
+        }
+
+        fetch('{{ path('edit_salle') }}', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+          body: new URLSearchParams({ id: id, nom: newNom, capacite: newCapacite }),
+        })
+        .then(response => {
+          if (!response.ok) throw new Error('Erreur lors de la mise à jour');
+          return response.json();
+        })
+        .then(data => {
+          if(data.success){
+            tr.classList.remove('editing');
+            tr.querySelector('.td-nom').textContent = newNom;
+            tr.querySelector('.td-capacite').textContent = newCapacite;
+
+            tr.querySelector('.actions').innerHTML = `
+              <a href="#" title="Modifier" class="edit-btn" style="color: #1c60c7; cursor: pointer; margin-right: 10px;">
+                <i class="fas fa-pencil-alt fa-lg"></i>
+              </a>
+              <a href="#" title="Supprimer" class="delete-btn" style="color: #ff0000; cursor: pointer;">
+                <i class="fas fa-trash-alt"></i>
+              </a>
+            `;
+          } else {
+            alert('Erreur serveur: ' + (data.message || ''));
+          }
+        })
+        .catch(err => alert(err.message));
+      }
+
+      // Supprimer (optionnel, pas demandé, mais laissé ici prêt à être implémenté)
+      else if (target.classList.contains('delete-btn')) {
+        if(!confirm('Confirmez-vous la suppression ?')) return;
+
+        fetch('{{ path('delete_salle') }}', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+          body: new URLSearchParams({ id: id }),
+        })
+        .then(response => {
+          if (!response.ok) throw new Error('Erreur lors de la suppression');
+          return response.json();
+        })
+        .then(data => {
+          if(data.success){
+            tr.remove();
+            // Si plus aucune salle, afficher message
+            if(salleTableBody.querySelectorAll('tr').length === 0){
+              const trEmpty = document.createElement('tr');
+              trEmpty.innerHTML = '<td colspan="4" class="text-center">Aucune salle trouvée</td>';
+              salleTableBody.appendChild(trEmpty);
+            }
+          } else {
+            alert('Erreur serveur: ' + (data.message || ''));
+          }
+        })
+        .catch(err => alert(err.message));
+      }
+    });
+
+    // Réinitialiser le menu vertical après tous les scripts
+    if (typeof $.app !== "undefined" && $.app.menu && $.app.menu.init) {
+      $.app.menu.init();
+    }
+  });
+  </script>
+
+
+
+</body>
+<!-- END: Body-->
+
+</html>

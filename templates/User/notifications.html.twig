@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="fr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   
+    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/jquery-jvectormap-2.0.3.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/morris.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/unslider.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/weather-icons/climacons.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
+    <!-- END: Theme CSS-->
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-overlay-menu.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-gradient.css">
+    <!-- link(rel='stylesheet', type='text/css', href=app_assets_path+'/css'+rtl+'/pages/users.css')-->
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
+    <!-- END: Custom CSS-->
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-overlay-menu 2-columns   fixed-navbar" data-open="click" data-menu="vertical-overlay-menu" data-col="2-columns">
+{% include 'user/navBar.html.twig' %}
+
+  
+
+
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-md-6 col-12 mb-2">
+                <h3 class="content-header-title">Mes Notifications</h3>
+                <p class="text-muted">Consultez toutes vos notifications</p>
+            </div>
+            <div class="content-header-right col-md-6 col-12">
+                <div class="btn-group float-md-right" role="group">
+                    <button type="button" class="btn btn-primary" id="marquerToutesLues">
+                        <i class="icon-check"></i> Marquer toutes comme lues
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Liste des notifications</h4>
+                            <div class="card-tools">
+                                <span class="badge badge-info">{{ countNonLues }} non lues</span>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body">
+                                {% if notifications is empty %}
+                                    <div class="text-center py-4">
+                                        <i class="icon-bell font-large-2 text-muted"></i>
+                                        <h5 class="mt-2">Aucune notification</h5>
+                                        <p class="text-muted">Vous n'avez aucune notification pour le moment.</p>
+                                    </div>
+                                {% else %}
+                                    <div class="list-group">
+                                        {% for notification in notifications %}
+                                            <div class="list-group-item list-group-item-action {% if not notification.lu %}list-group-item-warning{% endif %}">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h6 class="mb-1">{{ notification.titre }}</h6>
+                                                    <small class="text-muted">{{ notification.dateCreation|date('d/m/Y H:i') }}</small>
+                                                </div>
+                                                <p class="mb-1">{{ notification.message }}</p>
+                                                <div class="mt-2">
+                                                    {% if not notification.lu %}
+                                                        <button class="btn btn-sm btn-outline-primary marquer-lue" data-id="{{ notification.id }}">
+                                                            <i class="icon-check"></i> Marquer comme lue
+                                                        </button>
+                                                    {% else %}
+                                                        <span class="badge badge-success">Lue</span>
+                                                    {% endif %}
+                                                    
+                                                    {% if notification.type == 'inscription' and notification.session %}
+                                                        {% set inscription = null %}
+                                                        {% for userInscription in user.inscriptions %}
+                                                            {% if userInscription.session.id == notification.session.id %}
+                                                                {% set inscription = userInscription %}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        {% if inscription %}
+                                                            <a href="{{ path('user_inscription_details', {'id': inscription.id}) }}" class="btn btn-sm btn-outline-info ml-2">
+                                                                <i class="icon-eye"></i> Voir détails
+                                                            </a>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                    
+                                                    {% if notification.type == 'session_terminee' and notification.session %}
+                                                        {% set evaluation = null %}
+                                                        {% for eval in user.evaluations %}
+                                                            {% if eval.session.id == notification.session.id %}
+                                                                {% set evaluation = eval %}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        {% if evaluation %}
+                                                            <a href="{{ path('user_session_evaluation_show', {'id': notification.session.id}) }}" class="btn btn-sm btn-outline-info ml-2">
+                                                                <i class="fas fa-eye"></i> Voir évaluation
+                                                            </a>
+                                                        {% else %}
+                                                            <a href="{{ path('user_session_evaluation', {'id': notification.session.id}) }}" class="btn btn-sm btn-outline-warning ml-2">
+                                                                <i class="fas fa-star"></i> Évaluer la session
+                                                            </a>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                    
+                                                    {% if notification.type == 'session' and notification.session %}
+                                                        {% set evaluation = null %}
+                                                        {% for eval in user.evaluations %}
+                                                            {% if eval.session.id == notification.session.id %}
+                                                                {% set evaluation = eval %}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        {% if evaluation %}
+                                                            <a href="{{ path('user_session_evaluation_show', {'id': notification.session.id}) }}" class="btn btn-sm btn-outline-info ml-2">
+                                                                <i class="fas fa-eye"></i> Voir évaluation
+                                                            </a>
+                                                        {% else %}
+                                                            <a href="{{ path('user_session_evaluation', {'id': notification.session.id}) }}" class="btn btn-sm btn-outline-warning ml-2">
+                                                                <i class="fas fa-star"></i> Évaluer la session
+                                                            </a>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                    
+                                                    {% if notification.type == 'evaluation_reminder' and notification.session %}
+                                                        {% set evaluation = null %}
+                                                        {% for eval in user.evaluations %}
+                                                            {% if eval.session.id == notification.session.id %}
+                                                                {% set evaluation = eval %}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        {% if evaluation %}
+                                                            <a href="{{ path('user_session_evaluation_show', {'id': notification.session.id}) }}" class="btn btn-sm btn-outline-info ml-2">
+                                                                <i class="fas fa-eye"></i> Voir évaluation
+                                                            </a>
+                                                        {% else %}
+                                                            <a href="{{ path('user_session_evaluation', {'id': notification.session.id}) }}" class="btn btn-sm btn-outline-warning ml-2">
+                                                                <i class="fas fa-star"></i> Évaluer la session
+                                                            </a>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                    
+                                                    {% if notification.type == 'session_terminee_avancee' and notification.session %}
+                                                        {% set evaluation = null %}
+                                                        {% for eval in user.evaluations %}
+                                                            {% if eval.session.id == notification.session.id %}
+                                                                {% set evaluation = eval %}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        {% if evaluation %}
+                                                            <a href="{{ path('user_session_evaluation_show', {'id': notification.session.id}) }}" class="btn btn-sm btn-outline-info ml-2">
+                                                                <i class="fas fa-eye"></i> Voir évaluation
+                                                            </a>
+                                                        {% else %}
+                                                            <a href="{{ path('user_session_evaluation', {'id': notification.session.id}) }}" class="btn btn-sm btn-outline-warning ml-2">
+                                                                <i class="fas fa-star"></i> Évaluer la session
+                                                            </a>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- END: content-->
+
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+
+
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/extensions/jquery.knob.min.js"></script>
+    <script src="../../../app-assets/js/scripts/extensions/knob.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/raphael-min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/morris.min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/jvector/jquery-jvectormap-2.0.3.min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/jvector/jquery-jvectormap-world-mill.js"></script>
+    <script src="../../../app-assets/data/jvector/visitor-data.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/chart.min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/jquery.sparkline.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/unslider-min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-climacon.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/fonts/simple-line-icons/style.min.css">
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="../../../app-assets/js/core/app-menu.js"></script>
+    <script src="../../../app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/pages/dashboard-analytics.js"></script>
+    <!-- END: Page JS-->
+
+
+
+</body>
+<!-- END: Body-->
+
+</html>

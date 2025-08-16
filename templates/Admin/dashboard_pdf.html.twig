@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Formations - Rapport PDF</title>
+    <style>
+        @page {
+            margin: 2cm;
+            size: A4;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            font-size: 12px;
+            line-height: 1.4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Supprimer les icônes automatiques de Bootstrap */
+        abbr[title]::after,
+        abbr[data-original-title]::after {
+            content: none !important;
+        }
+        
+        /* S'assurer que le titre s'affiche correctement */
+        .main-title {
+            color: #007bff;
+            font-size: 28px;
+            margin: 0 0 10px 0;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        .main-title::before,
+        .main-title::after {
+            content: none !important;
+        }
+        
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .header .subtitle {
+            color: #666;
+            font-size: 16px;
+            margin: 0;
+        }
+        
+        .header .date {
+            color: #999;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            page-break-inside: avoid;
+        }
+        
+        .section-title {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .stat-card .value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 8px;
+        }
+        
+        .stat-card .label {
+            font-size: 14px;
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .stat-card .trend {
+            font-size: 12px;
+            margin-top: 8px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+        
+        .trend.positive {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .trend.negative {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .trend.neutral {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+        
+        .table-container {
+            margin: 20px 0;
+        }
+        
+        .table-title {
+            color: #495057;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-left: 4px solid #007bff;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        /* Supprimer les points d'interrogation des titres de tableaux */
+        .table-title::before,
+        .table-title::after {
+            content: none !important;
+        }
+        
+        /* Supprimer tous les points d'interrogation automatiques */
+        h3::before,
+        h3::after,
+        .table-title::before,
+        .table-title::after {
+            content: none !important;
+        }
+        
+        /* Règles CSS ultra-agressives pour supprimer TOUT contenu automatique */
+        *::before,
+        *::after {
+            content: none !important;
+        }
+        
+        /* Supprimer spécifiquement les icônes d'aide et de question */
+        abbr::after,
+        abbr::before,
+        [title]::after,
+        [title]::before,
+        [data-original-title]::after,
+        [data-original-title]::before {
+            content: none !important;
+        }
+        
+        /* Forcer l'affichage sans icônes */
+        .table-title {
+            content: none !important;
+        }
+        
+        .table-title *::before,
+        .table-title *::after {
+            content: none !important;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .data-table th {
+            background: linear-gradient(135deg, #6c757d, #495057);
+            color: white;
+            padding: 12px 8px;
+            text-align: left;
+            font-weight: bold;
+            font-size: 13px;
+        }
+        
+        .data-table td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #dee2e6;
+            font-size: 12px;
+        }
+        
+        .data-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .data-table tr:hover {
+            background-color: #e9ecef;
+        }
+        
+        .progress-bar {
+            background: #e9ecef;
+            border-radius: 10px;
+            height: 20px;
+            overflow: hidden;
+            margin: 5px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-fill.excellent { background: linear-gradient(90deg, #28a745, #20c997); }
+        .progress-fill.good { background: linear-gradient(90deg, #ffc107, #fd7e14); }
+        .progress-fill.poor { background: linear-gradient(90deg, #dc3545, #e83e8c); }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .highlight-box h3 {
+            color: #856404;
+            margin: 0 0 15px 0;
+            font-size: 20px;
+        }
+        
+        .highlight-box .highlight-value {
+            font-size: 36px;
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .highlight-box .highlight-description {
+            color: #856404;
+            font-size: 14px;
+        }
+        
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #dee2e6;
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+        }
+        
+        .page-break {
+            page-break-before: always;
+        }
+        
+        .chart-placeholder {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            color: #666;
+            margin: 20px 0;
+        }
+        
+        .chart-placeholder h4 {
+            margin: 0 0 10px 0;
+            color: #495057;
+        }
+        
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #dee2e6;
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <!-- En-tête -->
+    <div class="header">
+        <div class="main-title">📊 Dashboard des Formations</div>
+        <p class="subtitle">Rapport d'analyse et de statistiques</p>
+        <p class="date">Généré le {{ dateExport|date('d/m/Y à H:i') }}</p>
+    </div>
+
+    <!-- Section 1: Vue d'ensemble -->
+    <div class="section">
+        <h2 class="section-title">🎯 Vue d'ensemble</h2>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="value">{{ globalStats.totalFormations }}</div>
+                <div class="label">Total Formations</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="value">{{ globalStats.totalUsers }}</div>
+                <div class="label">Total Utilisateurs</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="value">{{ globalStats.tauxParticipation }}%</div>
+                <div class="label">Taux de Participation</div>
+                <div class="trend {% if globalStats.tauxParticipation >= 70 %}positive{% elseif globalStats.tauxParticipation >= 40 %}neutral{% else %}negative{% endif %}">
+                    {% if globalStats.tauxParticipation >= 70 %}Excellent{% elseif globalStats.tauxParticipation >= 40 %}Bon{% else %}À améliorer{% endif %}
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="value">{{ globalStats.tauxSatisfaction }}/5</div>
+                <div class="label">Satisfaction Moyenne</div>
+                <div class="trend {% if globalStats.tauxSatisfaction >= 4 %}positive{% elseif globalStats.tauxSatisfaction >= 3 %}neutral{% else %}negative{% endif %}">
+                    {% if globalStats.tauxSatisfaction >= 4 %}Excellent{% elseif globalStats.tauxSatisfaction >= 3 %}Bon{% else %}À améliorer{% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 2: Statistiques avancées -->
+    <div class="section">
+        <h2 class="section-title">📈 Statistiques avancées</h2>
+        
+        <div class="highlight-box">
+            <h3>🏆 Mois le plus actif</h3>
+            <div class="highlight-value">
+                {% if calculsAvances.moisPlusActif and calculsAvances.moisPlusActif.month %}
+                    {{ calculsAvances.moisPlusActif.month }}
+                {% else %}
+                    Aucun
+                {% endif %}
+            </div>
+            <div class="highlight-description">
+                {% if calculsAvances.moisPlusActif and calculsAvances.moisPlusActif.formations %}
+                    {{ calculsAvances.moisPlusActif.formations }} formations créées
+                {% else %}
+                    Aucune formation
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="value">{{ calculsAvances.croissanceFormations }}%</div>
+                <div class="label">Croissance Formations</div>
+                <div class="trend {% if calculsAvances.croissanceFormations > 0 %}positive{% elseif calculsAvances.croissanceFormations < 0 %}negative{% else %}neutral{% endif %}">
+                    {% if calculsAvances.croissanceFormations > 0 %}↗ Hausse{% elseif calculsAvances.croissanceFormations < 0 %}↘ Baisse{% else %}→ Stable{% endif %}
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="value">{{ calculsAvances.croissanceParticipants }}%</div>
+                <div class="label">Croissance Participants</div>
+                <div class="trend {% if calculsAvances.croissanceParticipants > 0 %}positive{% elseif calculsAvances.croissanceParticipants < 0 %}negative{% else %}neutral{% endif %}">
+                    {% if calculsAvances.croissanceParticipants > 0 %}↗ Hausse{% elseif calculsAvances.croissanceParticipants < 0 %}↘ Baisse{% else %}→ Stable{% endif %}
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="value">{{ calculsAvances.efficaciteFormation }}%</div>
+                <div class="label">Efficacité Formation</div>
+                <div class="trend {% if calculsAvances.efficaciteFormation >= 50 %}positive{% elseif calculsAvances.efficaciteFormation >= 25 %}neutral{% else %}negative{% endif %}">
+                    {% if calculsAvances.efficaciteFormation >= 50 %}Élevée{% elseif calculsAvances.efficaciteFormation >= 25 %}Moyenne{% else %}Faible{% endif %}
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="value">{{ calculsAvances.moyenneSatisfaction }}/5</div>
+                <div class="label">Satisfaction Moyenne</div>
+                <div class="trend {% if calculsAvances.moyenneSatisfaction >= 4 %}positive{% elseif calculsAvances.moyenneSatisfaction >= 3 %}neutral{% else %}negative{% endif %}">
+                    {% if calculsAvances.moyenneSatisfaction >= 4 %}Excellent{% elseif calculsAvances.moyenneSatisfaction >= 3 %}Bon{% else %}À améliorer{% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 3: Top formations -->
+    <div class="section">
+        <h2 class="section-title">🏆 Top 5 des formations par participation</h2>
+        
+        <div class="table-container">
+            <div class="table-title">📊 Classement des formations par nombre de participants</div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Formation</th>
+                        <th>Participants</th>
+                        <th>Pourcentage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for formation in additionalStats.topFormations %}
+                    <tr>
+                        <td>{{ formation.sujet }}</td>
+                        <td>{{ formation.participantCount }}</td>
+                        <td>
+                            {% set percentage = (formation.participantCount / additionalStats.topFormations|first.participantCount * 100)|round(1) %}
+                            {{ percentage }}%
+                            <div class="progress-bar">
+                                <div class="progress-fill {% if percentage >= 80 %}excellent{% elseif percentage >= 50 %}good{% else %}poor{% endif %}" style="width: {{ percentage }}%"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Section 4: Répartition des statuts -->
+    <div class="section">
+        <h2 class="section-title">📊 Répartition des statuts de participation</h2>
+        
+        <div class="table-container">
+            <div class="table-title">📈 Distribution des statuts d'inscription des participants</div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Statut</th>
+                        <th>Nombre</th>
+                        <th>Pourcentage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set totalStatuts = 0 %}
+                    {% for statut in additionalStats.statutsParticipation %}
+                        {% set totalStatuts = totalStatuts + statut.count %}
+                    {% endfor %}
+                    
+                    {% for statut in additionalStats.statutsParticipation %}
+                    <tr>
+                        <td>{{ statut.statutParticipation|title }}</td>
+                        <td>{{ statut.count }}</td>
+                        <td>
+                            {% set percentage = (statut.count / totalStatuts * 100)|round(1) %}
+                            {{ percentage }}%
+                            <div class="progress-bar">
+                                <div class="progress-fill {% if statut.statutParticipation == 'accepté' %}excellent{% elseif statut.statutParticipation == 'en attente' %}good{% else %}poor{% endif %}" style="width: {{ percentage }}%"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Section 5: Formations avec participation -->
+    <div class="section">
+        <h2 class="section-title">📚 Détail des formations</h2>
+        
+        <div class="table-container">
+            <div class="table-title">📋 Liste complète des formations avec taux de participation détaillé</div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Formation</th>
+                        <th>Date</th>
+                        <th>Durée</th>
+                        <th>Participants</th>
+                        <th>Taux</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for formation in formationsAvecParticipation %}
+                    <tr>
+                        <td>{{ formation.sujet }}</td>
+                        <td>{{ formation.dateDebut ? formation.dateDebut|date('d/m/Y') : 'Non définie' }}</td>
+                        <td>{{ formation.duree }} jour(s)</td>
+                        <td>{{ formation.participantsValides }}/{{ formation.totalParticipants }}</td>
+                        <td>
+                            {{ formation.tauxParticipation }}%
+                            <div class="progress-bar">
+                                <div class="progress-fill {% if formation.tauxParticipation >= 70 %}excellent{% elseif formation.tauxParticipation >= 40 %}good{% else %}poor{% endif %}" style="width: {{ formation.tauxParticipation }}%"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Pied de page -->
+    <div class="footer">
+        <p><strong>Dashboard des Formations</strong> - Rapport généré automatiquement</p>
+        <p>Utilisateur : {{ user.prenom }} {{ user.nom }} | {{ user.email }}</p>
+        <p>© {{ "now"|date("Y") }} - Système de gestion des formations</p>
+    </div>
+
+
+</body>
+</html>

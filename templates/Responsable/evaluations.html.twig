@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html class="loading" lang="fr" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimal-ui">
+    <title>Gestion des Évaluations - Responsable</title>
+    
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
+    <!-- END: Theme CSS-->
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-overlay-menu.css">
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- END: Custom CSS-->
+
+    <!-- BEGIN: Favicon-->
+    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
+    <!-- END: Favicon-->
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+<body class="vertical-layout vertical-overlay-menu 2-columns fixed-navbar" data-open="click" data-menu="vertical-overlay-menu" data-col="2-columns">
+
+    {% include 'Responsable/navBar.html.twig' %}
+
+    <!-- BEGIN: Main Menu-->
+    {% include 'Responsable/menuVertical.html.twig' %}
+    <!-- END: Main Menu-->
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-wrapper">
+            <div class="content-header row">
+                <div class="content-header-left col-md-6 col-12 mb-2">
+                    <h3 class="content-header-title">
+                        <i class="fas fa-chart-bar text-primary"></i> 
+                        Gestion des Évaluations Post-Formation
+                    </h3>
+                </div>
+            </div>
+            
+            <div class="content-body">
+                <div class="row">
+                    <div class="col-12">
+                        <!-- En-tête de la page -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h1 class="h3 mb-0">
+                                            <i class="fas fa-chart-bar text-primary"></i> 
+                                            Gestion des Évaluations Post-Formation
+                                        </h1>
+                                        <p class="text-muted">Consultez et analysez toutes les évaluations des participants</p>
+                                    </div>
+                                    <div>
+                                        <a href="{{ path('responsable_evaluations_export_csv') }}" class="btn btn-success">
+                                            <i class="fas fa-download"></i> Export CSV
+                                        </a>
+                                        <a href="{{ path('responsable_evaluations_stats') }}" class="btn btn-info">
+                                            <i class="fas fa-chart-pie"></i> Statistiques
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Statistiques globales -->
+                        <div class="row mb-4">
+                            <div class="col-md-3">
+                                <div class="card bg-primary text-white">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <h4 class="mb-0">{{ totalEvaluations }}</h4>
+                                                <p class="mb-0">Total Évaluations</p>
+                                            </div>
+                                            <div class="align-self-center">
+                                                <i class="fas fa-clipboard-list fa-2x"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-success text-white">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <h4 class="mb-0">{{ moyenneGlobale|number_format(1) }}/5</h4>
+                                                <p class="mb-0">Note Moyenne Globale</p>
+                                            </div>
+                                            <div class="align-self-center">
+                                                <i class="fas fa-star fa-2x"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-info text-white">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <h4 class="mb-0">{{ moyenneClarte|number_format(1) }}/5</h4>
+                                                <p class="mb-0">Clarté Moyenne</p>
+                                            </div>
+                                            <div class="align-self-center">
+                                                <i class="fas fa-lightbulb fa-2x"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-warning text-white">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <h4 class="mb-0">{{ moyennePertinence|number_format(1) }}/5</h4>
+                                                <p class="mb-0">Pertinence Moyenne</p>
+                                            </div>
+                                            <div class="align-self-center">
+                                                <i class="fas fa-target fa-2x"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Liste des évaluations -->
+                        <div class="card shadow">
+                            <div class="card-header">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-list"></i> 
+                                    Liste des Évaluations ({{ totalEvaluations }} total)
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                {% if evaluations is empty %}
+                                    <div class="text-center py-5">
+                                        <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                                        <h5 class="text-muted">Aucune évaluation trouvée</h5>
+                                        <p class="text-muted">Les évaluations apparaîtront ici une fois que les participants auront évalué leurs sessions.</p>
+                                    </div>
+                                {% else %}
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Formation</th>
+                                                    <th>Session</th>
+                                                    <th>Participant</th>
+                                                    <th>Note Globale</th>
+                                                    <th>Clarté</th>
+                                                    <th>Pertinence</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for evaluation in evaluations %}
+                                                    <tr>
+                                                        <td>
+                                                            <span class="badge bg-secondary">#{{ evaluation.id }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <strong>{{ evaluation.session.formation.sujet }}</strong>
+                                                        </td>
+                                                        <td>
+                                                            <span class="text-primary">{{ evaluation.session.titre }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="avatar-sm bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2">
+                                                                    {{ evaluation.user.prenom|first|upper }}{{ evaluation.user.nom|first|upper }}
+                                                                </div>
+                                                                <div>
+                                                                    <div class="fw-bold">{{ evaluation.user.prenom }} {{ evaluation.user.nom }}</div>
+                                                                    <small class="text-muted">{{ evaluation.user.email }}</small>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="rating-display-small">
+                                                                {% for i in 1..5 %}
+                                                                    <span class="rating-number-small {% if i <= evaluation.noteGlobale %}active{% endif %}">
+                                                                        {{ i }}
+                                                                    </span>
+                                                                {% endfor %}
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="rating-display-small">
+                                                                {% for i in 1..5 %}
+                                                                    <span class="rating-number-small {% if i <= evaluation.clarte %}active{% endif %}">
+                                                                        {{ i }}
+                                                                    </span>
+                                                                {% endfor %}
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="rating-display-small">
+                                                                {% for i in 1..5 %}
+                                                                    <span class="rating-number-small {% if i <= evaluation.pertinence %}active{% endif %}">
+                                                                        {{ i }}
+                                                                    </span>
+                                                                {% endfor %}
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="btn-group" role="group">
+                                                                <a href="{{ path('responsable_evaluation_show', {'id': evaluation.id}) }}" 
+                                                                   class="btn btn-sm btn-outline-primary" 
+                                                                   title="Voir détails">
+                                                                    <i class="fas fa-eye"></i>
+                                                                </a>
+                                                                {% if evaluation.suggestion %}
+                                                                    <button type="button" 
+                                                                            class="btn btn-sm btn-outline-info" 
+                                                                            title="A des suggestions"
+                                                                            data-bs-toggle="tooltip">
+                                                                        <i class="fas fa-comment"></i>
+                                                                    </button>
+                                                                {% endif %}
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <!-- Pagination -->
+                                    {% if totalPages > 1 %}
+                                        <nav aria-label="Pagination des évaluations">
+                                            <ul class="pagination justify-content-center">
+                                                {% if currentPage > 1 %}
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="{{ path('responsable_evaluations_list', {'page': currentPage - 1}) }}">
+                                                            <i class="fas fa-chevron-left"></i> Précédent
+                                                        </a>
+                                                    </li>
+                                                {% endif %}
+                                                
+                                                {% for page in 1..totalPages %}
+                                                    {% if page == currentPage %}
+                                                        <li class="page-item active">
+                                                            <span class="page-link">{{ page }}</span>
+                                                        </li>
+                                                    {% else %}
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="{{ path('responsable_evaluations_list', {'page': page}) }}">{{ page }}</a>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                
+                                                {% if currentPage < totalPages %}
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="{{ path('responsable_evaluations_list', {'page': currentPage + 1}) }}">
+                                                            Suivant <i class="fas fa-chevron-right"></i>
+                                                        </a>
+                                                    </li>
+                                                {% endif %}
+                                            </ul>
+                                        </nav>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Footer-->
+    <footer class="footer footer-static footer-light navbar-border navbar-shadow">
+        <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2">
+            <span class="float-md-left d-block d-md-inline-block">
+                Copyright &copy; 2025 <a class="text-bold-800 grey darken-2" href="#" target="_blank">Formation Manager</a>, All rights reserved.
+            </span>
+        </p>
+    </footer>
+    <!-- END: Footer-->
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- END: Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="../../../app-assets/js/core/app-menu.js"></script>
+    <script src="../../../app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- Styles pour l'affichage des notes -->
+    <style>
+    .rating-display-small {
+        display: flex;
+        gap: 2px;
+    }
+
+    .rating-number-small {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        text-align: center;
+        border-radius: 50%;
+        background-color: #e9ecef;
+        color: #6c757d;
+        font-weight: bold;
+        font-size: 0.7rem;
+    }
+
+    .rating-number-small.active {
+        background-color: #ffc107;
+        color: #212529;
+    }
+
+    .avatar-sm {
+        width: 32px;
+        height: 32px;
+        font-size: 0.8rem;
+    }
+
+    .card {
+        border: none;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .table th {
+        border-top: none;
+        font-weight: 600;
+    }
+
+    .btn-group .btn {
+        margin-right: 2px;
+    }
+    </style>
+
+    <!-- Initialisation des tooltips Bootstrap -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    });
+    </script>
+
+
+
+</body>
+<!-- END: Body-->
+</html>

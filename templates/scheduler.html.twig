@@ -1,0 +1,225 @@
+<!-- Scheduler JavaScript pour TOUTES les pages -->
+<script>
+/**
+ * Scheduler Console - Affiche le vrai statut des sessions toutes les 40 secondes
+ * DISPONIBLE SUR TOUTES LES PAGES
+ */
+
+class SchedulerConsole {
+    constructor() {
+        this.interval = 40000; // 40 secondes en millisecondes
+        this.isRunning = false;
+        this.executionCount = 0;
+        this.startTime = new Date();
+        this.page = '{{ app.request.get('_route') }}';
+        
+        this.init();
+    }
+    
+    init() {
+        console.log('🚀 SCHEDULER CONSOLE - Initialisé sur la page:', this.page);
+        console.log(`⏰ Intervalle: ${this.interval / 1000} secondes`);
+        console.log(`🕐 Démarrage: ${this.startTime.toLocaleTimeString()}`);
+        console.log(`📍 Page: ${this.page}`);
+        console.log(`🔍 Vérification des vraies sessions en base de données...`);
+        
+        this.start();
+    }
+    
+    start() {
+        if (this.isRunning) {
+            console.warn('⚠️ Le scheduler est déjà en cours d\'exécution');
+            return;
+        }
+        
+        this.isRunning = true;
+        console.log('✅ Scheduler démarré - Vérification des sessions toutes les 40 secondes');
+        
+        // Première exécution immédiate
+        this.execute();
+        
+        // Puis toutes les 40 secondes
+        this.intervalId = setInterval(() => {
+            this.execute();
+        }, this.interval);
+    }
+    
+    stop() {
+        if (!this.isRunning) {
+            console.warn('⚠️ Le scheduler n\'est pas en cours d\'exécution');
+            return;
+        }
+        
+        this.isRunning = false;
+        clearInterval(this.intervalId);
+        console.log('🛑 Scheduler arrêté');
+    }
+    
+    async execute() {
+        this.executionCount++;
+        const now = new Date();
+        const elapsedTime = Math.floor((now - this.startTime) / 1000);
+        
+        console.log('🔄 SCHEDULER ACTIF - Exécution #' + this.executionCount);
+        console.log(`🕐 Heure actuelle: ${now.toLocaleTimeString()}`);
+        console.log(`⏱️ Temps écoulé depuis le début: ${elapsedTime}s`);
+        console.log(`🔍 Vérification des sessions en cours...`);
+        
+        try {
+            // 1. D'abord, récupérer le statut des sessions
+            const response = await fetch('/admin/sessions-status', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                this.afficherResultats(data);
+                
+                // 2. Si il y a des changements à effectuer, exécuter le vrai scheduler
+                if (data.details.length > 0) {
+                    console.log('🚀 Exécution du vrai scheduler Symfony pour modifier les statuts...');
+                    await this.executerSchedulerSymfony();
+                }
+            } else {
+                console.error('❌ Erreur lors de la récupération du statut des sessions');
+            }
+        } catch (error) {
+            console.error('❌ Erreur réseau:', error);
+            console.log('⚠️ Impossible de récupérer le statut des sessions - Erreur réseau');
+        }
+        
+        console.log(`✅ SCHEDULER TERMINÉ - Prochaine exécution dans 40 secondes`);
+        console.log('---');
+    }
+    
+    async executerSchedulerSymfony() {
+        try {
+            console.log('⚡ Appel du scheduler Symfony...');
+            
+            // Appeler le vrai scheduler Symfony via une route
+            const response = await fetch('/admin/execute-scheduler', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            
+            if (response.ok) {
+                const result = await response.json();
+                console.log('✅ Scheduler Symfony exécuté avec succès !');
+                console.log('📊 Résultats:', result);
+                
+                // Afficher les détails des notifications
+                if (result.notifications_envoyees > 0) {
+                    console.log(`📧 Notifications envoyées: ${result.notifications_envoyees}`);
+                    if (result.details) {
+                        result.details.forEach(detail => {
+                            console.log(`   • ${detail}`);
+                        });
+                    }
+                }
+                
+                // Attendre un peu puis re-vérifier le statut
+                setTimeout(async () => {
+                    console.log('🔄 Re-vérification du statut après modification...');
+                    const recheckResponse = await fetch('/admin/sessions-status');
+                    if (recheckResponse.ok) {
+                        const recheckData = await recheckResponse.json();
+                        console.log('📋 Nouveau statut des sessions:');
+                        this.afficherResultats(recheckData);
+                    }
+                }, 2000); // Attendre 2 secondes
+                
+            } else {
+                console.error('❌ Erreur lors de l\'exécution du scheduler Symfony');
+            }
+        } catch (error) {
+            console.error('❌ Erreur lors de l\'exécution du scheduler:', error);
+        }
+    }
+    
+    afficherResultats(data) {
+        console.log(`📊 Sessions vérifiées: ${data.sessions_verifiees}`);
+        console.log(`🕐 Timestamp: ${data.timestamp}`);
+        
+        // Sessions à démarrer
+        if (data.sessions_a_demarrer.length > 0) {
+            console.log(`🟢 Sessions à démarrer (${data.sessions_a_demarrer.length}):`);
+            data.sessions_a_demarrer.forEach(session => {
+                if (session.doit_changer) {
+                    console.log(`   ✅ Session "${session.titre}" (ID: ${session.id})`);
+                    console.log(`      Status: "${session.status_actuel}" → "${session.nouveau_status}"`);
+                    console.log(`      Raison: ${session.raison}`);
+                    console.log(`      Date début: ${session.date_debut}`);
+                } else {
+                    console.log(`   ⏳ Session "${session.titre}" (ID: ${session.id})`);
+                    console.log(`      Status: "${session.status_actuel}" (pas de changement)`);
+                    console.log(`      Raison: ${session.raison}`);
+                    console.log(`      Date début: ${session.date_debut}`);
+                }
+            });
+        } else {
+            console.log('ℹ️ Aucune session à démarrer');
+        }
+        
+        // Sessions à terminer
+        if (data.sessions_a_terminer.length > 0) {
+            console.log(`🔴 Sessions à terminer (${data.sessions_a_terminer.length}):`);
+            data.sessions_a_terminer.forEach(session => {
+                if (session.doit_changer) {
+                    console.log(`   ✅ Session "${session.titre}" (ID: ${session.id})`);
+                    console.log(`      Status: "${session.status_actuel}" → "${session.nouveau_status}"`);
+                    console.log(`      Raison: ${session.raison}`);
+                    console.log(`      Date fin: ${session.date_fin}`);
+                } else {
+                    console.log(`   ⏳ Session "${session.titre}" (ID: ${session.id})`);
+                    console.log(`      Status: "${session.status_actuel}" (pas de changement)`);
+                    console.log(`      Raison: ${session.raison}`);
+                    console.log(`      Date fin: ${session.date_fin}`);
+                }
+            });
+        } else {
+            console.log('ℹ️ Aucune session à terminer');
+        }
+        
+        // Résumé des changements
+        if (data.details.length > 0) {
+            console.log(`🔄 Changements à effectuer (${data.details.length}):`);
+            data.details.forEach(detail => {
+                console.log(`   • ${detail}`);
+            });
+        } else {
+            console.log('ℹ️ Aucun changement de statut nécessaire pour le moment');
+        }
+    }
+    
+    getStatus() {
+        return {
+            isRunning: this.isRunning,
+            executionCount: this.executionCount,
+            startTime: this.startTime,
+            interval: this.interval,
+            page: this.page
+        };
+    }
+}
+
+// Initialiser le scheduler quand la page est chargée
+document.addEventListener('DOMContentLoaded', function() {
+    // Créer une instance globale pour pouvoir la contrôler depuis la console
+    window.schedulerConsole = new SchedulerConsole();
+    
+    // Afficher les commandes utiles dans la console
+    console.log('💡 Commandes disponibles:');
+    console.log('  - schedulerConsole.stop() : Arrêter le scheduler');
+    console.log('  - schedulerConsole.start() : Redémarrer le scheduler');
+    console.log('  - schedulerConsole.getStatus() : Voir le statut');
+    console.log('  - schedulerConsole.execute() : Exécuter immédiatement');
+});
+
+// Exposer la classe globalement pour utilisation avancée
+window.SchedulerConsole = SchedulerConsole;
+</script>

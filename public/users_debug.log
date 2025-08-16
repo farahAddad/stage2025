@@ -1,0 +1,5268 @@
+Array
+(
+    [0] => Array
+        (
+            [titre] => 
+            [dateDebut] => 
+            [dateFin] => 
+            [type] => 
+            [salle] => 
+            [emplacement] => 
+            [users] => Array
+                (
+                )
+
+            [fichier] => fichier_session_0
+        )
+
+)
+Array
+(
+    [session_id] => 
+    [users] => Array
+        (
+        )
+
+)
+Array
+(
+    [session_id] => 
+    [users] => Array
+        (
+        )
+
+)
+Array
+(
+    [session_id] => 57
+    [users] => Array
+        (
+        )
+
+)
+Array
+(
+    [0] => Array
+        (
+            [titre] => gaga
+            [dateDebut] => 
+            [dateFin] => 
+            [type] => interne
+            [salle] => 2
+            [emplacement] => 
+            [users] => Array
+                (
+                )
+
+            [fichier] => 
+        )
+
+)
+Array
+(
+    [session_id] => 58
+    [users] => Array
+        (
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => hh
+            [dateDebut] => 
+            [dateFin] => 
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 1
+                    [1] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Session 0 - Users: Array
+(
+    [0] => 1
+    [1] => 2
+)
+
+Array
+(
+    [session_id] => 59
+    [users] => Array
+        (
+            [0] => 1
+            [1] => 2
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => jjdsdsssdddddddd
+            [dateDebut] => 
+            [dateFin] => 
+            [type] => interne
+            [salle] => 2
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 1
+                    [1] => 2
+                )
+
+            [fichier] => 
+        )
+
+    [1] => Array
+        (
+            [titre] => jkjk
+            [dateDebut] => 
+            [dateFin] => 
+            [type] => externe
+            [salle] => 
+            [emplacement] => jkq
+            [users] => Array
+                (
+                    [0] => 1
+                )
+
+            [fichier] => 
+        )
+
+)
+Session 0 - Users: Array
+(
+    [0] => 1
+    [1] => 2
+)
+
+Array
+(
+    [session_id] => 60
+    [users_count] => 2
+    [users_ids] => Array
+        (
+            [0] => 1
+            [1] => 2
+        )
+
+)
+Session 1 - Users: Array
+(
+    [0] => 1
+)
+
+Array
+(
+    [session_id] => 61
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 1
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => cccc
+            [dateDebut] => 
+            [dateFin] => 
+            [type] => interne
+            [salle] => 4
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 1
+                )
+
+            [fichier] => 
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => cccc
+            [dateDebut] => 
+            [dateFin] => 
+            [type] => interne
+            [salle] => 4
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 1
+                    [1] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => hh
+            [dateDebut] => 2025-07-23T01:09
+            [dateFin] => 2025-07-31T01:09
+            [type] => interne
+            [salle] => 4
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => hh
+            [dateDebut] => 2025-07-23T01:09
+            [dateFin] => 2025-07-31T01:09
+            [type] => interne
+            [salle] => 2
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => hh
+            [dateDebut] => 2025-07-23T01:09
+            [dateFin] => 2025-07-31T01:09
+            [type] => interne
+            [salle] => 2
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Session 0 - Users: Array
+(
+    [0] => 2
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => hh
+    [dateDebut] => 2025-07-23T01:09
+    [dateFin] => 2025-07-31T01:09
+    [type] => interne
+    [salle] => 2
+    [emplacement] => 
+    [users] => Array
+        (
+            [0] => 2
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 62
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 2
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => ss
+            [dateDebut] => 2025-07-29T01:12
+            [dateFin] => 2025-08-08T01:12
+            [type] => interne
+            [salle] => 4
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 1
+                )
+
+            [fichier] => 
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => ss
+            [dateDebut] => 2025-07-30T01:12
+            [dateFin] => 2025-08-08T01:12
+            [type] => interne
+            [salle] => 4
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 1
+                )
+
+            [fichier] => 
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => ss
+            [dateDebut] => 2025-07-30T15:12
+            [dateFin] => 2025-08-08T01:12
+            [type] => interne
+            [salle] => 4
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 1
+                )
+
+            [fichier] => 
+        )
+
+)
+Session 0 - Users: Array
+(
+    [0] => 1
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => ss
+    [dateDebut] => 2025-07-30T15:12
+    [dateFin] => 2025-08-08T01:12
+    [type] => interne
+    [salle] => 4
+    [emplacement] => 
+    [users] => Array
+        (
+            [0] => 1
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 63
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 1
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => ss
+            [dateDebut] => 2025-07-30T10:12
+            [dateFin] => 2025-08-08T01:12
+            [type] => interne
+            [salle] => 4
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 1
+                )
+
+            [fichier] => 
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => ss
+            [dateDebut] => 2025-07-23T10:12
+            [dateFin] => 2025-08-08T01:12
+            [type] => interne
+            [salle] => 4
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 1
+                )
+
+            [fichier] => 
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => s
+            [dateDebut] => 2025-07-29T01:20
+            [dateFin] => 2025-08-07T01:20
+            [type] => interne
+            [salle] => 4
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => s
+            [dateDebut] => 2025-07-30T01:20
+            [dateFin] => 2025-08-07T01:20
+            [type] => interne
+            [salle] => 4
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => s
+            [dateDebut] => 2025-07-30T01:20
+            [dateFin] => 2025-08-07T01:20
+            [type] => interne
+            [salle] => 4
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => s
+            [dateDebut] => 2025-08-08T01:11
+            [dateFin] => 2025-08-27T01:20
+            [type] => interne
+            [salle] => 4
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => s
+            [dateDebut] => 2025-08-08T01:14
+            [dateFin] => 2025-08-27T01:20
+            [type] => interne
+            [salle] => 4
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Session 0 - Users: Array
+(
+    [0] => 2
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => s
+    [dateDebut] => 2025-08-08T01:14
+    [dateFin] => 2025-08-27T01:20
+    [type] => interne
+    [salle] => 4
+    [emplacement] => 
+    [users] => Array
+        (
+            [0] => 2
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 64
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 2
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => s
+            [dateDebut] => 2025-08-08T01:12
+            [dateFin] => 2025-08-19T01:20
+            [type] => interne
+            [salle] => 4
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => jhh
+            [dateDebut] => 2025-07-22T01:31
+            [dateFin] => 2025-08-08T01:31
+            [type] => interne
+            [salle] => 4
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 1
+                )
+
+            [fichier] => 
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => hh
+            [dateDebut] => 2025-07-29T01:34
+            [dateFin] => 2025-08-04T01:35
+            [type] => interne
+            [salle] => 4
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => hh
+            [dateDebut] => 2025-07-29T01:34
+            [dateFin] => 2025-08-04T01:35
+            [type] => interne
+            [salle] => 2
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => hh
+            [dateDebut] => 2025-07-29T01:34
+            [dateFin] => 2025-08-04T01:35
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => hh
+            [dateDebut] => 2025-08-08T01:34
+            [dateFin] => 2025-08-21T01:35
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => hh
+            [dateDebut] => 2025-08-08T01:34
+            [dateFin] => 2025-08-21T01:35
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 1
+                    [1] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => hh
+            [dateDebut] => 2025-08-08T01:34
+            [dateFin] => 2025-08-21T01:35
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 1
+                )
+
+            [fichier] => 
+        )
+
+)
+Session 0 - Users: Array
+(
+    [0] => 1
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => hh
+    [dateDebut] => 2025-08-08T01:34
+    [dateFin] => 2025-08-21T01:35
+    [type] => interne
+    [salle] => 1
+    [emplacement] => 
+    [users] => Array
+        (
+            [0] => 1
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 65
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 1
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => hh
+            [dateDebut] => 2025-08-08T01:34
+            [dateFin] => 2025-08-21T01:35
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 1
+                )
+
+            [fichier] => 
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => hh
+            [dateDebut] => 2025-08-08T01:34
+            [dateFin] => 2025-08-21T01:35
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 1
+                )
+
+            [fichier] => 
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => hh
+            [dateDebut] => 2025-08-08T01:34
+            [dateFin] => 2025-08-21T01:35
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 1
+                )
+
+            [fichier] => 
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => hh
+            [dateDebut] => 2025-08-29T01:34
+            [dateFin] => 2025-09-06T01:35
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => hh
+            [dateDebut] => 2025-07-30T02:12
+            [dateFin] => 2025-08-08T02:12
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_0] => Array
+        (
+            [0] => La date de début de session doit être supérieure ou égale à la date de début de formation (01/08/2025)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => hh
+            [dateDebut] => 2025-07-30T02:12
+            [dateFin] => 2025-08-08T02:12
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+Session 0 - Users: Array
+(
+    [0] => 2
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => hh
+    [dateDebut] => 2025-07-30T02:12
+    [dateFin] => 2025-08-08T02:12
+    [type] => interne
+    [salle] => 1
+    [emplacement] => 
+    [users] => Array
+        (
+            [0] => 2
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 1
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 2
+        )
+
+)
+Emails envoyés avec succès
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => hh
+            [dateDebut] => 2025-07-30T02:12
+            [dateFin] => 2025-08-08T02:12
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_0] => Array
+        (
+            [0] => La salle "Salle Test" n'est pas disponible pour cette période. Veuillez choisir une autre salle ou modifier les horaires.
+            [1] => Conflit d'horaires pour les utilisateurs : Participant Test (sessions: hh)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => hh
+            [dateDebut] => 2025-07-30T02:12
+            [dateFin] => 2025-08-08T02:12
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+Session 0 - Users: Array
+(
+    [0] => 2
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => hh
+    [dateDebut] => 2025-07-30T02:12
+    [dateFin] => 2025-08-08T02:12
+    [type] => interne
+    [salle] => 1
+    [emplacement] => 
+    [users] => Array
+        (
+            [0] => 2
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 2
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 2
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => sesion1
+            [dateDebut] => 2025-07-26T02:21
+            [dateFin] => 2025-08-02T02:21
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_0] => Array
+        (
+            [0] => La salle "Salle Test" n'est pas disponible pour cette période. Veuillez choisir une autre salle ou modifier les horaires.
+            [1] => Conflit d'horaires pour les utilisateurs : Participant Test (sessions: hh)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => sesion1
+            [dateDebut] => 2025-07-26T02:21
+            [dateFin] => 2025-08-02T02:21
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+Session 0 - Users: Array
+(
+    [0] => 2
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => sesion1
+    [dateDebut] => 2025-07-26T02:21
+    [dateFin] => 2025-08-02T02:21
+    [type] => interne
+    [salle] => 1
+    [emplacement] => 
+    [users] => Array
+        (
+            [0] => 2
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 3
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 2
+        )
+
+)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => sesion1
+            [dateDebut] => 2025-07-26T02:21
+            [dateFin] => 2025-08-02T02:21
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_0] => Array
+        (
+            [0] => La salle "Salle Test" n'est pas disponible pour cette période. Veuillez choisir une autre salle ou modifier les horaires.
+            [1] => Conflit d'horaires pour les utilisateurs : Participant Test (sessions: sesion1)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => sesion1
+            [dateDebut] => 2025-07-26T02:21
+            [dateFin] => 2025-08-02T02:21
+            [type] => externe
+            [salle] => 
+            [emplacement] => ,j
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_0] => Array
+        (
+            [0] => Conflit d'horaires pour les utilisateurs : Participant Test (sessions: sesion1)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => sesion1
+            [dateDebut] => 2025-08-10T02:21
+            [dateFin] => 2025-09-07T02:21
+            [type] => externe
+            [salle] => 
+            [emplacement] => ,j
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+Session 0 - Users: Array
+(
+    [0] => 2
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => sesion1
+    [dateDebut] => 2025-08-10T02:21
+    [dateFin] => 2025-09-07T02:21
+    [type] => externe
+    [salle] => 
+    [emplacement] => ,j
+    [users] => Array
+        (
+            [0] => 2
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 4
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 2
+        )
+
+)
+Emails et notifications envoyés avec succès
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => jj
+            [dateDebut] => 2025-08-02T02:37
+            [dateFin] => 2025-08-10T02:37
+            [type] => externe
+            [salle] => 
+            [emplacement] => c
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+    [1] => Array
+        (
+            [titre] => jjd
+            [dateDebut] => 2025-08-01T02:37
+            [dateFin] => 2025-08-01T02:41
+            [type] => externe
+            [salle] => 
+            [emplacement] => nnn
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_0] => Array
+        (
+            [0] => Conflit d'horaires pour les utilisateurs : Participant Test (sessions: sesion1)
+        )
+
+    [session_1] => Array
+        (
+            [0] => Conflit d'horaires pour les utilisateurs : Participant Test (sessions: sesion1)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => jj
+            [dateDebut] => 2025-08-02T02:37
+            [dateFin] => 2025-08-10T02:37
+            [type] => externe
+            [salle] => 
+            [emplacement] => c
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+    [1] => Array
+        (
+            [titre] => jjd
+            [dateDebut] => 2025-09-06T02:37
+            [dateFin] => 2025-09-07T02:41
+            [type] => externe
+            [salle] => 
+            [emplacement] => nnn
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_0] => Array
+        (
+            [0] => Conflit d'horaires pour les utilisateurs : Participant Test (sessions: sesion1)
+        )
+
+    [session_1] => Array
+        (
+            [0] => Conflit d'horaires pour les utilisateurs : Participant Test (sessions: sesion1)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => jj
+            [dateDebut] => 2025-08-02T02:37
+            [dateFin] => 2025-08-10T02:37
+            [type] => externe
+            [salle] => 
+            [emplacement] => c
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+    [1] => Array
+        (
+            [titre] => jjd
+            [dateDebut] => 2025-09-06T02:37
+            [dateFin] => 2025-09-07T02:41
+            [type] => externe
+            [salle] => 
+            [emplacement] => nnn
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_0] => Array
+        (
+            [0] => Conflit d'horaires pour les utilisateurs : Participant Test (sessions: sesion1)
+        )
+
+    [session_1] => Array
+        (
+            [0] => Conflit d'horaires pour les utilisateurs : Participant Test (sessions: sesion1)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => jj
+            [dateDebut] => 2025-08-02T02:37
+            [dateFin] => 2025-08-10T02:37
+            [type] => externe
+            [salle] => 
+            [emplacement] => c
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+    [1] => Array
+        (
+            [titre] => jjd
+            [dateDebut] => 2025-09-06T02:37
+            [dateFin] => 2025-09-07T02:41
+            [type] => externe
+            [salle] => 
+            [emplacement] => nnn
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_0] => Array
+        (
+            [0] => Conflit d'horaires pour les utilisateurs : Participant Test (sessions: sesion1)
+        )
+
+    [session_1] => Array
+        (
+            [0] => Conflit d'horaires pour les utilisateurs : Participant Test (sessions: sesion1)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => jj
+            [dateDebut] => 2025-08-02T02:37
+            [dateFin] => 2025-08-08T02:37
+            [type] => externe
+            [salle] => 
+            [emplacement] => c
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+    [1] => Array
+        (
+            [titre] => jjd
+            [dateDebut] => 2025-09-06T02:37
+            [dateFin] => 2025-09-07T02:41
+            [type] => externe
+            [salle] => 
+            [emplacement] => nnn
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_1] => Array
+        (
+            [0] => Conflit d'horaires pour les utilisateurs : Participant Test (sessions: sesion1)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => jj
+            [dateDebut] => 2025-08-02T02:37
+            [dateFin] => 2025-08-08T02:37
+            [type] => externe
+            [salle] => 
+            [emplacement] => c
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+    [1] => Array
+        (
+            [titre] => jjd
+            [dateDebut] => 2025-09-06T02:37
+            [dateFin] => 2025-09-07T02:41
+            [type] => externe
+            [salle] => 
+            [emplacement] => nnn
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+Session 0 - Users: Array
+(
+    [0] => 2
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => jj
+    [dateDebut] => 2025-08-02T02:37
+    [dateFin] => 2025-08-08T02:37
+    [type] => externe
+    [salle] => 
+    [emplacement] => c
+    [users] => Array
+        (
+            [0] => 2
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 5
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 2
+        )
+
+)
+Session 1 - Users: Array
+(
+    [0] => 2
+)
+
+Session 1 - Complete data: Array
+(
+    [titre] => jjd
+    [dateDebut] => 2025-09-06T02:37
+    [dateFin] => 2025-09-07T02:41
+    [type] => externe
+    [salle] => 
+    [emplacement] => nnn
+    [users] => Array
+        (
+            [0] => 2
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 6
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 2
+        )
+
+)
+Emails et notifications envoyés avec succès
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => s
+            [dateDebut] => 2025-07-23T02:46
+            [dateFin] => 2025-07-24T02:46
+            [type] => externe
+            [salle] => 
+            [emplacement] => xxxx
+            [users] => Array
+                (
+                    [0] => 2
+                    [1] => 5
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+Session 0 - Users: Array
+(
+    [0] => 2
+    [1] => 5
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => s
+    [dateDebut] => 2025-07-23T02:46
+    [dateFin] => 2025-07-24T02:46
+    [type] => externe
+    [salle] => 
+    [emplacement] => xxxx
+    [users] => Array
+        (
+            [0] => 2
+            [1] => 5
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 7
+    [users_count] => 2
+    [users_ids] => Array
+        (
+            [0] => 2
+            [1] => 5
+        )
+
+)
+Emails et notifications envoyés avec succès
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => jj
+            [dateDebut] => 2025-10-17T02:56
+            [dateFin] => 2025-10-28T02:56
+            [type] => externe
+            [salle] => 
+            [emplacement] => jj
+            [users] => Array
+                (
+                    [0] => 2
+                    [1] => 5
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+Session 0 - Users: Array
+(
+    [0] => 2
+    [1] => 5
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => jj
+    [dateDebut] => 2025-10-17T02:56
+    [dateFin] => 2025-10-28T02:56
+    [type] => externe
+    [salle] => 
+    [emplacement] => jj
+    [users] => Array
+        (
+            [0] => 2
+            [1] => 5
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 8
+    [users_count] => 2
+    [users_ids] => Array
+        (
+            [0] => 2
+            [1] => 5
+        )
+
+)
+Emails et notifications envoyés avec succès
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => hh
+            [dateDebut] => 2025-07-31T03:00
+            [dateFin] => 2025-08-07T03:05
+            [type] => externe
+            [salle] => 
+            [emplacement] => hh
+            [users] => Array
+                (
+                    [0] => 2
+                    [1] => 5
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_0] => Array
+        (
+            [0] => Conflit d'horaires pour les utilisateurs : Participant Test (sessions: jj)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => hh
+            [dateDebut] => 2025-07-31T03:00
+            [dateFin] => 2025-08-07T03:05
+            [type] => externe
+            [salle] => 
+            [emplacement] => hh
+            [users] => Array
+                (
+                    [0] => 5
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+Session 0 - Users: Array
+(
+    [0] => 5
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => hh
+    [dateDebut] => 2025-07-31T03:00
+    [dateFin] => 2025-08-07T03:05
+    [type] => externe
+    [salle] => 
+    [emplacement] => hh
+    [users] => Array
+        (
+            [0] => 5
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 9
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 5
+        )
+
+)
+Emails et notifications envoyés avec succès
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => HH
+            [dateDebut] => 2025-07-23T03:30
+            [dateFin] => 2025-07-23T03:35
+            [type] => externe
+            [salle] => 
+            [emplacement] => NNNN
+            [users] => Array
+                (
+                    [0] => 2
+                    [1] => 5
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_0] => Array
+        (
+            [0] => La date de début de session doit être supérieure ou égale à la date de début de formation (25/07/2025)
+            [1] => Conflit d'horaires pour les utilisateurs : Participant Test (sessions: s), Admin RH (sessions: s)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => HH
+            [dateDebut] => 2025-07-22T03:30
+            [dateFin] => 2025-07-23T03:35
+            [type] => externe
+            [salle] => 
+            [emplacement] => NNNN
+            [users] => Array
+                (
+                    [0] => 2
+                    [1] => 5
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_0] => Array
+        (
+            [0] => Conflit d'horaires pour les utilisateurs : Participant Test (sessions: s), Admin RH (sessions: s)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => HH
+            [dateDebut] => 2025-08-09T03:30
+            [dateFin] => 2025-08-10T03:35
+            [type] => externe
+            [salle] => 
+            [emplacement] => NNNN
+            [users] => Array
+                (
+                    [0] => 2
+                    [1] => 5
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+Session 0 - Users: Array
+(
+    [0] => 2
+    [1] => 5
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => HH
+    [dateDebut] => 2025-08-09T03:30
+    [dateFin] => 2025-08-10T03:35
+    [type] => externe
+    [salle] => 
+    [emplacement] => NNNN
+    [users] => Array
+        (
+            [0] => 2
+            [1] => 5
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 10
+    [users_count] => 2
+    [users_ids] => Array
+        (
+            [0] => 2
+            [1] => 5
+        )
+
+)
+Emails et notifications envoyés avec succès
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => n
+            [dateDebut] => 2025-08-01T03:38
+            [dateFin] => 2025-08-01T03:40
+            [type] => externe
+            [salle] => 
+            [emplacement] => jj
+            [users] => Array
+                (
+                    [0] => 5
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_0] => Array
+        (
+            [0] => Conflit d'horaires pour les utilisateurs : Admin RH (sessions: hh)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => n
+            [dateDebut] => 2025-08-01T03:38
+            [dateFin] => 2025-08-01T03:40
+            [type] => externe
+            [salle] => 
+            [emplacement] => jj
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+Session 0 - Users: Array
+(
+    [0] => 2
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => n
+    [dateDebut] => 2025-08-01T03:38
+    [dateFin] => 2025-08-01T03:40
+    [type] => externe
+    [salle] => 
+    [emplacement] => jj
+    [users] => Array
+        (
+            [0] => 2
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 11
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 2
+        )
+
+)
+Emails et notifications envoyés avec succès
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => jj
+            [dateDebut] => 2025-08-10T03:38
+            [dateFin] => 2025-08-10T03:44
+            [type] => externe
+            [salle] => 
+            [emplacement] => kk
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+Session 0 - Users: Array
+(
+    [0] => 2
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => jj
+    [dateDebut] => 2025-08-10T03:38
+    [dateFin] => 2025-08-10T03:44
+    [type] => externe
+    [salle] => 
+    [emplacement] => kk
+    [users] => Array
+        (
+            [0] => 2
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 12
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 2
+        )
+
+)
+Emails et notifications envoyés avec succès
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => k
+            [dateDebut] => 2025-08-03T03:43
+            [dateFin] => 2025-08-03T03:53
+            [type] => externe
+            [salle] => 
+            [emplacement] => kk
+            [users] => Array
+                (
+                    [0] => 5
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_0] => Array
+        (
+            [0] => Conflit d'horaires pour les utilisateurs : Admin RH (sessions: hh)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => k
+            [dateDebut] => 2025-08-03T03:43
+            [dateFin] => 2025-08-03T03:53
+            [type] => externe
+            [salle] => 
+            [emplacement] => kk
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_0] => Array
+        (
+            [0] => Conflit d'horaires pour les utilisateurs : Participant Test (sessions: jj)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => k
+            [dateDebut] => 2025-08-28T03:43
+            [dateFin] => 2025-08-28T03:53
+            [type] => externe
+            [salle] => 
+            [emplacement] => kk
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+Session 0 - Users: Array
+(
+    [0] => 2
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => k
+    [dateDebut] => 2025-08-28T03:43
+    [dateFin] => 2025-08-28T03:53
+    [type] => externe
+    [salle] => 
+    [emplacement] => kk
+    [users] => Array
+        (
+            [0] => 2
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 13
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 2
+        )
+
+)
+Emails et notifications envoyés avec succès
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => k
+            [dateDebut] => 2025-09-06T03:48
+            [dateFin] => 2025-09-07T03:53
+            [type] => externe
+            [salle] => 
+            [emplacement] => kk
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_0] => Array
+        (
+            [0] => Conflit d'horaires pour les utilisateurs : Participant Test (sessions: jjd)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => k
+            [dateDebut] => 2025-09-06T03:48
+            [dateFin] => 2025-09-07T03:53
+            [type] => externe
+            [salle] => 
+            [emplacement] => kk
+            [users] => Array
+                (
+                    [0] => 5
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+Session 0 - Users: Array
+(
+    [0] => 5
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => k
+    [dateDebut] => 2025-09-06T03:48
+    [dateFin] => 2025-09-07T03:53
+    [type] => externe
+    [salle] => 
+    [emplacement] => kk
+    [users] => Array
+        (
+            [0] => 5
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 14
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 5
+        )
+
+)
+Emails et notifications envoyés avec succès
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => bb
+            [dateDebut] => 2025-08-08T15:33
+            [dateFin] => 2025-08-08T15:40
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 5
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_0] => Array
+        (
+            [0] => La salle "Salle Test" n'est pas disponible pour cette période. Veuillez choisir une autre salle ou modifier les horaires.
+            [1] => Conflit d'horaires pour les utilisateurs : Admin RH (sessions: hh)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => bb
+            [dateDebut] => 2025-08-08T15:33
+            [dateFin] => 2025-08-08T15:40
+            [type] => externe
+            [salle] => 
+            [emplacement] => hh
+            [users] => Array
+                (
+                    [0] => 5
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_0] => Array
+        (
+            [0] => Conflit d'horaires pour les utilisateurs : Admin RH (sessions: hh)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => bb
+            [dateDebut] => 2025-08-08T15:33
+            [dateFin] => 2025-08-08T15:40
+            [type] => externe
+            [salle] => 
+            [emplacement] => hh
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+Session 0 - Users: Array
+(
+    [0] => 2
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => bb
+    [dateDebut] => 2025-08-08T15:33
+    [dateFin] => 2025-08-08T15:40
+    [type] => externe
+    [salle] => 
+    [emplacement] => hh
+    [users] => Array
+        (
+            [0] => 2
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 22
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 2
+        )
+
+)
+Emails et notifications envoyés avec succès
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => nnn
+            [dateDebut] => 2025-08-01T15:15
+            [dateFin] => 2025-08-01T15:20
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 5
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+Session 0 - Users: Array
+(
+    [0] => 5
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => nnn
+    [dateDebut] => 2025-08-01T15:15
+    [dateFin] => 2025-08-01T15:20
+    [type] => interne
+    [salle] => 1
+    [emplacement] => 
+    [users] => Array
+        (
+            [0] => 5
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 35
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 5
+        )
+
+)
+Emails et notifications envoyés avec succès
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => sa
+            [dateDebut] => 2025-08-05T15:00
+            [dateFin] => 2025-08-08T12:00
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                    [1] => 5
+                )
+
+            [fichier] => 
+        )
+
+    [1] => Array
+        (
+            [titre] => sz
+            [dateDebut] => 2025-08-05T12:01
+            [dateFin] => 2025-08-05T12:02
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+Session 0 - Users: Array
+(
+    [0] => 2
+    [1] => 5
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => sa
+    [dateDebut] => 2025-08-05T15:00
+    [dateFin] => 2025-08-08T12:00
+    [type] => interne
+    [salle] => 1
+    [emplacement] => 
+    [users] => Array
+        (
+            [0] => 2
+            [1] => 5
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 36
+    [users_count] => 2
+    [users_ids] => Array
+        (
+            [0] => 2
+            [1] => 5
+        )
+
+)
+Session 1 - Users: Array
+(
+    [0] => 2
+)
+
+Session 1 - Complete data: Array
+(
+    [titre] => sz
+    [dateDebut] => 2025-08-05T12:01
+    [dateFin] => 2025-08-05T12:02
+    [type] => interne
+    [salle] => 1
+    [emplacement] => 
+    [users] => Array
+        (
+            [0] => 2
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 37
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 2
+        )
+
+)
+Emails et notifications envoyés avec succès
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => jj
+            [dateDebut] => 2025-07-23T15:27
+            [dateFin] => 2025-07-23T15:30
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                    [1] => 5
+                )
+
+            [fichier] => fichier_session_0
+        )
+
+    [1] => Array
+        (
+            [titre] => kjde
+            [dateDebut] => 2025-07-23T15:31
+            [dateFin] => 2025-07-23T15:33
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                    [1] => 5
+                )
+
+            [fichier] => fichier_session_1
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_0] => Array
+        (
+            [0] => La date de début de session doit être supérieure ou égale à la date de début de formation (24/07/2025)
+        )
+
+    [session_1] => Array
+        (
+            [0] => La date de début de session doit être supérieure ou égale à la date de début de formation (24/07/2025)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => jj
+            [dateDebut] => 2025-07-24T15:27
+            [dateFin] => 2025-07-24T15:30
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                    [1] => 5
+                )
+
+            [fichier] => fichier_session_0
+        )
+
+    [1] => Array
+        (
+            [titre] => kjde
+            [dateDebut] => 2025-07-24T15:31
+            [dateFin] => 2025-07-24T15:33
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                    [1] => 5
+                )
+
+            [fichier] => fichier_session_1
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+Session 0 - Users: Array
+(
+    [0] => 2
+    [1] => 5
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => jj
+    [dateDebut] => 2025-07-24T15:27
+    [dateFin] => 2025-07-24T15:30
+    [type] => interne
+    [salle] => 1
+    [emplacement] => 
+    [users] => Array
+        (
+            [0] => 2
+            [1] => 5
+        )
+
+    [fichier] => fichier_session_0
+)
+
+Array
+(
+    [session_id] => 38
+    [users_count] => 2
+    [users_ids] => Array
+        (
+            [0] => 2
+            [1] => 5
+        )
+
+)
+Session 1 - Users: Array
+(
+    [0] => 2
+    [1] => 5
+)
+
+Session 1 - Complete data: Array
+(
+    [titre] => kjde
+    [dateDebut] => 2025-07-24T15:31
+    [dateFin] => 2025-07-24T15:33
+    [type] => interne
+    [salle] => 1
+    [emplacement] => 
+    [users] => Array
+        (
+            [0] => 2
+            [1] => 5
+        )
+
+    [fichier] => fichier_session_1
+)
+
+Array
+(
+    [session_id] => 39
+    [users_count] => 2
+    [users_ids] => Array
+        (
+            [0] => 2
+            [1] => 5
+        )
+
+)
+Emails et notifications envoyés avec succès
+AJOUT AUDITLOG: Array
+(
+    [added] => Array
+        (
+            [0] => participant@test.com
+            [1] => admin.rh@test.com
+        )
+
+    [removed] => Array
+        (
+        )
+
+)
+AJOUT AUDITLOG: Array
+(
+    [added] => Array
+        (
+            [0] => admin.rh@test.com
+        )
+
+    [removed] => Array
+        (
+        )
+
+)
+AJOUT AUDITLOG: Array
+(
+    [added] => Array
+        (
+            [0] => admin.rh@test.com
+        )
+
+    [removed] => Array
+        (
+        )
+
+)
+AJOUT AUDITLOG: Array
+(
+    [added] => Array
+        (
+            [0] => participant@test.com
+            [1] => admin.rh@test.com
+        )
+
+    [removed] => Array
+        (
+        )
+
+)
+AJOUT AUDITLOG: Array
+(
+    [added] => Array
+        (
+            [0] => admin.rh@test.com
+        )
+
+    [removed] => Array
+        (
+        )
+
+)
+PARTICIPANTS AVANT: Array
+(
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => admin.rh@test.com
+)
+
+AJOUT AUDITLOG: Array
+(
+    [added] => Array
+        (
+            [0] => participant@test.com
+            [1] => admin.rh@test.com
+        )
+
+    [removed] => Array
+        (
+        )
+
+)
+PARTICIPANTS AVANT: Array
+(
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => participant@test.com
+    [1] => admin.rh@test.com
+)
+
+PARTICIPANTS AVANT: Array
+(
+    [0] => participant@test.com
+    [1] => admin.rh@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => admin.rh@test.com
+)
+
+PARTICIPANTS AVANT: Array
+(
+    [0] => admin.rh@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => participant@test.com
+    [1] => admin.rh@test.com
+)
+
+PARTICIPANTS AVANT: Array
+(
+    [0] => participant@test.com
+    [1] => admin.rh@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => admin.rh@test.com
+)
+
+PARTICIPANTS AVANT: Array
+(
+    [0] => admin.rh@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => participant@test.com
+    [1] => admin.rh@test.com
+)
+
+PARTICIPANTS AVANT: Array
+(
+    [0] => participant@test.com
+    [1] => admin.rh@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => admin.rh@test.com
+)
+
+PARTICIPANTS AVANT: Array
+(
+    [0] => admin.rh@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => participant@test.com
+    [1] => admin.rh@test.com
+)
+
+PARTICIPANTS AVANT: Array
+(
+    [0] => participant@test.com
+    [1] => admin.rh@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => admin.rh@test.com
+)
+
+AUDITLOG USER: 1
+AUDITLOG FLUSH OK: Suppression participant(s) de la session (Formation: cddc, Session: nh)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => nj
+            [dateDebut] => 2025-12-12T19:03
+            [dateFin] => 2025-12-12T20:03
+            [type] => externe
+            [salle] => 
+            [emplacement] => c
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+AUDITLOG USER: 1
+AUDITLOG FLUSH OK: Création formation
+Session 0 - Users: Array
+(
+    [0] => 2
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => nj
+    [dateDebut] => 2025-12-12T19:03
+    [dateFin] => 2025-12-12T20:03
+    [type] => externe
+    [salle] => 
+    [emplacement] => c
+    [users] => Array
+        (
+            [0] => 2
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 40
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 2
+        )
+
+)
+Emails et notifications envoyés avec succès
+PARTICIPANTS AVANT: Array
+(
+    [0] => admin.rh@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => participant@test.com
+    [1] => admin.rh@test.com
+)
+
+AUDITLOG PARTICIPANTS ADDED: Array
+(
+    [0] => participant@test.com
+)
+
+AUDITLOG PARTICIPANTS REMOVED: Array
+(
+)
+
+AUDITLOG USER: 1
+AUDITLOG FLUSH OK: Ajout participant(s) à la session (Formation: cddc, Session: nh)
+PARTICIPANTS AVANT: Array
+(
+    [0] => participant@test.com
+    [1] => admin.rh@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => admin.rh@test.com
+)
+
+AUDITLOG PARTICIPANTS ADDED: Array
+(
+)
+
+AUDITLOG PARTICIPANTS REMOVED: Array
+(
+    [0] => participant@test.com
+)
+
+AUDITLOG USER: 1
+AUDITLOG FLUSH OK: Suppression participant(s) de la session (Formation: cddc, Session: nh)
+PARTICIPANTS AVANT: Array
+(
+    [0] => admin.rh@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => participant@test.com
+    [1] => admin.rh@test.com
+)
+
+AUDITLOG PARTICIPANTS ADDED: Array
+(
+    [0] => participant@test.com
+)
+
+AUDITLOG PARTICIPANTS REMOVED: Array
+(
+)
+
+AUDITLOG USER: 1
+AUDITLOG FLUSH OK: Ajout participant(s) à la session (Formation: cddc, Session: nh)
+PARTICIPANTS AVANT: Array
+(
+    [0] => participant@test.com
+    [1] => admin.rh@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => participant@test.com
+)
+
+AUDITLOG PARTICIPANTS ADDED: Array
+(
+)
+
+AUDITLOG PARTICIPANTS REMOVED: Array
+(
+    [1] => admin.rh@test.com
+)
+
+AUDITLOG USER: 1
+AUDITLOG FLUSH OK: Suppression participant(s) de la session (Formation: cddc, Session: nh)
+PARTICIPANTS AVANT: Array
+(
+    [0] => participant@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => participant@test.com
+    [1] => admin.rh@test.com
+)
+
+AUDITLOG PARTICIPANTS ADDED: Array
+(
+    [1] => admin.rh@test.com
+)
+
+AUDITLOG PARTICIPANTS REMOVED: Array
+(
+)
+
+AUDITLOG USER: 1
+AUDITLOG FLUSH OK: Ajout participant(s) à la session (Formation: cddc, Session: nh)
+PARTICIPANTS AVANT: Array
+(
+    [0] => participant@test.com
+    [1] => admin.rh@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => admin.rh@test.com
+)
+
+AUDITLOG PARTICIPANTS ADDED: Array
+(
+)
+
+AUDITLOG PARTICIPANTS REMOVED: Array
+(
+    [0] => participant@test.com
+)
+
+AUDITLOG USER: 1
+AUDITLOG FLUSH OK: Suppression participant(s) de la session (Formation: cddc, Session: nh)
+AUDITLOG USER: 1
+AUDITLOG FLUSH OK: Création salle
+PARTICIPANTS AVANT: Array
+(
+    [0] => admin.rh@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => participant@test.com
+    [1] => admin.rh@test.com
+)
+
+AUDITLOG PARTICIPANTS ADDED: Array
+(
+    [0] => participant@test.com
+)
+
+AUDITLOG PARTICIPANTS REMOVED: Array
+(
+)
+
+AUDITLOG USER: 1
+AUDITLOG FLUSH OK: Ajout participant(s) à la session (Formation: cddc, Session: nh)
+PARTICIPANTS AVANT: Array
+(
+    [0] => participant@test.com
+    [1] => admin.rh@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => admin.rh@test.com
+)
+
+AUDITLOG PARTICIPANTS ADDED: Array
+(
+)
+
+AUDITLOG PARTICIPANTS REMOVED: Array
+(
+    [0] => participant@test.com
+)
+
+AUDITLOG USER: 1
+AUDITLOG FLUSH OK: Suppression participant(s) de la session (Formation: cddc, Session: nh)
+PARTICIPANTS AVANT: Array
+(
+    [0] => participant@test.com
+    [1] => admin.rh@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => admin.rh@test.com
+)
+
+PARTICIPANTS AVANT: Array
+(
+    [0] => admin.rh@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => participant@test.com
+    [1] => admin.rh@test.com
+)
+
+PARTICIPANTS AVANT: Array
+(
+    [0] => admin.rh@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => participant@test.com
+    [1] => admin.rh@test.com
+)
+
+PARTICIPANTS AVANT: Array
+(
+    [0] => participant@test.com
+    [1] => admin.rh@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => admin.rh@test.com
+)
+
+PARTICIPANTS AVANT: Array
+(
+    [0] => admin.rh@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => participant@test.com
+    [1] => admin.rh@test.com
+)
+
+AUDITLOG PARTICIPANTS ADDED: Array
+(
+    [0] => participant@test.com
+)
+
+AUDITLOG PARTICIPANTS REMOVED: Array
+(
+)
+
+AUDITLOG USER: 1
+AUDITLOG FLUSH OK: Ajout participant(s) à la session (Formation: cddc, Session: nh)
+AUDITLOG USER: 4
+AUDITLOG FLUSH OK: Suppression participant(s) de la session (Formation: cddc, Session: nh)
+AUDITLOG USER: 4
+AUDITLOG FLUSH OK: Suppression session (Formation: dd, Session: sz, Salle: Salle Test)
+AUDITLOG USER: 4
+AUDITLOG FLUSH OK: Suppression session (Formation: dd, Session: sa, Salle: Salle Test)
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => bb
+            [dateDebut] => 2025-07-23T21:48
+            [dateFin] => 2025-08-10T16:48
+            [type] => externe
+            [salle] => 
+            [emplacement] => 4hbj
+            [users] => Array
+                (
+                    [0] => 5
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_0] => Array
+        (
+            [0] => La date de début de session doit être supérieure ou égale à la date de début de formation (02/08/2025)
+            [1] => Conflit d'horaires pour les utilisateurs : Admin RH (sessions: n, nnn, sa, jj, kjde)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => bb
+            [dateDebut] => 2025-07-24T21:48
+            [dateFin] => 2025-08-10T16:48
+            [type] => externe
+            [salle] => 
+            [emplacement] => 4hbj
+            [users] => Array
+                (
+                    [0] => 5
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_0] => Array
+        (
+            [0] => Conflit d'horaires pour les utilisateurs : Admin RH (sessions: n, nnn, sa)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => bb
+            [dateDebut] => 2025-07-24T21:48
+            [dateFin] => 2025-08-10T16:48
+            [type] => externe
+            [salle] => 
+            [emplacement] => 4hbj
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_0] => Array
+        (
+            [0] => Conflit d'horaires pour les utilisateurs : Participant Test (sessions: bb4, ddd, sa)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => bb
+            [dateDebut] => 2025-12-02T21:48
+            [dateFin] => 2025-12-10T16:48
+            [type] => externe
+            [salle] => 
+            [emplacement] => 4hbj
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_0] => Array
+        (
+            [0] => Conflit d'horaires pour les utilisateurs : Participant Test (sessions: n)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => bb
+            [dateDebut] => 2025-12-02T21:48
+            [dateFin] => 2025-12-10T16:48
+            [type] => externe
+            [salle] => 
+            [emplacement] => 4hbj
+            [users] => Array
+                (
+                    [0] => 5
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_0] => Array
+        (
+            [0] => Conflit d'horaires pour les utilisateurs : Admin RH (sessions: n)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => bb
+            [dateDebut] => 2025-12-02T12:48
+            [dateFin] => 2025-12-02T16:48
+            [type] => externe
+            [salle] => 
+            [emplacement] => 4hbj
+            [users] => Array
+                (
+                    [0] => 5
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+AUDITLOG USER: 4
+AUDITLOG FLUSH OK: Création formation
+Session 0 - Users: Array
+(
+    [0] => 5
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => bb
+    [dateDebut] => 2025-12-02T12:48
+    [dateFin] => 2025-12-02T16:48
+    [type] => externe
+    [salle] => 
+    [emplacement] => 4hbj
+    [users] => Array
+        (
+            [0] => 5
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 41
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 5
+        )
+
+)
+AUDITLOG USER: 74
+AUDITLOG FLUSH OK: Notification envoyée
+AUDITLOG USER: 5
+AUDITLOG FLUSH OK: Notification envoyée
+Emails et notifications envoyés avec succès
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => bb
+            [dateDebut] => 2029-12-02T12:48
+            [dateFin] => 2029-12-02T16:48
+            [type] => externe
+            [salle] => 
+            [emplacement] => 4hbj
+            [users] => Array
+                (
+                    [0] => 5
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+AUDITLOG USER: 4
+AUDITLOG FLUSH OK: Création formation
+Session 0 - Users: Array
+(
+    [0] => 5
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => bb
+    [dateDebut] => 2029-12-02T12:48
+    [dateFin] => 2029-12-02T16:48
+    [type] => externe
+    [salle] => 
+    [emplacement] => 4hbj
+    [users] => Array
+        (
+            [0] => 5
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 42
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 5
+        )
+
+)
+AUDITLOG USER: 74
+AUDITLOG FLUSH OK: Notification envoyée
+AUDITLOG USER: 5
+AUDITLOG FLUSH OK: Notification envoyée
+Emails et notifications envoyés avec succès
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => jj
+            [dateDebut] => 2026-08-10T16:55
+            [dateFin] => 2026-08-10T16:59
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                    [1] => 5
+                )
+
+            [fichier] => fichier_session_0
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+AUDITLOG USER: 4
+AUDITLOG FLUSH OK: Création formation
+Session 0 - Users: Array
+(
+    [0] => 2
+    [1] => 5
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => jj
+    [dateDebut] => 2026-08-10T16:55
+    [dateFin] => 2026-08-10T16:59
+    [type] => interne
+    [salle] => 1
+    [emplacement] => 
+    [users] => Array
+        (
+            [0] => 2
+            [1] => 5
+        )
+
+    [fichier] => fichier_session_0
+)
+
+AUDITLOG USER: 4
+AUDITLOG FLUSH OK: Réservation salle pour session (Formation: sssssss, Session: jj, Salle: Salle Test)
+Array
+(
+    [session_id] => 43
+    [users_count] => 2
+    [users_ids] => Array
+        (
+            [0] => 2
+            [1] => 5
+        )
+
+)
+AUDITLOG USER: 2
+AUDITLOG FLUSH OK: Notification envoyée
+AUDITLOG USER: 5
+AUDITLOG FLUSH OK: Notification envoyée
+Emails et notifications envoyés avec succès
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => jfkv
+            [dateDebut] => 2026-07-24T16:56
+            [dateFin] => 2026-07-25T16:56
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                    [1] => 5
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+AUDITLOG USER: 4
+AUDITLOG FLUSH OK: Création formation
+Session 0 - Users: Array
+(
+    [0] => 2
+    [1] => 5
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => jfkv
+    [dateDebut] => 2026-07-24T16:56
+    [dateFin] => 2026-07-25T16:56
+    [type] => interne
+    [salle] => 1
+    [emplacement] => 
+    [users] => Array
+        (
+            [0] => 2
+            [1] => 5
+        )
+
+    [fichier] => 
+)
+
+AUDITLOG USER: 4
+AUDITLOG FLUSH OK: Réservation salle pour session (Formation: bbb, Session: jfkv, Salle: Salle Test)
+Array
+(
+    [session_id] => 44
+    [users_count] => 2
+    [users_ids] => Array
+        (
+            [0] => 2
+            [1] => 5
+        )
+
+)
+AUDITLOG USER: 74
+AUDITLOG FLUSH OK: Notification envoyée
+AUDITLOG USER: 2
+AUDITLOG FLUSH OK: Notification envoyée
+AUDITLOG USER: 5
+AUDITLOG FLUSH OK: Notification envoyée
+Emails et notifications envoyés avec succès
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => ,,,
+            [dateDebut] => 2026-08-01T16:58
+            [dateFin] => 2026-08-06T16:58
+            [type] => externe
+            [salle] => 
+            [emplacement] => k,
+            [users] => Array
+                (
+                    [0] => 2
+                    [1] => 5
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+AUDITLOG USER: 4
+AUDITLOG FLUSH OK: Création formation
+Session 0 - Users: Array
+(
+    [0] => 2
+    [1] => 5
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => ,,,
+    [dateDebut] => 2026-08-01T16:58
+    [dateFin] => 2026-08-06T16:58
+    [type] => externe
+    [salle] => 
+    [emplacement] => k,
+    [users] => Array
+        (
+            [0] => 2
+            [1] => 5
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 45
+    [users_count] => 2
+    [users_ids] => Array
+        (
+            [0] => 2
+            [1] => 5
+        )
+
+)
+AUDITLOG USER: 2
+AUDITLOG FLUSH OK: Notification envoyée
+AUDITLOG USER: 5
+AUDITLOG FLUSH OK: Notification envoyée
+Emails et notifications envoyés avec succès
+AUDITLOG USER: 4
+AUDITLOG FLUSH OK: Modification formation
+AUDITLOG USER: 4
+AUDITLOG FLUSH OK: Modification session (Formation: jjjjjj, Session: ,,,szszssz)
+AUDITLOG USER: 4
+AUDITLOG FLUSH OK: Modification session (Formation: jjjjjj, Session: jj)
+AUDITLOG USER: 4
+AUDITLOG FLUSH OK: Modification session (Formation: jjjjjj, Session: jj)
+AUDITLOG USER: 1
+AUDITLOG FLUSH OK: Modification formation
+AUDITLOG USER: 1
+AUDITLOG FLUSH OK: Modification session (Formation: jj, Session: jjjjjjjjjjjjjjjjjjjj)
+PARTICIPANTS AVANT: Array
+(
+    [0] => participant@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => participant@test.com
+)
+
+AUDITLOG PARTICIPANTS ADDED: Array
+(
+)
+
+AUDITLOG PARTICIPANTS REMOVED: Array
+(
+)
+
+AUDITLOG USER: 1
+AUDITLOG FLUSH OK: Modification session (Formation: jj, Session: kkk)
+PARTICIPANTS AVANT: Array
+(
+    [0] => participant@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => participant@test.com
+)
+
+AUDITLOG PARTICIPANTS ADDED: Array
+(
+)
+
+AUDITLOG PARTICIPANTS REMOVED: Array
+(
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => vvvv
+            [dateDebut] => 2027-07-26T17:14
+            [dateFin] => 2027-08-01T17:14
+            [type] => interne
+            [salle] => 3
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                    [1] => 5
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+AUDITLOG USER: 1
+AUDITLOG FLUSH OK: Création formation
+Session 0 - Users: Array
+(
+    [0] => 2
+    [1] => 5
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => vvvv
+    [dateDebut] => 2027-07-26T17:14
+    [dateFin] => 2027-08-01T17:14
+    [type] => interne
+    [salle] => 3
+    [emplacement] => 
+    [users] => Array
+        (
+            [0] => 2
+            [1] => 5
+        )
+
+    [fichier] => 
+)
+
+AUDITLOG USER: 1
+AUDITLOG FLUSH OK: Réservation salle pour session (Formation: xxxxxxxxxxx, Session: vvvv, Salle: ,,)
+Array
+(
+    [session_id] => 46
+    [users_count] => 2
+    [users_ids] => Array
+        (
+            [0] => 2
+            [1] => 5
+        )
+
+)
+AUDITLOG USER: 4
+AUDITLOG FLUSH OK: Notification envoyée
+AUDITLOG USER: 2
+AUDITLOG FLUSH OK: Notification envoyée
+AUDITLOG USER: 5
+AUDITLOG FLUSH OK: Notification envoyée
+Emails et notifications envoyés avec succès
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => sks
+            [dateDebut] => 2025-08-10T17:17
+            [dateFin] => 2025-08-10T17:23
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                    [1] => 5
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+AUDITLOG USER: 1
+AUDITLOG FLUSH OK: Création formation
+Session 0 - Users: Array
+(
+    [0] => 2
+    [1] => 5
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => sks
+    [dateDebut] => 2025-08-10T17:17
+    [dateFin] => 2025-08-10T17:23
+    [type] => interne
+    [salle] => 1
+    [emplacement] => 
+    [users] => Array
+        (
+            [0] => 2
+            [1] => 5
+        )
+
+    [fichier] => 
+)
+
+AUDITLOG USER: 1
+AUDITLOG FLUSH OK: Réservation salle pour session (Formation: sujet, Session: sks, Salle: Salle Test)
+Array
+(
+    [session_id] => 47
+    [users_count] => 2
+    [users_ids] => Array
+        (
+            [0] => 2
+            [1] => 5
+        )
+
+)
+AUDITLOG USER: 4
+AUDITLOG FLUSH OK: Notification envoyée
+AUDITLOG USER: 2
+AUDITLOG FLUSH OK: Notification envoyée
+AUDITLOG USER: 5
+AUDITLOG FLUSH OK: Notification envoyée
+Emails et notifications envoyés avec succès
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => sessionresponsable
+            [dateDebut] => 2025-08-23T17:23
+            [dateFin] => 2025-08-23T23:18
+            [type] => externe
+            [salle] => 
+            [emplacement] => lo
+            [users] => Array
+                (
+                    [0] => 2
+                    [1] => 5
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+AUDITLOG USER: 4
+AUDITLOG FLUSH OK: Création formation
+Session 0 - Users: Array
+(
+    [0] => 2
+    [1] => 5
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => sessionresponsable
+    [dateDebut] => 2025-08-23T17:23
+    [dateFin] => 2025-08-23T23:18
+    [type] => externe
+    [salle] => 
+    [emplacement] => lo
+    [users] => Array
+        (
+            [0] => 2
+            [1] => 5
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 48
+    [users_count] => 2
+    [users_ids] => Array
+        (
+            [0] => 2
+            [1] => 5
+        )
+
+)
+AUDITLOG USER: 74
+AUDITLOG FLUSH OK: Notification envoyée
+AUDITLOG USER: 2
+AUDITLOG FLUSH OK: Notification envoyée
+AUDITLOG USER: 5
+AUDITLOG FLUSH OK: Notification envoyée
+Emails et notifications envoyés avec succès
+AUDITLOG USER: 4
+AUDITLOG FLUSH OK: Modification session (Formation: sujet, Session: kkkk)
+AUDITLOG USER: 1
+AUDITLOG FLUSH OK: Modification session (Formation: responsable, Session: sessionrespnsable)
+PARTICIPANTS AVANT: Array
+(
+    [0] => participant@test.com
+    [1] => admin.rh@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => participant@test.com
+    [1] => admin.rh@test.com
+)
+
+AUDITLOG PARTICIPANTS ADDED: Array
+(
+)
+
+AUDITLOG PARTICIPANTS REMOVED: Array
+(
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => session
+            [dateDebut] => 2028-08-03T17:27
+            [dateFin] => 2028-08-09T17:27
+            [type] => interne
+            [salle] => 2
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+Session 0 - Users: Array
+(
+    [0] => 2
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => session
+    [dateDebut] => 2028-08-03T17:27
+    [dateFin] => 2028-08-09T17:27
+    [type] => interne
+    [salle] => 2
+    [emplacement] => 
+    [users] => Array
+        (
+            [0] => 2
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 49
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 2
+        )
+
+)
+Emails et notifications envoyés avec succès
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => kk
+            [dateDebut] => 2025-08-09T17:32
+            [dateFin] => 2025-08-10T17:32
+            [type] => interne
+            [salle] => 2
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+    [1] => Array
+        (
+            [titre] => klkl
+            [dateDebut] => 2025-08-02T17:32
+            [dateFin] => 2025-08-02T17:38
+            [type] => externe
+            [salle] => 
+            [emplacement] => j
+            [users] => Array
+                (
+                    [0] => 5
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_0] => Array
+        (
+            [0] => Conflit d'horaires pour les utilisateurs : Participant Test (sessions: kkl,po)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => kk
+            [dateDebut] => 2025-08-09T17:32
+            [dateFin] => 2025-08-10T17:32
+            [type] => interne
+            [salle] => 2
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 5
+                )
+
+            [fichier] => 
+        )
+
+    [1] => Array
+        (
+            [titre] => klkl
+            [dateDebut] => 2025-08-02T17:32
+            [dateFin] => 2025-08-02T17:38
+            [type] => externe
+            [salle] => 
+            [emplacement] => j
+            [users] => Array
+                (
+                    [0] => 5
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+    [session_0] => Array
+        (
+            [0] => Conflit d'horaires pour les utilisateurs : Admin RH (sessions: kkl,po)
+        )
+
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => kk
+            [dateDebut] => 2026-08-09T17:32
+            [dateFin] => 2026-08-10T17:32
+            [type] => interne
+            [salle] => 2
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 5
+                )
+
+            [fichier] => 
+        )
+
+    [1] => Array
+        (
+            [titre] => klkl
+            [dateDebut] => 2025-08-02T17:32
+            [dateFin] => 2025-08-02T17:38
+            [type] => externe
+            [salle] => 
+            [emplacement] => j
+            [users] => Array
+                (
+                    [0] => 5
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+Session 0 - Users: Array
+(
+    [0] => 5
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => kk
+    [dateDebut] => 2026-08-09T17:32
+    [dateFin] => 2026-08-10T17:32
+    [type] => interne
+    [salle] => 2
+    [emplacement] => 
+    [users] => Array
+        (
+            [0] => 5
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 50
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 5
+        )
+
+)
+Session 1 - Users: Array
+(
+    [0] => 5
+)
+
+Session 1 - Complete data: Array
+(
+    [titre] => klkl
+    [dateDebut] => 2025-08-02T17:32
+    [dateFin] => 2025-08-02T17:38
+    [type] => externe
+    [salle] => 
+    [emplacement] => j
+    [users] => Array
+        (
+            [0] => 5
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 51
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 5
+        )
+
+)
+Emails et notifications envoyés avec succès
+PARTICIPANTS AVANT: Array
+(
+    [0] => admin.rh@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => admin.rh@test.com
+)
+
+AUDITLOG PARTICIPANTS ADDED: Array
+(
+)
+
+AUDITLOG PARTICIPANTS REMOVED: Array
+(
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => ksldqld
+            [dateDebut] => 2027-08-10T17:50
+            [dateFin] => 2027-08-10T18:55
+            [type] => externe
+            [salle] => 
+            [emplacement] => ,j
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+Session 0 - Users: Array
+(
+    [0] => 2
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => ksldqld
+    [dateDebut] => 2027-08-10T17:50
+    [dateFin] => 2027-08-10T18:55
+    [type] => externe
+    [salle] => 
+    [emplacement] => ,j
+    [users] => Array
+        (
+            [0] => 2
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 52
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 2
+        )
+
+)
+Emails et notifications envoyés avec succès
+PARTICIPANTS AVANT: Array
+(
+    [0] => participant@test.com
+    [1] => admin.rh@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => participant@test.com
+    [1] => admin.rh@test.com
+)
+
+AUDITLOG PARTICIPANTS ADDED: Array
+(
+)
+
+AUDITLOG PARTICIPANTS REMOVED: Array
+(
+)
+
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=null, responsable=4 MED.ali@gmail.com
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => gg
+            [dateDebut] => 2025-08-10T18:03
+            [dateFin] => 2025-08-10T18:10
+            [type] => interne
+            [salle] => 3
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+Session 0 - Users: Array
+(
+    [0] => 2
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => gg
+    [dateDebut] => 2025-08-10T18:03
+    [dateFin] => 2025-08-10T18:10
+    [type] => interne
+    [salle] => 3
+    [emplacement] => 
+    [users] => Array
+        (
+            [0] => 2
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 53
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 2
+        )
+
+)
+Emails et notifications envoyés avec succès
+PARTICIPANTS AVANT: Array
+(
+    [0] => participant@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => participant@test.com
+)
+
+AUDITLOG PARTICIPANTS ADDED: Array
+(
+)
+
+AUDITLOG PARTICIPANTS REMOVED: Array
+(
+)
+
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+NOTIF FORMATION: acteur=4 MED.ali@gmail.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+PARTICIPANTS AVANT: Array
+(
+    [0] => participant@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => participant@test.com
+)
+
+AUDITLOG PARTICIPANTS ADDED: Array
+(
+)
+
+AUDITLOG PARTICIPANTS REMOVED: Array
+(
+)
+
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+PARTICIPANTS AVANT: Array
+(
+    [0] => participant@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => participant@test.com
+)
+
+AUDITLOG PARTICIPANTS ADDED: Array
+(
+)
+
+AUDITLOG PARTICIPANTS REMOVED: Array
+(
+)
+
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+PARTICIPANTS AVANT: Array
+(
+    [0] => participant@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => participant@test.com
+)
+
+AUDITLOG PARTICIPANTS ADDED: Array
+(
+)
+
+AUDITLOG PARTICIPANTS REMOVED: Array
+(
+)
+
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+PARTICIPANTS AVANT: Array
+(
+    [0] => participant@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => participant@test.com
+)
+
+AUDITLOG PARTICIPANTS ADDED: Array
+(
+)
+
+AUDITLOG PARTICIPANTS REMOVED: Array
+(
+)
+
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+NOTIF FORMATION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+PARTICIPANTS AVANT: Array
+(
+    [0] => participant@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => participant@test.com
+)
+
+AUDITLOG PARTICIPANTS ADDED: Array
+(
+)
+
+AUDITLOG PARTICIPANTS REMOVED: Array
+(
+)
+
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+PARTICIPANTS AVANT: Array
+(
+    [0] => participant@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => participant@test.com
+)
+
+AUDITLOG PARTICIPANTS ADDED: Array
+(
+)
+
+AUDITLOG PARTICIPANTS REMOVED: Array
+(
+)
+
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+PARTICIPANTS AVANT: Array
+(
+    [0] => participant@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => participant@test.com
+)
+
+AUDITLOG PARTICIPANTS ADDED: Array
+(
+)
+
+AUDITLOG PARTICIPANTS REMOVED: Array
+(
+)
+
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+NOTIF FORMATION: acteur=4 MED.ali@gmail.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+PARTICIPANTS AVANT: Array
+(
+    [0] => participant@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => participant@test.com
+)
+
+AUDITLOG PARTICIPANTS ADDED: Array
+(
+)
+
+AUDITLOG PARTICIPANTS REMOVED: Array
+(
+)
+
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+NOTIF FORMATION: acteur=4 MED.ali@gmail.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+NOTIF FORMATION: acteur=4 MED.ali@gmail.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+PARTICIPANTS AVANT: Array
+(
+    [0] => participant@test.com
+)
+
+PARTICIPANTS APRES: Array
+(
+    [0] => participant@test.com
+)
+
+AUDITLOG PARTICIPANTS ADDED: Array
+(
+)
+
+AUDITLOG PARTICIPANTS REMOVED: Array
+(
+)
+
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: []
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: []
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: []
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: []
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: []
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF FORMATION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=74 k.k@gmail.com
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => session
+            [dateDebut] => 2025-08-24T15:35
+            [dateFin] => 2025-09-07T15:35
+            [type] => externe
+            [salle] => 
+            [emplacement] => localitio,
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => fichier_session_0
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => session
+            [dateDebut] => 2025-08-24T15:35
+            [dateFin] => 2025-09-07T15:35
+            [type] => externe
+            [salle] => 
+            [emplacement] => localitio,
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => fichier_session_0
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => session
+            [dateDebut] => 2025-08-24T15:35
+            [dateFin] => 2025-09-07T15:35
+            [type] => externe
+            [salle] => 
+            [emplacement] => localitio,
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => fichier_session_0
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=1 admin@test.com, responsable=74 k.k@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=1 admin@test.com, responsable=74 k.k@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF FORMATION: acteur=4 MED.ali@gmail.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [5 admin.rh@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [5 admin.rh@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=74 k.k@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=74 k.k@gmail.com
+NOTIF SESSION CIBLES: [5 admin.rh@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=74 k.k@gmail.com
+NOTIF SESSION CIBLES: [5 admin.rh@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=74 k.k@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=74 k.k@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=74 k.k@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=74 k.k@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=74 k.k@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=74 k.k@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=74 k.k@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=74 k.k@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com, 5 admin.rh@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=74 k.k@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com, 5 admin.rh@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [5 admin.rh@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [5 admin.rh@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [5 admin.rh@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [5 admin.rh@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [5 admin.rh@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com, 5 admin.rh@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [5 admin.rh@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [5 admin.rh@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [5 admin.rh@test.com]
+NOTIF FORMATION: acteur=1 admin@test.com, createur=null, responsable=74 k.k@gmail.com
+NOTIF FORMATION: acteur=1 admin@test.com, createur=null, responsable=74 k.k@gmail.com
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=74 k.k@gmail.com
+NOTIF SESSION CIBLES: [5 admin.rh@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=74 k.k@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=74 k.k@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com, 5 admin.rh@test.com]
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=null, responsable=74 k.k@gmail.com
+NOTIF SESSION CIBLES: [5 admin.rh@test.com]
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=null, responsable=74 k.k@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [5 admin.rh@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [5 admin.rh@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [5 admin.rh@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [5 admin.rh@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [5 admin.rh@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [5 admin.rh@test.com]
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [5 admin.rh@test.com]
+NOTIF FORMATION: acteur=4 MED.ali@gmail.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF FORMATION: acteur=4 MED.ali@gmail.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=74 k.k@gmail.com
+NOTIF SESSION CIBLES: [5 admin.rh@test.com]
+NOTIF FORMATION: acteur=1 admin@test.com, createur=null, responsable=74 k.k@gmail.com
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION CIBLES: [2 participant@test.com, 5 admin.rh@test.com]
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION - CASE: RESPONSABLE
+NOTIF SESSION CIBLES: [2 participant@test.com, 5 admin.rh@test.com]
+NOTIF FORMATION: acteur=4 MED.ali@gmail.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF FORMATION - CASE: RESPONSABLE
+NOTIF FORMATION - PARTICIPANTS COUNT: 2
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION - CASE: RESPONSABLE
+NOTIF SESSION - RESPONSABLE NOTIFIED: NO
+NOTIF SESSION CIBLES: [2 participant@test.com, 5 admin.rh@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION - CASE: AUTRE
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION - CASE: AUTRE
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [5 admin.rh@test.com]
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION - CASE: RESPONSABLE
+NOTIF SESSION - RESPONSABLE NOTIFIED: NO
+NOTIF SESSION CIBLES: [5 admin.rh@test.com]
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => session 1
+            [dateDebut] => 2025-08-10T16:00
+            [dateFin] => 2025-08-10T17:00
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 2
+                )
+
+            [fichier] => fichier_session_0
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+Session 0 - Users: Array
+(
+    [0] => 2
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => session 1
+    [dateDebut] => 2025-08-10T16:00
+    [dateFin] => 2025-08-10T17:00
+    [type] => interne
+    [salle] => 1
+    [emplacement] => 
+    [users] => Array
+        (
+            [0] => 2
+        )
+
+    [fichier] => fichier_session_0
+)
+
+Array
+(
+    [session_id] => 65
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 2
+        )
+
+)
+Emails et notifications envoyés avec succès
+NOTIF SESSION: acteur=4 MED.ali@gmail.com, createur=1 admin@test.com, responsable=4 MED.ali@gmail.com
+NOTIF SESSION - CASE: RESPONSABLE
+NOTIF SESSION - RESPONSABLE NOTIFIED: NO
+NOTIF SESSION CIBLES: [2 participant@test.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=4 MED.ali@gmail.com
+NOTIF SESSION - CASE: AUTRE
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [5 admin.rh@test.com]
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => ss
+            [dateDebut] => 2025-08-12T17:59
+            [dateFin] => 2025-08-12T22:00
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 3
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => Session Test
+            [dateDebut] => 2025-12-01T09:00
+            [dateFin] => 2025-12-01T17:00
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 1
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => ss
+            [dateDebut] => 2025-08-12T17:59
+            [dateFin] => 2025-08-12T22:00
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 3
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+Session 0 - Users: Array
+(
+    [0] => 3
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => ss
+    [dateDebut] => 2025-08-12T17:59
+    [dateFin] => 2025-08-12T22:00
+    [type] => interne
+    [salle] => 1
+    [emplacement] => 
+    [users] => Array
+        (
+            [0] => 3
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 2
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 3
+        )
+
+)
+Emails et notifications envoyés avec succès
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => jj
+            [dateDebut] => 2025-08-15T17:26
+            [dateFin] => 2025-08-15T17:32
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 3
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => hh
+            [dateDebut] => 2025-08-23T17:30
+            [dateFin] => 2025-08-23T17:34
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 3
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+Session 0 - Users: Array
+(
+    [0] => 3
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => hh
+    [dateDebut] => 2025-08-23T17:30
+    [dateFin] => 2025-08-23T17:34
+    [type] => interne
+    [salle] => 1
+    [emplacement] => 
+    [users] => Array
+        (
+            [0] => 3
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 3
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 3
+        )
+
+)
+Emails et notifications envoyés avec succès
+NOTIF SESSION: acteur=2 admin@test.com, createur=null, responsable=1 MED.ali@gmail.com
+NOTIF SESSION - CASE: AUTRE
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [3 participant@1.com]
+NOTIF FORMATION: acteur=2 admin@test.com, createur=null, responsable=1 MED.ali@gmail.com
+NOTIF FORMATION - CASE: AUTRE
+NOTIF FORMATION - PARTICIPANTS COUNT: 1
+NOTIF FORMATION - RESPONSABLE NOTIFIED: YES
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => session
+            [dateDebut] => 2025-08-13T17:39
+            [dateFin] => 2025-08-13T22:00
+            [type] => interne
+            [salle] => 1
+            [emplacement] => 
+            [users] => Array
+                (
+                    [0] => 3
+                )
+
+            [fichier] => 
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+Session 0 - Users: Array
+(
+    [0] => 3
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => session
+    [dateDebut] => 2025-08-13T17:39
+    [dateFin] => 2025-08-13T22:00
+    [type] => interne
+    [salle] => 1
+    [emplacement] => 
+    [users] => Array
+        (
+            [0] => 3
+        )
+
+    [fichier] => 
+)
+
+Array
+(
+    [session_id] => 5
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 3
+        )
+
+)
+Emails et notifications envoyés avec succès
+NOTIF SESSION: acteur=1 MED.ali@gmail.com, createur=null, responsable=1 MED.ali@gmail.com
+NOTIF SESSION - CASE: RESPONSABLE
+NOTIF SESSION - RESPONSABLE NOTIFIED: NO
+NOTIF SESSION CIBLES: [3 participant@1.com]
+NOTIF SESSION: acteur=2 admin@test.com, createur=null, responsable=1 MED.ali@gmail.com
+NOTIF SESSION - CASE: AUTRE
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [3 participant@1.com]
+NOTIF FORMATION: acteur=2 admin@test.com, createur=null, responsable=1 MED.ali@gmail.com
+NOTIF FORMATION - CASE: AUTRE
+NOTIF FORMATION - PARTICIPANTS COUNT: 1
+NOTIF FORMATION - RESPONSABLE NOTIFIED: YES
+NOTIF FORMATION: acteur=2 admin@test.com, createur=null, responsable=1 MED.ali@gmail.com
+NOTIF FORMATION - CASE: AUTRE
+NOTIF FORMATION - PARTICIPANTS COUNT: 1
+NOTIF FORMATION - RESPONSABLE NOTIFIED: YES
+NOTIF FORMATION: acteur=2 admin@test.com, createur=null, responsable=1 MED.ali@gmail.com
+NOTIF FORMATION - CASE: AUTRE
+NOTIF FORMATION - PARTICIPANTS COUNT: 1
+NOTIF FORMATION - RESPONSABLE NOTIFIED: YES
+=== NOUVELLE FORMATION ===
+Array
+(
+    [0] => Array
+        (
+            [titre] => sesion 
+            [dateDebut] => 2025-08-22T10:49
+            [dateFin] => 2025-08-22T12:00
+            [type] => externe
+            [salle] => 
+            [emplacement] => localition
+            [users] => Array
+                (
+                    [0] => 3
+                )
+
+            [fichier] => fichier_session_0
+        )
+
+)
+Erreurs de validation: Array
+(
+)
+
+Session 0 - Users: Array
+(
+    [0] => 3
+)
+
+Session 0 - Complete data: Array
+(
+    [titre] => sesion 
+    [dateDebut] => 2025-08-22T10:49
+    [dateFin] => 2025-08-22T12:00
+    [type] => externe
+    [salle] => 
+    [emplacement] => localition
+    [users] => Array
+        (
+            [0] => 3
+        )
+
+    [fichier] => fichier_session_0
+)
+
+Array
+(
+    [session_id] => 6
+    [users_count] => 1
+    [users_ids] => Array
+        (
+            [0] => 3
+        )
+
+)
+Emails et notifications envoyés avec succès
+NOTIF SESSION: acteur=2 admin@test.com, createur=null, responsable=1 MED.ali@gmail.com
+NOTIF SESSION - CASE: AUTRE
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [3 participant@1.com, 4 participant2@.com]
+NOTIF SESSION: acteur=2 admin@test.com, createur=null, responsable=1 MED.ali@gmail.com
+NOTIF SESSION - CASE: AUTRE
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [3 participant@1.com, 8 participant@2.com]
+NOTIF SESSION: acteur=2 admin@test.com, createur=null, responsable=1 MED.ali@gmail.com
+NOTIF SESSION - CASE: AUTRE
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [3 participant@1.com, 8 participant@2.com]
+NOTIF SESSION: acteur=2 admin@test.com, createur=null, responsable=1 MED.ali@gmail.com
+NOTIF SESSION - CASE: AUTRE
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [3 participant@1.com, 8 participant@2.com]
+NOTIF SESSION: acteur=2 admin@test.com, createur=null, responsable=1 MED.ali@gmail.com
+NOTIF SESSION - CASE: AUTRE
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [8 participant@2.com]
+NOTIF SESSION: acteur=2 admin@test.com, createur=null, responsable=1 MED.ali@gmail.com
+NOTIF SESSION - CASE: AUTRE
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [8 participant@2.com]
+NOTIF SESSION: acteur=2 admin@test.com, createur=null, responsable=1 MED.ali@gmail.com
+NOTIF SESSION - CASE: AUTRE
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [8 participant@2.com]
+NOTIF SESSION: acteur=2 admin@test.com, createur=null, responsable=1 MED.ali@gmail.com
+NOTIF SESSION - CASE: AUTRE
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [3 participant@1.com, 8 participant@2.com]
+NOTIF SESSION: acteur=2 admin@test.com, createur=null, responsable=1 MED.ali@gmail.com
+NOTIF SESSION - CASE: AUTRE
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [3 participant@1.com, 8 participant@2.com]
+NOTIF SESSION: acteur=2 admin@test.com, createur=null, responsable=1 MED.ali@gmail.com
+NOTIF SESSION - CASE: AUTRE
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [8 participant@2.com]
+NOTIF FORMATION: acteur=2 admin@test.com, createur=null, responsable=1 MED.ali@gmail.com
+NOTIF FORMATION - CASE: AUTRE
+NOTIF FORMATION - PARTICIPANTS COUNT: 2
+NOTIF FORMATION - RESPONSABLE NOTIFIED: YES
+NOTIF FORMATION: acteur=6 admin@test.com, createur=6 admin@test.com, responsable=8 responsable@test.com
+NOTIF FORMATION - CASE: CREATEUR
+NOTIF FORMATION - PARTICIPANTS COUNT: 1
+NOTIF FORMATION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION: acteur=6 admin@test.com, createur=6 admin@test.com, responsable=8 responsable@test.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [10 participant@1.com]
+NOTIF SESSION: acteur=6 admin@test.com, createur=6 admin@test.com, responsable=8 responsable@test.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [10 participant@1.com]
+NOTIF SESSION: acteur=6 admin@test.com, createur=6 admin@test.com, responsable=8 responsable@test.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [10 participant@1.com]
+NOTIF SESSION: acteur=6 admin@test.com, createur=6 admin@test.com, responsable=8 responsable@test.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [10 participant@1.com]
+NOTIF SESSION: acteur=6 admin@test.com, createur=6 admin@test.com, responsable=8 responsable@test.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [10 participant@1.com]
+NOTIF FORMATION: acteur=6 admin@test.com, createur=6 admin@test.com, responsable=8 responsable@test.com
+NOTIF FORMATION - CASE: CREATEUR
+NOTIF FORMATION - PARTICIPANTS COUNT: 1
+NOTIF FORMATION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION: acteur=6 admin@test.com, createur=6 admin@test.com, responsable=8 responsable@test.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [10 participant@1.com]
+NOTIF SESSION: acteur=6 admin@test.com, createur=6 admin@test.com, responsable=8 responsable@test.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [10 participant@1.com]
+NOTIF SESSION: acteur=6 admin@test.com, createur=6 admin@test.com, responsable=8 responsable@test.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [10 participant@1.com]
+NOTIF SESSION: acteur=6 admin@test.com, createur=6 admin@test.com, responsable=8 responsable@test.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [10 participant@1.com]
+NOTIF SESSION: acteur=6 admin@test.com, createur=6 admin@test.com, responsable=8 responsable@test.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [10 participant@1.com]
+NOTIF FORMATION: acteur=6 admin@test.com, createur=6 admin@test.com, responsable=8 responsable@test.com
+NOTIF FORMATION - CASE: CREATEUR
+NOTIF FORMATION - PARTICIPANTS COUNT: 1
+NOTIF FORMATION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION: acteur=6 admin@test.com, createur=6 admin@test.com, responsable=8 responsable@test.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [10 participant@1.com]
+NOTIF FORMATION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=2 MED.ali@gmail.com
+NOTIF FORMATION - CASE: CREATEUR
+NOTIF FORMATION - PARTICIPANTS COUNT: 2
+NOTIF FORMATION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=2 MED.ali@gmail.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [3 participant@1.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=2 MED.ali@gmail.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [3 participant@1.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=2 MED.ali@gmail.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [3 participant@1.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=2 MED.ali@gmail.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [3 participant@1.com, 4 participant@2.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=2 MED.ali@gmail.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [3 participant@1.com, 4 participant@2.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=2 MED.ali@gmail.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [3 participant@1.com, 4 participant@2.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=2 MED.ali@gmail.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [3 participant@1.com, 4 participant@2.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=2 MED.ali@gmail.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [3 participant@1.com, 4 participant@2.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=2 MED.ali@gmail.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [3 participant@1.com, 4 participant@2.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=2 MED.ali@gmail.com
+NOTIF SESSION - CASE: AUTRE
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [3 participant@1.com, 4 participant@2.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=2 MED.ali@gmail.com
+NOTIF SESSION - CASE: AUTRE
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [3 participant@1.com, 4 participant@2.com]

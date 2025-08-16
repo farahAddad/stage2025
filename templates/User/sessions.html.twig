@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="fr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   
+    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/jquery-jvectormap-2.0.3.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/morris.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/unslider.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/weather-icons/climacons.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
+    <!-- END: Theme CSS-->
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-overlay-menu.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-gradient.css">
+    <!-- link(rel='stylesheet', type='text/css', href=app_assets_path+'/css'+rtl+'/pages/users.css')-->
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
+    <!-- END: Custom CSS-->
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-overlay-menu 2-columns   fixed-navbar" data-open="click" data-menu="vertical-overlay-menu" data-col="2-columns">
+{% include 'User/navBar.html.twig' %}
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-md-6 col-12 mb-2">
+                <h3 class="content-header-title">Mes Sessions</h3>
+                <p class="text-muted">Bienvenue {{ user.prenom }} {{ user.nom }}</p>
+            </div>
+        </div>
+        
+        <div class="content-body">
+            <!-- Statistiques -->
+            <div class="row">
+                <div class="col-xl-3 col-md-6 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-left">
+                                        <h3 class="primary">{{ totalFormations }}</h3>
+                                        <span>Total Formations</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="icon-book-open primary font-large-2 float-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-xl-3 col-md-6 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-left">
+                                        <h3 class="warning">{{ sessionsAValider }}</h3>
+                                        <span>À valider ta inscription</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="icon-clock warning font-large-2 float-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-xl-3 col-md-6 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-left">
+                                        <h3 class="success">{{ formationsTerminees }}</h3>
+                                        <span>Terminées</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="icon-check success font-large-2 float-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+              
+                <div class="col-xl-3 col-md-6 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-left">
+                                        <h3 class="info">{{ countNonLues }}</h3>
+                                        <span>Notifications</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="icon-bell info font-large-2 float-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mes Sessions -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Mes Sessions</h4>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body">
+                                {% if inscriptions is empty %}
+                                    <div class="text-center py-4">
+                                        <i class="icon-calendar font-large-2 text-muted"></i>
+                                        <h5 class="mt-2">Aucune session</h5>
+                                        <p class="text-muted">Vous n'êtes inscrit à aucune session pour le moment.</p>
+                                    </div>
+                                {% else %}
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Formation</th>
+                                                    <th>Session</th>
+                                                    <th>Date de début</th>
+                                                    <th>Date de fin</th>
+                                                    <th>Lieu</th>
+                                                    <th>Statut</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for inscription in inscriptions %}
+                                                    {% set session = inscription.session %}
+                                                    {% set formation = session.formation %}
+                                                    <tr>
+                                                        <td>
+                                                            <strong>{{ formation.sujet }}</strong>
+                                                        </td>
+                                                        <td>{{ session.titre }}</td>
+                                                        <td>{{ session.dateDebut|date('d/m/Y H:i') }}</td>
+                                                        <td>{{ session.dateFin|date('d/m/Y H:i') }}</td>
+                                                        <td>
+                                                            {% if session.salle %}
+                                                                {{ session.salle.nom }}
+                                                            {% else %}
+                                                                {{ session.emplacement }}
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            {% set status = session.status ?: 'créée' %}
+                                                            {% if status == 'créée' %}
+                                                                <span class="badge badge-info">{{ status|capitalize }}</span>
+                                                            {% elseif status == 'en cours' %}
+                                                                <span class="badge badge-warning">{{ status|capitalize }}</span>
+                                                            {% elseif status == 'terminé' %}
+                                                                <span class="badge badge-success">{{ status|capitalize }}</span>
+                                                            {% elseif status == 'annulée' %}
+                                                                <span class="badge badge-danger">{{ status|capitalize }}</span>
+                                                            {% else %}
+                                                                <span class="badge badge-secondary">{{ status|capitalize }}</span>
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            {% if inscription.statutParticipation == 'en attente' and session.status == 'créée' %}
+                                                                <a href="{{ path('user_inscription_details', {'id': inscription.id}) }}" class="btn btn-sm btn-danger">
+                                                                    <i class="icon-alert-circle"></i> Valider
+                                                                </a>
+                                                            {% else %}
+                                                                <a href="{{ path('user_inscription_details', {'id': inscription.id}) }}" class="btn btn-sm btn-primary">
+                                                                    <i class="icon-eye"></i> Détails
+                                                                </a>
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: Content-->
+
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+  
+
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/extensions/jquery.knob.min.js"></script>
+    <script src="../../../app-assets/js/scripts/extensions/knob.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/raphael-min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/morris.min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/jvector/jquery-jvectormap-2.0.3.min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/jvector/jquery-jvectormap-world-mill.js"></script>
+    <script src="../../../app-assets/data/jvector/visitor-data.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/chart.min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/jquery.sparkline.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/unslider-min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-climacon.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/fonts/simple-line-icons/style.min.css">
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="../../../app-assets/js/core/app-menu.js"></script>
+    <script src="../../../app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/pages/dashboard-analytics.js"></script>
+    <!-- END: Page JS-->
+
+
+
+</body>
+<!-- END: Body-->
+
+</html>

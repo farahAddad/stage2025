@@ -1,0 +1,52 @@
+<nav class="vertical-menu">
+    <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow menu-border">
+       
+        <div class="main-menu-content">
+            <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+                <li class=" navigation-header"><span>Administration</span><i class=" ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Administration"></i>
+                </li>
+                
+                <li class=" nav-item">
+                    <a href="{{ path('admin_dashboard') }}">
+                        <i class="ft-home"></i>
+                        <span class="menu-title" data-i18n="">Dashboard</span>
+                    </a>
+                </li>
+                
+                <li class=" nav-item">
+                    <a href="#">
+                        <i class="ft-check-square"></i>
+                        <span class="menu-title" data-i18n="">Formations</span>
+                    </a>
+                    <ul class="menu-content">
+                        <li><a class="menu-item" href="{{ path('liste_formations') }}">Liste des formations</a></li>
+                        <li><a class="menu-item" href="{{ path('ajouter_formation') }}">Créer une formation</a></li>
+                    </ul>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="{{ path('listeSalles') }}">
+                        <i class="ft-layout"></i>
+                        <span class="menu-title" data-i18n="">Salles</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ path('admin_audit_logs') }}">
+                        <i class="ft-history"></i>
+                        <span class="menu-title" data-i18n="">Audit Logs</span>
+                    </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="{{ path('app_calendar_index') }}">
+                        <i class="ft-calendar"></i>
+                        <span class="menu-title" data-i18n="">Calendrier</span>
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+       
+    </div>
+</nav>
