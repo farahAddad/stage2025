@@ -183,6 +183,7 @@ class ResponsableController extends AbstractController
         $totalSessions = 0;
         $sessionsEnCours = 0;
         $sessionsTerminees = 0;
+        $sessionsCreees = 0;
         $totalParticipants = 0;
         
         foreach ($formations as $formation) {
@@ -194,6 +195,11 @@ class ResponsableController extends AbstractController
                     $sessionsEnCours++;
                 } else {
                     $sessionsTerminees++;
+                }
+                
+                // Compter les sessions créées
+                if ($session->getStatus() === 'créée') {
+                    $sessionsCreees++;
                 }
                 
                 // Compter les participants
@@ -228,6 +234,7 @@ class ResponsableController extends AbstractController
             'totalSessions' => $totalSessions,
             'sessionsEnCours' => $sessionsEnCours,
             'sessionsTerminees' => $sessionsTerminees,
+            'sessionsCreees' => $sessionsCreees,
             'totalParticipants' => $totalParticipants
         ]);
     }

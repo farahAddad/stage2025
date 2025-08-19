@@ -1,192 +1,290 @@
 <!DOCTYPE html>
-<html class="loading" lang="fr" data-textdirection="fr">
+<html class="loading" lang="en" data-textdirection="fr">
+<!-- BEGIN: Head-->
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Notifications - Système de Formation</title>
-    
-    <!-- CSS -->
+   
+    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/jquery-jvectormap-2.0.3.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/morris.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/unslider.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/weather-icons/climacons.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
+    <!-- END: Theme CSS-->
+
+    <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-overlay-menu.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-gradient.css">
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
-    
-    <!-- Font Awesome pour les icônes -->
+    <!-- END: Custom CSS-->
+
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        .notification-item {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        .notification-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .notification-item.unread {
+            border-left-color: #007bff;
+            background-color: #f8f9fa;
+        }
+        .notification-item.read {
+            border-left-color: #6c757d;
+            opacity: 0.8;
+        }
+        .notification-type {
+            font-size: 0.8rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+        .notification-type.inscription { background-color: #e3f2fd; color: #1976d2; }
+        .notification-type.modification { background-color: #fff3e0; color: #f57c00; }
+        .notification-type.evaluation { background-color: #e8f5e8; color: #388e3c; }
+        .notification-type.absence_automatique { background-color: #ffebee; color: #d32f2f; }
+        .notification-type.creation { background-color: #f3e5f5; color: #7b1fa2; }
+        .notification-actions {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .notification-item:hover .notification-actions {
+            opacity: 1;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6c757d;
+        }
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+        .filters-section {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .stats-cards {
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        .stat-card .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .stat-card .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+    </style>
 </head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
 
 <body class="vertical-layout vertical-overlay-menu 2-columns fixed-navbar" data-open="click" data-menu="vertical-overlay-menu" data-col="2-columns">
-    
-    <!-- Header -->
-    <nav class="header-navbar navbar-expand-md navbar navbar-with-menu fixed-top navbar-light navbar-border">
-        <div class="navbar-wrapper">
-            <div class="navbar-header">
-                <ul class="nav navbar-nav flex-row">
-                    <li class="nav-item mobile-menu d-md-none mr-auto">
-                        <a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#">
-                            <i class="ft-menu font-large-1"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="navbar-brand" href="/admin/formations">
-                            <h2 class="brand-text">Système de Formation</h2>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="navbar-container content">
-                <div class="collapse navbar-collapse" id="navbar-mobile">
-                    <ul class="nav navbar-nav mr-auto float-left">
-                        <li class="nav-item d-none d-md-block">
-                            <a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#">
-                                <i class="ft-menu"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-nav float-right">
-                        <li class="nav-item dropdown dropdown-notification">
-                            <a class="nav-link nav-link-label" href="#" data-toggle="dropdown">
-                                <i class="fas fa-bell"></i>
-                                {% if countNonLues > 0 %}
-                                    <span class="badge badge-pill badge-danger badge-up">{{ countNonLues }}</span>
-                                {% endif %}
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
-                                <li class="dropdown-menu-header">
-                                    <h6 class="dropdown-header m-0">
-                                        <span class="grey darken-2">Notifications</span>
-                                        {% if countNonLues > 0 %}
-                                            <span class="notification-tag badge badge-danger float-right m-0">{{ countNonLues }} Nouveau(x)</span>
-                                        {% endif %}
-                                    </h6>
-                                </li>
-                                <li class="scrollable-container media-list w-100">
-                                    {% for notification in notifications %}
-                                        <a href="javascript:void(0)" class="media-list-item" data-notification-id="{{ notification.id }}">
-                                            <div class="media">
-                                                <div class="media-left align-self-center">
-                                                    <i class="fas fa-info-circle font-medium-3 text-info"></i>
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="media-heading">{{ notification.titre }}</h6>
-                                                    <p class="notification-text font-small-3 text-muted">{{ notification.message }}</p>
-                                                    <small>
-                                                        <time class="media-meta text-muted">{{ notification.dateCreation|date('d/m/Y H:i') }}</time>
-                                                    </small>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    {% else %}
-                                        <div class="media">
-                                            <div class="media-body">
-                                                <p class="text-muted text-center">Aucune nouvelle notification</p>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                </li>
-                                {% if countNonLues > 0 %}
-                                    <li class="dropdown-menu-footer">
-                                        <a class="dropdown-item text-muted text-center" href="javascript:void(0)" id="marquer-toutes-lues">
-                                            Marquer toutes comme lues
-                                        </a>
-                                    </li>
-                                {% endif %}
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </nav>
+{% include 'Admin/navBar.html.twig' %}
 
-    <!-- Main Content -->
-    <div class="app-content content">
-        <div class="content-wrapper">
-            <div class="content-header row">
-                <div class="content-header-left col-md-6 col-12 mb-2">
-                    <h3 class="content-header-title">Notifications</h3>
-                </div>
-                <div class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-12">
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-md-6 col-12 mb-2">
+                <h3 class="content-header-title">🔔 Gestion des Notifications</h3>
+                <div class="row breadcrumbs-top">
                     <div class="breadcrumb-wrapper col-12">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/admin/formations">Formations</a></li>
+                            <li class="breadcrumb-item"><a href="{{ path('admin_dashboard') }}">Dashboard</a></li>
                             <li class="breadcrumb-item active">Notifications</li>
                         </ol>
                     </div>
                 </div>
             </div>
-            
-            <div class="content-body">
+            <div class="content-header-right col-md-6 col-12">
+                <div class="btn-group float-md-right" role="group" aria-label="Button group with nested dropdown">
+                    <button type="button" class="btn btn-outline-primary" onclick="marquerToutesLues()">
+                        <i class="ft-check"></i> Marquer toutes comme lues
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="refreshNotifications()">
+                        <i class="ft-rotate-cw"></i> Actualiser
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-body">
+            <!-- Statistiques -->
+            <div class="row stats-cards">
+                <div class="col-xl-3 col-md-6 col-12">
+                    <div class="stat-card">
+                        <div class="stat-number">{{ countNonLues }}</div>
+                        <div class="stat-label">Non lues</div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 col-12">
+                    <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <div class="stat-number">{{ notifications|length }}</div>
+                        <div class="stat-label">Total</div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 col-12">
+                    <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <div class="stat-number">{{ notifications|filter(n => n.type == 'inscription')|length }}</div>
+                        <div class="stat-label">Inscriptions</div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 col-12">
+                    <div class="stat-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <div class="stat-number">{{ notifications|filter(n => n.type == 'evaluation')|length }}</div>
+                        <div class="stat-label">Évaluations</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filtres -->
+            <div class="filters-section">
                 <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">
-                                    <i class="fas fa-bell"></i> 
-                                    Notifications ({{ countNonLues }} non lue(s))
-                                </h4>
-                                {% if countNonLues > 0 %}
-                                    <div class="heading-elements">
-                                        <button class="btn btn-sm btn-outline-primary" id="marquer-toutes-lues-btn">
-                                            <i class="fas fa-check-double"></i> Marquer toutes comme lues
-                                        </button>
-                                    </div>
-                                {% endif %}
+                    <div class="col-md-4">
+                        <label for="typeFilter">Type de notification</label>
+                        <select id="typeFilter" class="form-control" onchange="filterNotifications()">
+                            <option value="">Tous les types</option>
+                            <option value="inscription">Inscriptions</option>
+                            <option value="modification">Modifications</option>
+                            <option value="evaluation">Évaluations</option>
+                            <option value="absence_automatique">Absences</option>
+                            <option value="creation">Créations</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="statusFilter">Statut</label>
+                        <select id="statusFilter" class="form-control" onchange="filterNotifications()">
+                            <option value="">Tous les statuts</option>
+                            <option value="unread">Non lues</option>
+                            <option value="read">Lues</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="searchInput">Recherche</label>
+                        <input type="text" id="searchInput" class="form-control" placeholder="Rechercher dans les notifications..." onkeyup="filterNotifications()">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Liste des notifications -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Liste des Notifications</h4>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">
+                                    <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                    <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                </ul>
                             </div>
-                            <div class="card-content">
-                                <div class="card-body">
-                                    {% if notifications|length > 0 %}
-                                        <div class="notifications-list">
-                                            {% for notification in notifications %}
-                                                <div class="notification-item media p-2 border-bottom" data-notification-id="{{ notification.id }}">
-                                                    <div class="media-left align-self-center">
-                                                        {% if notification.type == 'formation' %}
-                                                            <i class="fas fa-graduation-cap text-primary"></i>
-                                                        {% elseif notification.type == 'inscription' %}
-                                                            <i class="fas fa-user-plus text-success"></i>
-                                                        {% elseif notification.type == 'validation' %}
-                                                            <i class="fas fa-check-circle text-info"></i>
-                                                        {% elseif notification.type == 'rappel' %}
-                                                            <i class="fas fa-clock text-warning"></i>
-                                                        {% elseif notification.type == 'annulation' %}
-                                                            <i class="fas fa-times-circle text-danger"></i>
-                                                        {% else %}
-                                                            <i class="fas fa-info-circle text-secondary"></i>
-                                                        {% endif %}
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h6 class="media-heading">{{ notification.titre }}</h6>
-                                                        <p class="notification-text">{{ notification.message }}</p>
-                                                        <div class="notification-meta">
-                                                            <small class="text-muted">
-                                                                <i class="fas fa-calendar"></i> {{ notification.dateCreation|date('d/m/Y H:i') }}
-                                                                {% if notification.lien %}
-                                                                    <a href="{{ notification.lien }}" class="ml-2">
-                                                                        <i class="fas fa-external-link-alt"></i> Voir
-                                                                    </a>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body">
+                                {% if notifications is empty %}
+                                    <div class="empty-state">
+                                        <i class="ft-bell"></i>
+                                        <h4>Aucune notification</h4>
+                                        <p>Vous n'avez pas encore reçu de notifications.</p>
+                                    </div>
+                                {% else %}
+                                    <div id="notificationsList">
+                                        {% for notification in notifications %}
+                                            <div class="notification-item p-3 mb-3 rounded {{ notification.lue ? 'read' : 'unread' }}" 
+                                                 data-type="{{ notification.type }}" 
+                                                 data-status="{{ notification.lue ? 'read' : 'unread' }}"
+                                                 data-content="{{ notification.contenu|lower }}">
+                                                <div class="row align-items-center">
+                                                    <div class="col-md-8">
+                                                        <div class="d-flex align-items-start">
+                                                            <div class="mr-3">
+                                                                {% if notification.type == 'inscription' %}
+                                                                    <i class="ft-user-plus text-primary"></i>
+                                                                {% elseif notification.type == 'modification' %}
+                                                                    <i class="ft-edit text-warning"></i>
+                                                                {% elseif notification.type == 'evaluation' %}
+                                                                    <i class="ft-star text-success"></i>
+                                                                {% elseif notification.type == 'absence_automatique' %}
+                                                                    <i class="ft-alert-triangle text-danger"></i>
+                                                                {% elseif notification.type == 'creation' %}
+                                                                    <i class="ft-plus-circle text-info"></i>
+                                                                {% else %}
+                                                                    <i class="ft-bell text-secondary"></i>
                                                                 {% endif %}
-                                                            </small>
+                                                            </div>
+                                                            <div class="flex-grow-1">
+                                                                <h6 class="mb-1">{{ notification.titre }}</h6>
+                                                                <p class="mb-2 text-muted">{{ notification.contenu|striptags|slice(0, 150) }}{% if notification.contenu|length > 150 %}...{% endif %}</p>
+                                                                <div class="d-flex align-items-center">
+                                                                    <span class="notification-type {{ notification.type }}">{{ notification.type|title }}</span>
+                                                                    <small class="text-muted ml-3">
+                                                                        <i class="ft-clock"></i> 
+                                                                        {{ notification.dateCreation|date('d/m/Y H:i') }}
+                                                                    </small>
+                                                                    {% if not notification.lue %}
+                                                                        <span class="badge badge-primary badge-pill ml-2">Nouvelle</span>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="media-right align-self-center">
-                                                        <button class="btn btn-sm btn-outline-success marquer-lue-btn" data-id="{{ notification.id }}">
-                                                            <i class="fas fa-check"></i>
-                                                        </button>
+                                                    <div class="col-md-4 text-right">
+                                                        <div class="notification-actions">
+                                                            {% if not notification.lue %}
+                                                                <button class="btn btn-sm btn-outline-success mr-2" onclick="marquerCommeLue({{ notification.id }})">
+                                                                    <i class="ft-check"></i> Marquer lue
+                                                                </button>
+                                                            {% endif %}
+                                                            <button class="btn btn-sm btn-outline-info" onclick="voirDetails({{ notification.id }})">
+                                                                <i class="ft-eye"></i> Voir détails
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            {% endfor %}
-                                        </div>
-                                    {% else %}
-                                        <div class="text-center py-4">
-                                            <i class="fas fa-bell-slash fa-3x text-muted mb-3"></i>
-                                            <h5 class="text-muted">Aucune notification</h5>
-                                            <p class="text-muted">Vous n'avez aucune notification en attente.</p>
-                                        </div>
-                                    {% endif %}
-                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -194,68 +292,160 @@
             </div>
         </div>
     </div>
+</div>
+<!-- END: Content-->
 
-    <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Vendor JS-->
     <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+<!-- END: Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/extensions/jquery.knob.min.js"></script>
+    <script src="../../../app-assets/js/scripts/extensions/knob.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/raphael-min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/morris.min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/jvector/jquery-jvectormap-2.0.3.min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/jvector/jquery-jvectormap-world-mill.js"></script>
+    <script src="../../../app-assets/data/jvector/visitor-data.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/chart.min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/jquery.sparkline.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/unslider-min.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
     <script src="../../../app-assets/js/core/app-menu.js"></script>
     <script src="../../../app-assets/js/core/app.js"></script>
-    
-    <script>
-        $(document).ready(function() {
-            // Marquer une notification comme lue
-            $('.marquer-lue-btn').on('click', function() {
-                const notificationId = $(this).data('id');
-                const $notificationItem = $(this).closest('.notification-item');
-                
-                $.ajax({
-                    url: '/admin/notification/marquer-lue/' + notificationId,
-                    method: 'POST',
-                    success: function(response) {
-                        if (response.success) {
-                            $notificationItem.fadeOut(300, function() {
-                                $(this).remove();
-                                updateNotificationCount();
-                            });
-                        }
-                    },
-                    error: function() {
-                        alert('Erreur lors du marquage de la notification');
-                    }
-                });
-            });
-            
-            // Marquer toutes les notifications comme lues
-            $('#marquer-toutes-lues-btn, #marquer-toutes-lues').on('click', function() {
-                $.ajax({
-                    url: '/admin/notifications/marquer-toutes-lues',
-                    method: 'POST',
-                    success: function(response) {
-                        if (response.success) {
-                            $('.notification-item').fadeOut(300, function() {
-                                $(this).remove();
-                                updateNotificationCount();
-                                location.reload();
-                            });
-                        }
-                    },
-                    error: function() {
-                        alert('Erreur lors du marquage des notifications');
-                    }
-                });
-            });
-            
-            // Mettre à jour le compteur de notifications
-            function updateNotificationCount() {
-                const count = $('.notification-item').length;
-                $('.badge-up').text(count);
-                if (count === 0) {
-                    $('.badge-up').hide();
-                }
-            }
-        });
-    </script>
+    <!-- END: Theme JS-->
 
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/pages/dashboard-analytics.js"></script>
+    <!-- END: Page JS-->
+
+<script>
+// Fonction pour marquer une notification comme lue
+function marquerCommeLue(notificationId) {
+    fetch(`/admin/notification/marquer-lue/${notificationId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Mettre à jour l'interface
+            const notificationItem = document.querySelector(`[data-notification-id="${notificationId}"]`);
+            if (notificationItem) {
+                notificationItem.classList.remove('unread');
+                notificationItem.classList.add('read');
+                notificationItem.querySelector('.badge').remove();
+                notificationItem.querySelector('.btn-outline-success').remove();
+            }
+            
+            // Mettre à jour le compteur
+            updateNotificationCount();
+            
+            // Recharger la page pour mettre à jour les statistiques
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
+        }
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+        alert('Erreur lors du marquage de la notification');
+    });
+}
+
+// Fonction pour marquer toutes les notifications comme lues
+function marquerToutesLues() {
+    if (confirm('Êtes-vous sûr de vouloir marquer toutes les notifications comme lues ?')) {
+        fetch('/admin/notifications/marquer-toutes-lues', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Toutes les notifications ont été marquées comme lues');
+                location.reload();
+            }
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+            alert('Erreur lors du marquage des notifications');
+        });
+    }
+}
+
+// Fonction pour filtrer les notifications
+function filterNotifications() {
+    const typeFilter = document.getElementById('typeFilter').value;
+    const statusFilter = document.getElementById('statusFilter').value;
+    const searchInput = document.getElementById('searchInput').value.toLowerCase();
+    
+    const notifications = document.querySelectorAll('.notification-item');
+    
+    notifications.forEach(notification => {
+        const type = notification.dataset.type;
+        const status = notification.dataset.status;
+        const content = notification.dataset.content;
+        
+        let show = true;
+        
+        // Filtre par type
+        if (typeFilter && type !== typeFilter) {
+            show = false;
+        }
+        
+        // Filtre par statut
+        if (statusFilter && status !== statusFilter) {
+            show = false;
+        }
+        
+        // Filtre par recherche
+        if (searchInput && !content.includes(searchInput)) {
+            show = false;
+        }
+        
+        notification.style.display = show ? 'block' : 'none';
+    });
+}
+
+// Fonction pour voir les détails d'une notification
+function voirDetails(notificationId) {
+    // Ici vous pouvez implémenter la logique pour afficher les détails
+    // Par exemple, ouvrir une modal ou rediriger vers une page
+    alert('Fonctionnalité de détails à implémenter pour la notification ID: ' + notificationId);
+}
+
+// Fonction pour actualiser les notifications
+function refreshNotifications() {
+    location.reload();
+}
+
+// Fonction pour mettre à jour le compteur de notifications
+function updateNotificationCount() {
+    // Mettre à jour le compteur dans la navbar si nécessaire
+    const unreadCount = document.querySelectorAll('.notification-item.unread').length;
+    // Vous pouvez mettre à jour un élément dans la navbar ici
+}
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', function() {
+    // Ajouter les attributs data-notification-id aux éléments
+    const notifications = document.querySelectorAll('.notification-item');
+    notifications.forEach((notification, index) => {
+        notification.setAttribute('data-notification-id', index + 1);
+    });
+});
+</script>
 
 </body>
-</html> 
+<!-- END: Body-->
+</html>

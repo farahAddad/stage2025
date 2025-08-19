@@ -102,8 +102,8 @@
                                         </div>
                                         <div class="col-lg-3 col-12">
                                             <div class="text-center">
-                                                <h3>{{ heuresFormation }}h</h3>
-                                                <p class="text-muted">Heures Formation <span class="info"><i class="ft-arrow-up"></i> Total</span></p>
+                                                <h3>{{ joursFormation }} jour(s)</h3>
+                                                <p class="text-muted">Jours Formation <span class="info"><i class="ft-arrow-up"></i> Total</span></p>
                                                 <div id="sp-bar-total-hours"></div>
                                             </div>
                                         </div>
@@ -187,7 +187,7 @@
                                         </div>
                                     </div>
                                     <div class="progress progress-sm mt-1 mb-0">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: {{ (formationsParResponsable / totalFormations * 100)|round }}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: {{ totalFormations > 0 ? (formationsParResponsable / totalFormations * 100)|round : 0 }}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                             </div>
@@ -213,26 +213,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-lg-6 col-12">
-                        <div class="card">
-                            <div class="card-content">
-                                <div class="card-body">
-                                    <div class="media">
-                                        <div class="media-body text-left w-100">
-                                            <h3 class="warning">{{ heuresParUtilisateur }}h</h3>
-                                            <span>Heures par utilisateur</span>
-                                        </div>
-                                        <div class="media-right media-middle">
-                                            <i class="icon-clock warning font-large-2 float-right"></i>
-                                        </div>
-                                    </div>
-                                    <div class="progress progress-sm mt-1 mb-0">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: {{ (heuresParUtilisateur / heuresFormation * 100)|round }}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="col-xl-3 col-lg-6 col-12">
                         <div class="card">
                             <div class="card-content">
@@ -264,8 +245,9 @@
                                 <h4 class="card-title">📚 Formations & Participation</h4>
                                 <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
                                 <div class="heading-elements">
-                                    <ul class="list-inline mb-0">
-                                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                   <ul class="list-inline mb-0">
+                                      
+                                        <li><a href="{{ path('admin_dashboard') }}" title="Réinitialiser la recherche"><i class="ft-rotate-cw"></i></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -337,7 +319,8 @@
                                 <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
                                 <div class="heading-elements">
                                     <ul class="list-inline mb-0">
-                                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                      
+                                        <li><a href="{{ path('admin_dashboard') }}" title="Réinitialiser la recherche"><i class="ft-rotate-cw"></i></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -356,6 +339,7 @@
                                                 {% endfor %}
                                             </select>
                                         </div>
+
                                     </form>
 
                                     {% if statsResponsable %}
@@ -383,8 +367,8 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="text-center p-2">
-                                                    <h4 class="info">{{ statsResponsable.heuresFormation }}h</h4>
-                                                    <p class="text-muted mb-0">Heures Formation</p>
+                                                    <h4 class="info">{{ statsResponsable.joursFormation }} jour(s)</h4>
+                                                                                                          <p class="text-muted mb-0">Jours Formation</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -674,7 +658,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             var label = context.label || '';
                             var value = context.parsed;
                             var total = context.dataset.data.reduce((a, b) => a + b, 0);
-                            var percentage = ((value / total) * 100).toFixed(1);
+                            var percentage = total > 0 ? ((value / total) * 100).toFixed(1) : '0.0';
                             return label + ': ' + value + ' (' + percentage + '%)';
                         }
                     }
@@ -687,7 +671,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     },
                     formatter: function(value, context) {
                         var total = context.dataset.data.reduce((a, b) => a + b, 0);
-                        var percentage = ((value / total) * 100).toFixed(1);
+                        var percentage = total > 0 ? ((value / total) * 100).toFixed(1) : '0.0';
                         return percentage + '%';
                     }
                 }

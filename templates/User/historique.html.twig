@@ -28,6 +28,9 @@
 
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/evaluations.css">
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- END: Custom CSS-->
 
 </head>
@@ -55,7 +58,10 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Historique des Formations</h4>
+                            <h4 class="card-title">
+                                <i class="fas fa-star text-warning"></i> 
+                                Historique des Formations
+                            </h4>
                         </div>
                         <div class="card-content">
                             <div class="card-body">
@@ -146,7 +152,10 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Historique des Notifications</h4>
+                            <h4 class="card-title">
+                                <i class="fas fa-star text-warning"></i> 
+                                Historique des Notifications
+                            </h4>
                         </div>
                         <div class="card-content">
                             <div class="card-body">
@@ -166,6 +175,7 @@
                                                     <th>Titre</th>
                                                     <th>Message</th>
                                                     <th>Statut</th>
+                                                    <th>Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -196,6 +206,138 @@
                                                                 <span class="badge badge-warning">Non lu</span>
                                                             {% endif %}
                                                         </td>
+                                                        <td>
+                                                            {% if (notification.type == 'inscription' or notification.type == 'modification' or notification.type == 'absence_automatique') and notification.session %}
+                                                                {% set inscription = null %}
+                                                                {% for userInscription in user.inscriptions %}
+                                                                    {% if userInscription.session.id == notification.session.id %}
+                                                                        {% set inscription = userInscription %}
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                                {% if inscription %}
+                                                                    <a href="{{ path('user_inscription_details', {'id': inscription.id}) }}" class="btn btn-sm btn-outline-info">
+                                                                        <i class="icon-eye"></i> Voir détails
+                                                                    </a>
+                                                                {% endif %}
+                                                            {% elseif notification.type == 'session_terminee' and notification.session %}
+                                                                {% set evaluation = null %}
+                                                                {% for eval in user.evaluations %}
+                                                                    {% if eval.session.id == notification.session.id %}
+                                                                        {% set evaluation = eval %}
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                                {% if evaluation %}
+                                                                    <a href="{{ path('user_session_evaluation_show', {'id': notification.session.id}) }}" class="btn btn-sm btn-outline-info">
+                                                                        <i class="fas fa-eye"></i> Voir évaluation
+                                                                    </a>
+                                                                {% else %}
+                                                                    <a href="{{ path('user_session_evaluation', {'id': notification.session.id}) }}" class="btn btn-sm btn-outline-warning">
+                                                                        <i class="fas fa-star"></i> Évaluer
+                                                                    </a>
+                                                                {% endif %}
+                                                            {% else %}
+                                                                <span class="text-muted">-</span>
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Historique des Évaluations -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">
+                                <i class="fas fa-star text-warning"></i> 
+                                Historique des Évaluations
+                            </h4>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body">
+                                {% if evaluations is empty %}
+                                    <div class="text-center py-4">
+                                        <i class="icon-star font-large-2 text-muted"></i>
+                                        <h5 class="mt-2">Aucune évaluation</h5>
+                                        <p class="text-muted">Vous n'avez pas encore évalué de formations.</p>
+                                    </div>
+                                {% else %}
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Formation</th>
+                                                    <th>Session</th>
+                                                    <th>Note Globale</th>
+                                                    <th>Clarté</th>
+                                                    <th>Pertinence</th>
+                                                    <th>Suggestion</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for evaluation in evaluations %}
+                                                    <tr>
+                                                        <td>
+                                                            <strong>{{ evaluation.session.formation.sujet }}</strong>
+                                                        </td>
+                                                        <td>{{ evaluation.session.titre }}</td>
+                                                        <td>
+                                                            <div class="rating-display-inline">
+                                                                {% for i in 1..5 %}
+                                                                    <span class="rating-number-small {% if i <= evaluation.noteGlobale %}active{% endif %}">
+                                                                        {{ i }}
+                                                                    </span>
+                                                                {% endfor %}
+                                                                <span class="ml-2 text-muted">({{ evaluation.noteGlobale }}/5)</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="rating-display-inline">
+                                                                {% for i in 1..5 %}
+                                                                    <span class="rating-number-small {% if i <= evaluation.clarte %}active{% endif %}">
+                                                                        {{ i }}
+                                                                    </span>
+                                                                {% endfor %}
+                                                                <span class="ml-2 text-muted">({{ evaluation.clarte }}/5)</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="rating-display-inline">
+                                                                {% for i in 1..5 %}
+                                                                    <span class="rating-number-small {% if i <= evaluation.pertinence %}active{% endif %}">
+                                                                        {{ i }}
+                                                                    </span>
+                                                                {% endfor %}
+                                                                <span class="ml-2 text-muted">({{ evaluation.pertinence }}/5)</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            {% if evaluation.suggestion %}
+                                                                <span class="badge badge-info" data-toggle="tooltip" title="{{ evaluation.suggestion }}">
+                                                                    <i class="fas fa-comment"></i> Oui
+                                                                </span>
+                                                            {% else %}
+                                                                <span class="badge badge-secondary">
+                                                                    <i class="fas fa-minus"></i> Non
+                                                                </span>
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{ path('user_session_evaluation_show', {'id': evaluation.session.id}) }}" 
+                                                               class="btn btn-outline-primary btn-sm" 
+                                                               title="Voir les détails">
+                                                                <i class="fas fa-eye"></i>
+                                                            </a>
+                                                        </td>
                                                     </tr>
                                                 {% endfor %}
                                             </tbody>
@@ -212,14 +354,7 @@
 </div>
 <!-- END: Content-->
 
-<!-- BEGIN: Footer-->
-<footer class="footer footer-static footer-light navbar-border navbar-shadow">
-    <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2">
-        <span class="float-md-left d-block d-md-inline-block">Copyright &copy; 2024 <a class="text-bold-800 grey darken-2" href="#" target="_blank">Formation Manager</a>, All rights reserved. </span>
-        <span class="float-md-right d-none d-lg-block">Espace Participant <i class="icon-heart5 pink"></i></span>
-    </p>
-</footer>
-<!-- END: Footer-->
+
 
 <!-- BEGIN: Vendor JS-->
 <script src="../../../app-assets/vendors/js/vendors.min.js" type="text/javascript"></script>

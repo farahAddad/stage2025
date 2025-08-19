@@ -113,6 +113,95 @@ class EvaluationRepository extends ServiceEntityRepository
     }
 
     /**
+     * Récupérer les évaluations des formations d'un responsable spécifique
+     */
+    public function findEvaluationsByResponsable(User $responsable, int $page = 1, int $limit = 20): array
+    {
+        $offset = ($page - 1) * $limit;
+        
+        $qb = $this->createQueryBuilder('e')
+            ->leftJoin('e.session', 's')
+            ->leftJoin('s.formation', 'f')
+            ->leftJoin('e.user', 'u')
+            ->addSelect('s', 'f', 'u')
+            ->where('f.responsable = :responsable')
+            ->setParameter('responsable', $responsable)
+            ->orderBy('e.id', 'DESC')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit);
+        
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Compter les évaluations des formations d'un responsable spécifique
+     */
+    public function countEvaluationsByResponsable(User $responsable): int
+    {
+        $result = $this->createQueryBuilder('e')
+            ->select('COUNT(e.id)')
+            ->leftJoin('e.session', 's')
+            ->leftJoin('s.formation', 'f')
+            ->where('f.responsable = :responsable')
+            ->setParameter('responsable', $responsable)
+            ->getQuery()
+            ->getSingleScalarResult();
+        
+        return (int) $result;
+    }
+
+    /**
+     * Calculer la moyenne globale pour les formations d'un responsable
+     */
+    public function getMoyenneGlobaleByResponsable(User $responsable): float
+    {
+        $result = $this->createQueryBuilder('e')
+            ->select('AVG(e.noteGlobale) as moyenne')
+            ->leftJoin('e.session', 's')
+            ->leftJoin('s.formation', 'f')
+            ->where('f.responsable = :responsable')
+            ->setParameter('responsable', $responsable)
+            ->getQuery()
+            ->getSingleScalarResult();
+        
+        return $result ? (float) $result : 0.0;
+    }
+
+    /**
+     * Calculer la moyenne de clarté pour les formations d'un responsable
+     */
+    public function getMoyenneClarteByResponsable(User $responsable): float
+    {
+        $result = $this->createQueryBuilder('e')
+            ->select('AVG(e.clarte) as moyenne')
+            ->leftJoin('e.session', 's')
+            ->leftJoin('s.formation', 'f')
+            ->where('f.responsable = :responsable')
+            ->setParameter('responsable', $responsable)
+            ->getQuery()
+            ->getSingleScalarResult();
+        
+        return $result ? (float) $result : 0.0;
+    }
+
+    /**
+     * Calculer la moyenne de pertinence pour les formations d'un responsable
+     */
+    public function getMoyennePertinenceByResponsable(User $responsable): float
+    {
+        $result = $this->createQueryBuilder('e')
+            ->select('AVG(e.pertinence) as moyenne')
+            ->leftJoin('e.session', 's')
+            ->leftJoin('s.formation', 'f')
+            ->where('f.responsable = :responsable')
+            ->setParameter('responsable', $responsable)
+            ->getQuery()
+            ->getSingleScalarResult();
+        
+        return $result ? (float) $result : 0.0;
+    }
+
+    /**
      * Obtenir la répartition des notes
      */
     public function getRepartitionNotes(): array

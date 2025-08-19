@@ -82,7 +82,7 @@ class SessionEvaluationController extends AbstractController
             return $this->redirectToRoute('user_sessions');
         }
 
-        return $this->render('user/session_evaluation_show.html.twig', [
+        return $this->render('user/evaluation_show.html.twig', [
             'session' => $session,
             'formation' => $session->getFormation(),
             'evaluation' => $evaluation

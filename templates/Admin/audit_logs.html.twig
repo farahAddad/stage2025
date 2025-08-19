@@ -101,6 +101,42 @@
             margin-right: 5px;
         }
         
+        /* Styles pour les valeurs avant et après */
+        .modification-details {
+            border-top: 2px solid #ffc107;
+            padding-top: 20px;
+        }
+        
+        .modification-details h6 {
+            color: #856404;
+            font-weight: 600;
+        }
+        
+        .field-value pre {
+            font-family: 'Courier New', monospace;
+            background: transparent;
+            border: none;
+            padding: 0;
+        }
+        
+        .alert-info {
+            background-color: #d1ecf1;
+            border-color: #bee5eb;
+            color: #0c5460;
+        }
+        
+        .text-danger {
+            color: #dc3545 !important;
+        }
+        
+        .text-success {
+            color: #28a745 !important;
+        }
+        
+        .text-warning {
+            color: #856404 !important;
+        }
+        
         .modal-content {
             border-radius: 12px;
             border: none;
@@ -535,6 +571,66 @@
                                                                                 </div>
                                                                             {% endif %}
                                                                         </div>
+                                                                       {% endif %}
+                                                                       
+                                                                       <!-- Affichage des valeurs avant et après pour les modifications -->
+                                                                       {% if audit_log.valeurAvant and audit_log.valeurApres and audit_log.valeurAvant != audit_log.valeurApres %}
+                                                                           <div class="modification-details mt-4">
+                                                                               <h6 class="text-warning mb-3">
+                                                                                   <i class="icon-edit"></i> Comparaison des valeurs
+                                                                               </h6>
+                                                                               <div class="row">
+                                                                                   <!-- Valeur avant -->
+                                                                                   <div class="col-md-6 mb-3">
+                                                                                       <div class="field-item">
+                                                                                           <span class="field-label text-danger">
+                                                                                               <i class="icon-minus-circle"></i> Valeur avant :
+                                                                                           </span>
+                                                                                           <div class="field-value" style="background-color: #ffe6e6; border-left-color: #dc3545;">
+                                                                                               {% if audit_log.valeurAvant starts with '{' and audit_log.valeurAvant ends with '}' %}
+                                                                                                   {% set jsonData = audit_log.valeurAvant|replace({'"': '', '{': '', '}': ''})|split(',') %}
+                                                                                                   <div style="padding: 10px;">
+                                                                                                       {% for item in jsonData %}
+                                                                                                           {% if ':' in item %}
+                                                                                                               {% set keyValue = item|split(':') %}
+                                                                                                               <div><strong>{{ keyValue[0]|trim|title }}:</strong> {{ keyValue[1]|trim }}</div>
+                                                                                                           {% endif %}
+                                                                                                       {% endfor %}
+                                                                                                   </div>
+                                                                                               {% else %}
+                                                                                                   {{ audit_log.valeurAvant }}
+                                                                                               {% endif %}
+                                                                                           </div>
+                                                                                       </div>
+                                                                                   </div>
+                                                                                   
+                                                                                   <!-- Valeur après -->
+                                                                                   <div class="col-md-6 mb-3">
+                                                                                       <div class="field-item">
+                                                                                           <span class="field-label text-success">
+                                                                                               <i class="icon-plus-circle"></i> Valeur après :
+                                                                                           </span>
+                                                                                           <div class="field-value" style="background-color: #e6ffe6; border-left-color: #28a745;">
+                                                                                               {% if audit_log.valeurApres starts with '{' and audit_log.valeurApres ends with '}' %}
+                                                                                                   {% set jsonData = audit_log.valeurApres|replace({'"': '', '{': '', '}': ''})|split(',') %}
+                                                                                                   <div style="padding: 10px;">
+                                                                                                       {% for item in jsonData %}
+                                                                                                           {% if ':' in item %}
+                                                                                                               {% set keyValue = item|split(':') %}
+                                                                                                               <div><strong>{{ keyValue[0]|trim|title }}:</strong> {{ keyValue[1]|trim }}</div>
+                                                                                                           {% endif %}
+                                                                                                       {% endfor %}
+                                                                                                   </div>
+                                                                                               {% else %}
+                                                                                                   {{ audit_log.valeurApres }}
+                                                                                               {% endif %}
+                                                                                           </div>
+                                                                                       </div>
+                                                                                   </div>
+                                                                               </div>
+                                                                               
+
+                                                                           </div>
                                                                        {% endif %}
                                                                </div>
                                                            </div>

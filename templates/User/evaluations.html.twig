@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html class="loading" lang="fr" data-textdirection="fr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   
+    <link rel="apple-touch-icon" href="/app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="/app-assets/vendors/css/vendors.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/components.css">
+    <!-- END: Theme CSS-->
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/core/menu/menu-types/vertical-overlay-menu.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/core/colors/palette-gradient.css">
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/evaluations.css">
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- END: Custom CSS-->
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-overlay-menu 2-columns fixed-navbar" data-open="click" data-menu="vertical-overlay-menu" data-col="2-columns">
+
+{% include 'User/navBar.html.twig' %}
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-md-6 col-12 mb-2">
+                <h3 class="content-header-title">Mes Évaluations</h3>
+                
+            </div>
+        </div>
+        
+        <div class="content-body">
+            {% if evaluations is empty %}
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-clipboard-list fa-3x text-muted mb-3"></i>
+                                    <h4 class="text-muted">Aucune évaluation trouvée</h4>
+                                    <p class="text-muted">Vous n'avez pas encore évalué de formations.</p>
+                                    <a href="{{ path('user_dashboard') }}" class="btn btn-primary">
+                                        <i class="fas fa-arrow-left"></i> Retour aux formations
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">
+                                    <i class="fas fa-star text-warning"></i> 
+                                    Mes évaluations ({{ evaluations|length }})
+                                </h4>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th>Formation</th>
+                                                    <th>Session</th>
+                                                    <th>Note Globale</th>
+                                                    <th>Clarté</th>
+                                                    <th>Pertinence</th>
+                                                    <th>Suggestion</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for evaluation in evaluations %}
+                                                    <tr>
+                                                        <td>
+                                                            <strong>{{ evaluation.session.formation.sujet }}</strong>
+                                                        </td>
+                                                        <td>{{ evaluation.session.titre }}</td>
+                                                        <td>
+                                                            <div class="rating-display-inline">
+                                                                {% for i in 1..5 %}
+                                                                    <span class="rating-number-small {% if i <= evaluation.noteGlobale %}active{% endif %}">
+                                                                        {{ i }}
+                                                                    </span>
+                                                                {% endfor %}
+                                                                <span class="ml-2 text-muted">({{ evaluation.noteGlobale }}/5)</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="rating-display-inline">
+                                                                {% for i in 1..5 %}
+                                                                    <span class="rating-number-small {% if i <= evaluation.clarte %}active{% endif %}">
+                                                                        {{ i }}
+                                                                    </span>
+                                                                {% endfor %}
+                                                                <span class="ml-2 text-muted">({{ evaluation.clarte }}/5)</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="rating-display-inline">
+                                                                {% for i in 1..5 %}
+                                                                    <span class="rating-number-small {% if i <= evaluation.pertinence %}active{% endif %}">
+                                                                        {{ i }}
+                                                                    </span>
+                                                                {% endfor %}
+                                                                <span class="ml-2 text-muted">({{ evaluation.pertinence }}/5)</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            {% if evaluation.suggestion %}
+                                                                <span class="badge badge-info" data-toggle="tooltip" title="{{ evaluation.suggestion }}">
+                                                                    <i class="fas fa-comment"></i> Oui
+                                                                </span>
+                                                            {% else %}
+                                                                <span class="badge badge-secondary">
+                                                                    <i class="fas fa-minus"></i> Non
+                                                                </span>
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{ path('user_session_evaluation_show', {'id': evaluation.session.id}) }}" 
+                                                               class="btn btn-outline-primary btn-sm" 
+                                                               title="Voir les détails">
+                                                                <i class="fas fa-eye"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        
+                                        <!-- Pagination -->
+                                        <div class="d-flex justify-content-center mt-4">
+                                            <!-- Informations sur la pagination -->
+                                            <div class="text-center text-muted">
+                                                <small>
+                                                    Affichage de {{ ((currentPage - 1) * 10) + 1 }} à {{ currentPage * 10 > totalEvaluations ? totalEvaluations : currentPage * 10 }} 
+                                                    sur {{ totalEvaluations }} évaluation{{ totalEvaluations > 1 ? 's' : '' }}
+                                                </small>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Debug temporaire -->
+                                        <div class="text-center text-muted mt-2">
+                                            <small>
+                                                Debug: Page {{ currentPage }}, Total pages: {{ totalPages }}, Total évaluations: {{ totalEvaluations }}
+                                            </small>
+                                        </div>
+                                        
+                                        <!-- Navigation des pages (seulement si plus d'une page) -->
+                                        {% if totalPages > 1 %}
+                                            <div class="d-flex justify-content-center mt-3">
+                                                <nav aria-label="Pagination des évaluations">
+                                                    <ul class="pagination">
+                                                        <!-- Bouton Précédent -->
+                                                        {% if currentPage > 1 %}
+                                                            <li class="page-item">
+                                                                <a class="page-link" href="{{ path('user_evaluations', {'page': currentPage - 1}) }}">
+                                                                    <i class="fas fa-chevron-left"></i> Précédent
+                                                                </a>
+                                                            </li>
+                                                        {% else %}
+                                                            <li class="page-item disabled">
+                                                                <span class="page-link">
+                                                                    <i class="fas fa-chevron-left"></i> Précédent
+                                                                </span>
+                                                            </li>
+                                                        {% endif %}
+                                                        
+                                                        <!-- Numéros de pages -->
+                                                        {% for page in 1..totalPages %}
+                                                            {% if page == currentPage %}
+                                                                <li class="page-item active">
+                                                                    <span class="page-link">{{ page }}</span>
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="page-item">
+                                                                    <a class="page-link" href="{{ path('user_evaluations', {'page': page}) }}">{{ page }}</a>
+                                                                </li>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        
+                                                        <!-- Bouton Suivant -->
+                                                        {% if currentPage < totalPages %}
+                                                            <li class="page-item">
+                                                                <a class="page-link" href="{{ path('user_evaluations', {'page': currentPage + 1}) }}">
+                                                                    Suivant <i class="fas fa-chevron-right"></i>
+                                                                </a>
+                                                            </li>
+                                                        {% else %}
+                                                            <li class="page-item disabled">
+                                                                <span class="page-link">
+                                                                    Suivant <i class="fas fa-chevron-right"></i>
+                                                                </span>
+                                                            </li>
+                                                        {% endif %}
+                                                    </ul>
+                                                </nav>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<!-- END: Content-->
+
+<!-- BEGIN: Vendor JS-->
+<script src="/app-assets/vendors/js/vendors.min.js" type="text/javascript"></script>
+<!-- END: Vendor JS-->
+
+<!-- BEGIN: Theme JS-->
+<script src="/app-assets/js/core/app-menu.js" type="text/javascript"></script>
+<script src="/app-assets/js/core/app.js" type="text/javascript"></script>
+<!-- END: Theme JS-->
+
+
+
+<script>
+$(document).ready(function() {
+    // Initialiser les tooltips Bootstrap
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
+
+</body>
+<!-- END: Body-->
+
+</html>

@@ -1,249 +1,304 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="fr">
+<!-- BEGIN: Head-->
 
-{% block title %}Détails Évaluation - Responsable{% endblock %}
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   
+    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
 
-{% block body %}
-<div class="container mt-4">
-    <div class="row justify-content-center">
-        <div class="col-md-10">
-            <!-- En-tête de la page -->
-            <div class="text-center mb-4">
-                <h2 class="text-primary">
-                    <i class="fas fa-eye text-info"></i> 
-                    Détails de l'Évaluation
-                </h2>
-                <p class="text-muted">Consultez les détails complets de cette évaluation</p>
-            </div>
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/jquery-jvectormap-2.0.3.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/morris.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/unslider.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/weather-icons/climacons.min.css">
+    <!-- END: Vendor CSS-->
 
-            <!-- Informations de la session -->
-            <div class="card shadow mb-4">
-                <div class="card-header bg-info text-white">
-                    <h5 class="mb-0">
-                        <i class="fas fa-graduation-cap"></i> 
-                        Détails de la Formation
-                    </h5>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p><strong>Formation :</strong> {{ formation.sujet }}</p>
-                            <p><strong>Session :</strong> {{ session.titre }}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <p><strong>Date :</strong> {{ session.dateDebut|date('d/m/Y') }}</p>
-                            <p><strong>Horaires :</strong> {{ session.dateDebut|date('H:i') }} - {{ session.dateFin|date('H:i') }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
+    <!-- END: Theme CSS-->
 
-            <!-- Informations du participant -->
-            <div class="card shadow mb-4">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">
-                        <i class="fas fa-user"></i> 
-                        Informations du Participant
-                    </h5>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p><strong>Nom :</strong> {{ user.nom }}</p>
-                            <p><strong>Prénom :</strong> {{ user.prenom }}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <p><strong>Email :</strong> {{ user.email }}</p>
-                            <p><strong>Rôle :</strong> 
-                                {% for role in user.roles %}
-                                    <span class="badge bg-secondary">{{ role }}</span>
-                                {% endfor %}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-overlay-menu.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-gradient.css">
+    <!-- link(rel='stylesheet', type='text/css', href=app_assets_path+'/css'+rtl+'/pages/users.css')-->
+    <!-- END: Page CSS-->
 
-            <!-- Résultats de l'évaluation -->
-            <div class="card shadow">
-                <div class="card-header bg-success text-white">
-                    <h4 class="mb-0">
-                        <i class="fas fa-chart-bar"></i> 
-                        Résultats de l'Évaluation
-                    </h4>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <!-- Note globale -->
-                        <div class="col-md-4 mb-3">
-                            <div class="text-center">
-                                <h6>Note Globale</h6>
-                                <div class="rating-display">
-                                    {% for i in 1..5 %}
-                                        <span class="rating-number {% if i <= evaluation.noteGlobale %}active{% endif %}">
-                                            {{ i }}
-                                        </span>
-                                    {% endfor %}
-                                </div>
-                                <p class="mt-2">
-                                    <strong>{{ evaluation.noteGlobale }}/5</strong>
-                                </p>
-                                <small class="text-muted">
-                                    {% if evaluation.noteGlobale <= 2 %}
-                                        Très insatisfait
-                                    {% elseif evaluation.noteGlobale == 3 %}
-                                        Moyen
-                                    {% else %}
-                                        Très satisfait
-                                    {% endif %}
-                                </small>
-                            </div>
-                        </div>
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- END: Custom CSS-->
 
-                        <!-- Clarté -->
-                        <div class="col-md-4 mb-3">
-                            <div class="text-center">
-                                <h6>Clarté des Explications</h6>
-                                <div class="rating-display">
-                                    {% for i in 1..5 %}
-                                        <span class="rating-number {% if i <= evaluation.clarte %}active{% endif %}">
-                                            {{ i }}
-                                        </span>
-                                    {% endfor %}
-                                </div>
-                                <p class="mt-2">
-                                    <strong>{{ evaluation.clarte }}/5</strong>
-                                </p>
-                                <small class="text-muted">
-                                    {% if evaluation.clarte <= 2 %}
-                                        Très confus
-                                    {% elseif evaluation.clarte == 3 %}
-                                        Assez clair
-                                    {% else %}
-                                        Très clair
-                                    {% endif %}
-                                </small>
-                            </div>
-                        </div>
+</head>
+<!-- END: Head-->
 
-                        <!-- Pertinence -->
-                        <div class="col-md-4 mb-3">
-                            <div class="text-center">
-                                <h6>Pertinence du Contenu</h6>
-                                <div class="rating-display">
-                                    {% for i in 1..5 %}
-                                        <span class="rating-number {% if i <= evaluation.pertinence %}active{% endif %}">
-                                            {{ i }}
-                                        </span>
-                                    {% endfor %}
-                                </div>
-                                <p class="mt-2">
-                                    <strong>{{ evaluation.pertinence }}/5</strong>
-                                </p>
-                                <small class="text-muted">
-                                    {% if evaluation.pertinence <= 2 %}
-                                        Pas pertinent
-                                    {% elseif evaluation.pertinence == 3 %}
-                                        Assez pertinent
-                                    {% else %}
-                                        Très pertinent
-                                    {% endif %}
-                                </small>
-                            </div>
-                        </div>
-                    </div>
+<!-- BEGIN: Body-->
 
-                    <!-- Suggestions -->
-                    {% if evaluation.suggestion %}
-                        <div class="mt-4">
-                            <h6>Suggestions et Commentaires du Participant</h6>
-                            <div class="alert alert-light">
-                                <i class="fas fa-comment text-primary"></i>
-                                {{ evaluation.suggestion }}
-                            </div>
-                        </div>
-                    {% endif %}
+<body class="vertical-layout vertical-overlay-menu 2-columns   fixed-navbar" data-open="click" data-menu="vertical-overlay-menu" data-col="2-columns">
+{% include 'Responsable/navBar.html.twig' %}
 
-                    <!-- Actions disponibles -->
-            </div>
-            <div class="card shadow mt-4">
-                <div class="card-header bg-secondary text-white">
-                    <h5 class="mb-0">
-                        <i class="fas fa-cogs"></i> 
-                        Actions Disponibles
-                    </h5>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4 mb-2">
-                            <a href="{{ path('responsable_evaluations_list') }}" class="btn btn-outline-primary btn-block">
-                                <i class="fas fa-arrow-left"></i> 
-                                Retour à la Liste
-                            </a>
-                        </div>
-                        <div class="col-md-4 mb-2">
-                            <a href="{{ path('responsable_evaluations_stats') }}" class="btn btn-outline-info btn-block">
-                                <i class="fas fa-chart-pie"></i> 
-                                Voir Statistiques
-                            </a>
-                        </div>
-                        <div class="col-md-4 mb-2">
-                            <a href="{{ path('responsable_evaluations_export_csv') }}" class="btn btn-outline-success btn-block">
-                                <i class="fas fa-download"></i> 
-                                Export CSV
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-wrapper">
+        
+        
+        <div class="content-body">
+                         <!-- Informations générales -->
+             <div class="row mb-4">
+                 <div class="col-md-8">
+                     <div class="card">
+                         <div class="card-header">
+                             <h5 class="mb-0">
+                                 <i class="fas fa-info-circle text-primary"></i> 
+                                 Informations de l'Évaluation
+                             </h5>
+                         </div>
+                         <div class="card-body">
+                             <div class="row mb-3">
+                                 <div class="col-sm-4"><strong>Formation :</strong></div>
+                                 <div class="col-sm-8">{{ formation.sujet }}</div>
+                             </div>
+                             <div class="row mb-3">
+                                 <div class="col-sm-4"><strong>Session :</strong></div>
+                                 <div class="col-sm-8">{{ session.titre }}</div>
+                             </div>
+                             <div class="row mb-3">
+                                 <div class="col-sm-4"><strong>Participant :</strong></div>
+                                 <div class="col-sm-8">
+                                     <div class="fw-bold">{{ user.prenom }} {{ user.nom }}</div>
+                                     <small class="text-muted">{{ user.email }}</small>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+
+                 <!-- Actions et Résumé -->
+                 <div class="col-md-4">
+                     <!-- Résumé rapide -->
+                     <div class="card">
+                         <div class="card-header">
+                             <h6 class="mb-0">
+                                 <i class="fas fa-chart-pie text-warning"></i> 
+                                 Résumé
+                             </h6>
+                         </div>
+                         <div class="card-body py-2">
+                             <div class="mb-2">
+                                 <small class="text-muted">Moyenne</small>
+                                 <h5 class="mb-0 text-primary">
+                                     {{ ((evaluation.noteGlobale + evaluation.clarte + evaluation.pertinence) / 3)|number_format(1) }}/5
+                                 </h5>
+                             </div>
+                             <div class="mb-2">
+                                 <small class="text-muted">Statut</small>
+                                 <br>
+                                 {% if ((evaluation.noteGlobale + evaluation.clarte + evaluation.pertinence) / 3) >= 4 %}
+                                     <span class="badge bg-success badge-sm">Excellente</span>
+                                 {% elseif ((evaluation.noteGlobale + evaluation.clarte + evaluation.pertinence) / 3) >= 3 %}
+                                     <span class="badge bg-warning badge-sm">Bonne</span>
+                                 {% else %}
+                                     <span class="badge bg-danger badge-sm">À améliorer</span>
+                                 {% endif %}
+                             </div>
+                             {% if evaluation.suggestion %}
+                             <div class="mb-2">
+                                 <small class="text-muted">Commentaires</small>
+                                 <br>
+                                 <span class="badge bg-info badge-sm">
+                                     <i class="fas fa-comment"></i> Présents
+                                 </span>
+                             </div>
+                             {% endif %}
+                         </div>
+                     </div>
+                 </div>
+             </div>
+
+             <!-- Notes détaillées sur toute la largeur -->
+             <div class="row mb-3">
+                 <div class="col-12">
+                     <div class="card">
+                         <div class="card-header">
+                             <h5 class="mb-0">
+                                 <i class="fas fa-chart-bar text-success"></i> 
+                                 Notes Détaillées
+                             </h5>
+                         </div>
+                         <div class="card-body">
+                             <div class="row">
+                                 <div class="col-md-4 mb-3">
+                                     <div class="text-center">
+                                         <h6>Note Globale</h6>
+                                         <div class="rating-display-large">
+                                             {% for i in 1..5 %}
+                                                 <span class="rating-number-large {% if i <= evaluation.noteGlobale %}active{% endif %}">
+                                                     {{ i }}
+                                                 </span>
+                                             {% endfor %}
+                                         </div>
+                                         <p class="text-muted mt-2">{{ evaluation.noteGlobale }}/5</p>
+                                     </div>
+                                 </div>
+                                 <div class="col-md-4 mb-3">
+                                     <div class="text-center">
+                                         <h6>Clarté</h6>
+                                         <div class="rating-display-large">
+                                             {% for i in 1..5 %}
+                                                 <span class="rating-number-large {% if i <= evaluation.clarte %}active{% endif %}">
+                                                     {{ i }}
+                                                 </span>
+                                             {% endfor %}
+                                         </div>
+                                         <p class="text-muted mt-2">{{ evaluation.clarte }}/5</p>
+                                     </div>
+                                 </div>
+                                 <div class="col-md-4 mb-3">
+                                     <div class="text-center">
+                                         <h6>Pertinence</h6>
+                                         <div class="rating-display-large">
+                                             {% for i in 1..5 %}
+                                                 <span class="rating-number-large {% if i <= evaluation.pertinence %}active{% endif %}">
+                                                     {{ i }}
+                                                 </span>
+                                             {% endfor %}
+                                         </div>
+                                         <p class="text-muted mt-2">{{ evaluation.pertinence }}/5</p>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+
+             {% if evaluation.suggestion %}
+             <!-- Suggestions sur toute la largeur -->
+             <div class="row">
+                 <div class="col-12">
+                     <div class="card">
+                         <div class="card-header">
+                             <h5 class="mb-0">
+                                 <i class="fas fa-comment text-info"></i> 
+                                 Suggestions et Commentaires
+                             </h5>
+                         </div>
+                         <div class="card-body">
+                             <div class="bg-white p-3 rounded border">
+                                 <p class="mb-0">{{ evaluation.suggestion }}</p>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+             {% endif %}
+
+
         </div>
     </div>
 </div>
+<!-- END: content-->
 
-<!-- Styles pour l'affichage des notes -->
-<style>
-.rating-display {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin: 10px 0;
-}
 
-.rating-number {
-    display: inline-block;
-    width: 35px;
-    height: 35px;
-    line-height: 35px;
-    text-align: center;
-    border-radius: 50%;
-    background-color: #e9ecef;
-    color: #6c757d;
-    font-weight: bold;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-}
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
 
-.rating-number.active {
-    background-color: #ffc107;
-    color: #212529;
-    box-shadow: 0 2px 8px rgba(255, 193, 7, 0.4);
-    transform: scale(1.1);
-}
 
-.card {
-    border: none;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
 
-.card-header {
-    border-bottom: none;
-}
 
-.btn-block {
-    width: 100%;
-}
+    <!-- BEGIN: Vendor JS-->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
 
-.badge {
-    font-size: 0.8rem;
-}
-</style>
-{% endblock %}
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/extensions/jquery.knob.min.js"></script>
+    <script src="../../../app-assets/js/scripts/extensions/knob.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/raphael-min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/morris.min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/jvector/jquery-jvectormap-2.0.3.min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/jvector/jquery-jvectormap-world-mill.js"></script>
+    <script src="../../../app-assets/data/jvector/visitor-data.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/chart.min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/jquery.sparkline.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/unslider-min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-climacon.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/fonts/simple-line-icons/style.min.css">
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="../../../app-assets/js/core/app-menu.js"></script>
+    <script src="../../../app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/pages/dashboard-analytics.js"></script>
+    <!-- END: Page JS-->
+
+    <!-- Styles pour l'affichage des notes -->
+    <style>
+    .rating-display-large {
+        display: flex;
+        gap: 5px;
+        justify-content: center;
+    }
+
+    .rating-number-large {
+        display: inline-block;
+        width: 35px;
+        height: 35px;
+        line-height: 35px;
+        text-align: center;
+        border-radius: 50%;
+        background-color: #e9ecef;
+        color: #6c757d;
+        font-weight: bold;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .rating-number-large.active {
+        background-color: #ffc107;
+        color:rgb(255, 255, 255);
+        transform: scale(1.1);
+    }
+
+    .avatar-sm {
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+    }
+
+    .card {
+        border: none;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+    }
+
+    .card-header {
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .badge {
+        font-size: 0.8rem;
+    }
+
+    .btn {
+        border-radius: 6px;
+    }
+    </style>
+
+</body>
+<!-- END: Body-->
+
+</html>

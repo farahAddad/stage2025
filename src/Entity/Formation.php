@@ -22,14 +22,14 @@ class Formation
 
     #[ORM\Column]
     #[Assert\NotBlank(message: "La date est requise.")]
-    #[Assert\GreaterThan("today", message: "La date doit être dans le futur.")]
+    #[Assert\GreaterThanOrEqual("today", message: "La date doit être aujourd'hui ou dans le futur.")]
     private ?\DateTime $dateDebut = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'decimal', precision: 4, scale: 1)]
     #[Assert\NotBlank(message: "La durée est requise.")]
-    #[Assert\Type(type: "integer", message: "La durée doit être un nombre.")]
-    #[Assert\GreaterThan(value: 1, message: "La durée doit être supérieure à 1.")]
-    private ?int $duree = null;
+    #[Assert\Type(type: "numeric", message: "La durée doit être un nombre.")]
+    #[Assert\GreaterThan(value: 0.5, message: "La durée doit être supérieure à 0.5 jour.")]
+    private ?float $duree = null;
 
 
 
@@ -79,12 +79,12 @@ class Formation
         return $this;
     }
 
-    public function getDuree(): ?int
+    public function getDuree(): ?float
     {
         return $this->duree;
     }
 
-    public function setDuree(int $duree): static
+    public function setDuree(float $duree): static
     {
         $this->duree = $duree;
 

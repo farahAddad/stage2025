@@ -1,0 +1,131 @@
+/* Styles pour la page des évaluations */
+
+.rating-display-inline {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.rating-number-small {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    color: #6c757d;
+    font-weight: bold;
+    font-size: 10px;
+}
+
+.rating-number-small.active {
+    background-color: #28a745;
+    color: white;
+}
+
+.table th,
+.table thead th,
+.table thead tr th {
+    background-color: white !important;
+    border-top: none;
+    font-weight: 600;
+    border-bottom: 2px solid #dee2e6 !important;
+    color: #333 !important;
+}
+
+.table td {
+    vertical-align: middle;
+    border-top: none !important;
+    border-bottom: none !important;
+}
+
+.table tbody tr {
+    border: none !important;
+}
+
+.table {
+    border: none !important;
+}
+
+.badge {
+    font-size: 0.75rem;
+    border-radius: 20px;
+    padding: 0.5rem 0.75rem;
+}
+
+.badge-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.badge-warning {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.badge-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-sm {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    border-radius: 20px;
+}
+
+.btn-info {
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+    color: white;
+}
+
+.btn-info:hover {
+    background-color: #138496;
+    border-color: #117a8b;
+    color: white;
+}
+
+/* Styles pour la pagination */
+.pagination {
+    margin-bottom: 0;
+}
+
+.page-link {
+    color: #007bff;
+    border: 1px solid #dee2e6;
+    padding: 0.5rem 0.75rem;
+    margin-left: -1px;
+    transition: all 0.2s ease;
+}
+
+.page-link:hover {
+    color: #0056b3;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+    text-decoration: none;
+}
+
+.page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+}
+
+.page-item.disabled .page-link {
+    color: #6c757d;
+    background-color: #fff;
+    border-color: #dee2e6;
+    cursor: not-allowed;
+}
+
+.page-item:first-child .page-link {
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+}
+
+.page-item:last-child .page-link {
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+}

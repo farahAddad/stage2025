@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="fr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   
+    <link rel="apple-touch-icon" href="/app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="/app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/vendors/css/charts/jquery-jvectormap-2.0.3.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/vendors/css/charts/morris.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/vendors/css/extensions/unslider.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/vendors/css/weather-icons/climacons.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/components.css">
+    <!-- END: Theme CSS-->
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/core/menu/menu-types/vertical-overlay-menu.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/core/colors/palette-gradient.css">
+    <!-- link(rel='stylesheet', type='text/css', href=app_assets_path+'/css'+rtl+'/pages/users.css')-->
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+    <!-- END: Custom CSS-->
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-overlay-menu 2-columns   fixed-navbar" data-open="click" data-menu="vertical-overlay-menu" data-col="2-columns">
+{% if is_granted('ROLE_RH') %}
+    {% include 'Admin/navBar.html.twig' %}
+{% else %}
+    {% include 'Responsable/navBar.html.twig' %}
+{% endif %}
+
+  
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-md-6 col-12 mb-2">
+                <h3 class="content-header-title">👥 Liste des Participants</h3>
+                
+            </div>
+            <div class="content-header-right col-md-6 col-12 mb-2">
+               
+                <div class="float-md-right">
+                    <ul class="list-inline mb-0">
+                        <li><a href="{{ path('admin_participants') }}" data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="content-body">
+            <!-- Section Recherche et Liste des Participants -->
+            <div class="card" style="background-color: white; border: 1px solid #e8e4e0; border-radius: 8px;">
+                <div class="card-body">
+                    <h5 class="card-title" style="color: black; margin-bottom: 20px;">
+                        <i class="ft-search" style="color: #666;"></i> Recherche et Filtrage
+                    </h5>
+                    
+                    <div class="row mb-4">
+                        <!-- Recherche par nom/email -->
+                        <div class="col-md-4 mb-3">
+                            <label for="searchInput" style="color: black; font-weight: 500;">Rechercher un participant</label>
+                            <input type="text" id="searchInput" class="form-control" placeholder="Nom, prénom ou email..." 
+                                   style="border: 1px solid #d4c4b7; border-radius: 6px; background-color: #fefefe;">
+                        </div>
+                        
+                        <!-- Filtre par formation -->
+                        <div class="col-md-3 mb-3">
+                            <label for="formationFilter" style="color: black; font-weight: 500;">Formation</label>
+                            <select id="formationFilter" class="form-control" 
+                                    style="border: 1px solid #d4c4b7; border-radius: 6px; background-color: #fefefe;">
+                                <option value="">Toutes les formations</option>
+                                {% for formationKey, formationData in participantsOrganises %}
+                                    <option value="{{ formationData.formation.sujet }}">{{ formationData.formation.sujet }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <!-- Filtre par statut -->
+                        <div class="col-md-3 mb-3">
+                            <label for="statutFilter" style="color: black; font-weight: 500;">Statut</label>
+                            <select id="statutFilter" class="form-control" 
+                                    style="border: 1px solid #d4c4b7; border-radius: 6px; background-color: #fefefe;">
+                                <option value="">Tous les statuts</option>
+                                <option value="accepté">Accepté</option>
+                                <option value="en attente">En attente</option>
+                                <option value="absence">Absence</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Bouton réinitialiser -->
+                       
+                    </div>
+                    
+                    <!-- Résultats de recherche -->
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div id="searchResults" style="display: none; color: black; font-size: 0.875rem; margin-bottom: 0;">
+                                <span id="resultsCount">0</span> participant(s) trouvé(s)
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Liste des Participants -->
+                    <div class="participants-content">
+                        {% if participantsOrganises is empty %}
+                            <div class="text-center text-muted py-4">
+                                <i class="ft-users fa-3x mb-3"></i>
+                                <h5>Aucun participant trouvé</h5>
+                                <p>Aucune inscription n'a été effectuée pour le moment.</p>
+                            </div>
+                        {% else %}
+                            {% for formationKey, formationData in participantsOrganises %}
+                                <div class="formation-section mb-4" data-formation="{{ formationData.formation.sujet }}">
+                                    <div class="formation-header" style="background-color: #f8f6f3; border: 1px solid #e8e4e0; border-radius: 8px; padding: 16px;">
+                                        <h5 class="mb-0" style="color: black;"><i class="ft-book" style="color: #666;"></i> {{ formationData.formation.sujet }}</h5>
+                                        <small style="color: black;">{{ formationData.formation.dateDebut ? formationData.formation.dateDebut|date('d/m/Y') : 'Date non définie' }} | {{ formationData.formation.duree }} jour(s)</small>
+                                    </div>
+                                    {% for sessionKey, sessionData in formationData.sessions %}
+                                        <div class="session-section ml-4 mt-3" data-session="{{ sessionData.session.titre }}">
+                                            <div class="session-header" style="background-color: #fefefe; border: 1px solid #f0ede8; border-radius: 6px; padding: 12px;">
+                                                <h6 class="mb-0" style="color: black;"><i class="ft-calendar" style="color: #666;"></i> Session: {{ sessionData.session.titre }}</h6>
+                                                <small style="color: black;">{{ sessionData.session.dateDebut ? sessionData.session.dateDebut|date('d/m/Y') : 'Date non définie' }} {% if sessionData.session.dateFin %}- {{ sessionData.session.dateFin|date('d/m/Y') }}{% endif %}</small>
+                                            </div>
+                                            <div class="participants-list ml-4 mt-2">
+                                                <div class="table-responsive">
+                                                    <table class="table table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="background-color: white; color: black; font-weight: 500; border: none; padding: 12px 16px;">Participant</th>
+                                                                <th style="background-color: white; color: black; font-weight: 500; border: none; padding: 12px 16px;">Email</th>
+                                                                <th style="background-color: white; color: black; font-weight: 500; border: none; padding: 12px 16px;">Statut</th>
+                                                                <th style="background-color: white; color: black; font-weight: 500; border: none; padding: 12px 16px;">Date Validation</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for participantData in sessionData.participants %}
+                                                                <tr class="participant-row" style="border-bottom: 1px solid #f0ede8;" 
+                                                                    data-formation="{{ formationData.formation.sujet }}"
+                                                                    data-session="{{ sessionData.session.titre }}"
+                                                                    data-participant="{{ participantData.user.prenom }} {{ participantData.user.nom }}"
+                                                                    data-email="{{ participantData.user.email }}"
+                                                                    data-statut="{{ participantData.inscription.statutParticipation }}">
+                                                                    <td style="padding: 12px 16px; color: black; font-weight: 500;">{{ participantData.user.prenom }} {{ participantData.user.nom }}</td>
+                                                                    <td style="padding: 12px 16px; text-align: center; color: black;">{{ participantData.user.email }}</td>
+                                                                    <td style="padding: 12px 16px; text-align: center;">
+                                                                        {% set statut = participantData.inscription.statutParticipation %}
+                                                                        {% if statut == 'accepté' %}
+                                                                            <span class="badge badge-success rounded-pill">{{ statut|title }}</span>
+                                                                        {% elseif statut == 'en attente' %}
+                                                                            <span class="badge badge-warning rounded-pill">{{ statut|title }}</span>
+                                                                        {% elseif statut == 'absence' or statut == 'absence de validation' %}
+                                                                            <span class="badge rounded-pill" style="background-color: #d4c4b7; color: black;">Absence</span>
+                                                                        {% else %}
+                                                                            <span class="badge rounded-pill" style="background-color: #d4c4b7; color: black;">{{ statut|title }}</span>
+                                                                        {% endif %}
+                                                                    </td>
+                                                                    <td style="padding: 12px 16px; text-align: center; color: black;">
+                                                                        {% if participantData.inscription.dateValidation %}
+                                                                            {{ participantData.inscription.dateValidation|date('d/m/Y H:i') }}
+                                                                        {% else %}
+                                                                            <span style="color: #666;">Non définie</span>
+                                                                        {% endif %}
+                                                                    </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: content-->
+
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+
+
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="/app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="/app-assets/vendors/js/extensions/jquery.knob.min.js"></script>
+    <script src="/app-assets/js/scripts/extensions/knob.js"></script>
+    <script src="/app-assets/vendors/js/charts/raphael-min.js"></script>
+    <script src="/app-assets/js/charts/morris.min.js"></script>
+    <script src="/app-assets/vendors/js/charts/jvector/jquery-jvectormap-2.0.3.min.js"></script>
+    <script src="/app-assets/js/charts/jvector/jquery-jvectormap-world-mill.js"></script>
+    <script src="/app-assets/data/jvector/visitor-data.js"></script>
+    <script src="/app-assets/vendors/js/charts/chart.min.js"></script>
+    <script src="/app-assets/js/charts/jquery.sparkline.min.js"></script>
+    <script src="/app-assets/vendors/js/extensions/unslider-min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/core/colors/palette-climacon.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/fonts/simple-line-icons/style.min.css">
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="/app-assets/js/core/app-menu.js"></script>
+    <script src="/app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="/app-assets/js/scripts/pages/dashboard-analytics.js"></script>
+    <!-- END: Page JS-->
+
+    <!-- Script de recherche et filtrage -->
+    <script>
+        $(document).ready(function() {
+            // Éléments DOM
+            const searchInput = $('#searchInput');
+            const formationFilter = $('#formationFilter');
+            const statutFilter = $('#statutFilter');
+            const resetFilters = $('#resetFilters');
+            const searchResults = $('#searchResults');
+            const resultsCount = $('#resultsCount');
+            const participantRows = $('.participant-row');
+            const formationSections = $('.formation-section');
+            const sessionSections = $('.session-section');
+
+            // Fonction de filtrage
+            function filterParticipants() {
+                const searchTerm = searchInput.val().toLowerCase();
+                const selectedFormation = formationFilter.val();
+                const selectedStatut = statutFilter.val();
+                
+                let visibleCount = 0;
+                let hasVisibleFormations = false;
+
+                // Parcourir toutes les formations
+                formationSections.each(function() {
+                    const formationSection = $(this);
+                    const formationName = formationSection.data('formation');
+                    let formationHasVisibleSessions = false;
+                    let formationHasVisibleParticipants = false;
+
+                    // Vérifier si la formation doit être visible
+                    const formationVisible = !selectedFormation || formationName === selectedFormation;
+                    
+                    // Parcourir toutes les sessions de cette formation
+                    const sessionsInFormation = formationSection.find('.session-section');
+                    sessionsInFormation.each(function() {
+                        const sessionSection = $(this);
+                        const sessionName = sessionSection.data('session');
+                        let sessionHasVisibleParticipants = false;
+
+                        // Parcourir tous les participants de cette session
+                        const participantsInSession = sessionSection.find('.participant-row');
+                        participantsInSession.each(function() {
+                            const participantRow = $(this);
+                            const participantName = participantRow.data('participant').toLowerCase();
+                            const participantEmail = participantRow.data('email').toLowerCase();
+                            const participantStatut = participantRow.data('statut');
+                            const participantFormation = participantRow.data('formation');
+                            const participantSession = participantRow.data('session');
+
+                            // Vérifier les critères de filtrage
+                            const matchesSearch = !searchTerm || 
+                                participantName.includes(searchTerm) || 
+                                participantEmail.includes(searchTerm);
+                            const matchesFormation = !selectedFormation || participantFormation === selectedFormation;
+                            
+                            // Gestion spéciale pour le filtre "absence" qui doit inclure "absence" et "absence de validation"
+                            let matchesStatut = true;
+                            if (selectedStatut) {
+                                if (selectedStatut === 'absence') {
+                                    matchesStatut = participantStatut === 'absence' || participantStatut === 'absence de validation';
+                                } else {
+                                    matchesStatut = participantStatut === selectedStatut;
+                                }
+                            }
+
+                            // Afficher/masquer la ligne selon les critères
+                            if (matchesSearch && matchesFormation && matchesStatut) {
+                                participantRow.show();
+                                visibleCount++;
+                                sessionHasVisibleParticipants = true;
+                                formationHasVisibleParticipants = true;
+                            } else {
+                                participantRow.hide();
+                            }
+                        });
+
+                        // Afficher/masquer la section session
+                        if (sessionHasVisibleParticipants && formationVisible) {
+                            sessionSection.show();
+                            formationHasVisibleSessions = true;
+                        } else {
+                            sessionSection.hide();
+                        }
+                    });
+
+                    // Afficher/masquer la section formation
+                    if (formationHasVisibleSessions && formationVisible) {
+                        formationSection.show();
+                        hasVisibleFormations = true;
+                    } else {
+                        formationSection.hide();
+                    }
+                });
+
+                // Afficher le message de résultats
+                if (searchTerm || selectedFormation || selectedStatut) {
+                    resultsCount.text(visibleCount);
+                    searchResults.show();
+                    
+                    if (visibleCount === 0) {
+                        searchResults.html('Aucun participant trouvé avec ces critères');
+                    } else {
+                        searchResults.html(visibleCount + ' participant(s) trouvé(s)');
+                    }
+                } else {
+                    searchResults.hide();
+                }
+
+                // Afficher/masquer le message "Aucun participant trouvé"
+                if (!hasVisibleFormations) {
+                    $('.text-center.text-muted.py-4').show();
+                } else {
+                    $('.text-center.text-muted.py-4').hide();
+                }
+            }
+
+            // Événements de filtrage
+            searchInput.on('input', filterParticipants);
+            formationFilter.on('change', filterParticipants);
+            statutFilter.on('change', filterParticipants);
+
+            // Bouton réinitialiser
+            resetFilters.on('click', function() {
+                searchInput.val('');
+                formationFilter.val('');
+                statutFilter.val('');
+                filterParticipants();
+                
+                // Focus sur la recherche
+                searchInput.focus();
+            });
+
+            // Initialisation
+            filterParticipants();
+        });
+    </script>
+
+</body>
+<!-- END: Body-->
+
+</html>

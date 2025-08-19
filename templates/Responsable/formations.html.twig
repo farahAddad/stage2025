@@ -90,13 +90,7 @@
                 <h3 class="content-header-title">Mes Formations</h3>
                 <p class="text-muted">Gestion de vos formations en tant que responsable</p>
             </div>
-            <div class="content-header-right col-md-6 col-12">
-                <div class="btn-group float-md-right" role="group">
-                    <a href="{{ path('ajouter_formation') }}" class="btn btn-primary">
-                        <i class="icon-plus"></i> Créer une formation
-                    </a>
-                </div>
-            </div>
+           
         </div>
         
         <div class="content-body">
@@ -119,6 +113,42 @@
                         </div>
                     </div>
                 </div>
+                 <div class="col-xl-2 col-md-4 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-left">
+                                        <h3 class="primary">{{ totalSessions }}</h3>
+                                        <span>Total Sessions</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="icon-calendar primary font-large-2 float-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <div class="col-xl-2 col-md-4 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-left">
+                                        <h3 class="info">{{ sessionsCreees }}</h3>
+                                        <span>Sessions créées</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="icon-plus info font-large-2 float-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+               
                 
                 <div class="col-xl-2 col-md-4 col-12">
                     <div class="card">
@@ -156,41 +186,9 @@
                     </div>
                 </div>
                 
-                <div class="col-xl-2 col-md-4 col-12">
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="card-body">
-                                <div class="media d-flex">
-                                    <div class="media-body text-left">
-                                        <h3 class="info">{{ totalSessions }}</h3>
-                                        <span>Sessions</span>
-                                    </div>
-                                    <div class="align-self-center">
-                                        <i class="icon-calendar info font-large-2 float-right"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+               
                 
-                <div class="col-xl-2 col-md-4 col-12">
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="card-body">
-                                <div class="media d-flex">
-                                    <div class="media-body text-left">
-                                        <h3 class="warning">{{ sessionsEnCours }}</h3>
-                                        <span>Sessions Actives</span>
-                                    </div>
-                                    <div class="align-self-center">
-                                        <i class="icon-play warning font-large-2 float-right"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          
                 
                 <div class="col-xl-2 col-md-4 col-12">
                     <div class="card">
@@ -209,6 +207,10 @@
                         </div>
                     </div>
                 </div>
+
+ 
+
+
             </div>
 
             <!-- Liste des Formations -->

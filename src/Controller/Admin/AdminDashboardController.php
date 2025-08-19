@@ -46,8 +46,8 @@ class AdminDashboardController extends AbstractController
             'totalFormations' => $globalStats['totalFormations'],
             'tauxParticipation' => $globalStats['tauxParticipation'],
             'tauxSatisfaction' => $globalStats['tauxSatisfaction'],
-            'heuresFormation' => $globalStats['heuresFormation'],
-            'heuresParUtilisateur' => $globalStats['heuresParUtilisateur'],
+            'joursFormation' => $globalStats['joursFormation'],
+
             'formationsParResponsable' => $globalStats['formationsParResponsable'],
             'totalEvaluations' => $globalStats['totalEvaluations'],
             'responsables' => $responsables,
@@ -71,6 +71,18 @@ class AdminDashboardController extends AbstractController
         $additionalStats = $dashboardRepo->getAdditionalChartStats();
         $formationsAvecParticipation = $dashboardRepo->getFormationsWithParticipation();
         
+        // Récupérer tous les responsables avec leurs statistiques
+        $responsables = $dashboardRepo->getAllResponsables();
+        $statsParResponsable = [];
+        foreach ($responsables as $responsable) {
+            $statsParResponsable[] = [
+                'id' => $responsable['id'],
+                'nom' => $responsable['nom'],
+                'prenom' => $responsable['prenom'],
+                'stats' => $dashboardRepo->getStatsByResponsable($responsable['id'])
+            ];
+        }
+        
         // Calculs supplémentaires pour le PDF
         $calculsAvances = $this->calculerStatistiquesAvancees($globalStats, $monthlyStats);
         
@@ -81,6 +93,8 @@ class AdminDashboardController extends AbstractController
             'additionalStats' => $additionalStats,
             'formationsAvecParticipation' => $formationsAvecParticipation,
             'calculsAvances' => $calculsAvances,
+            'responsables' => $responsables,
+            'statsParResponsable' => $statsParResponsable,
             'dateExport' => new \DateTime(),
             'user' => $user
         ]);
@@ -144,7 +158,13 @@ class AdminDashboardController extends AbstractController
         
         // S'assurer que moisPlusActif n'est pas null
         if ($moisPlusActif === null) {
-            $moisPlusActif = ['month' => 'Aucun', 'formations' => 0];
+            $moisPlusActif = ['month' => 'Aucun', 'formations' => 0, 'sessions' => 0, 'participants' => 0, 'inscriptionsAcceptees' => 0, 'moyenneSatisfaction' => 0];
+        } else {
+            // Enrichir les données du mois le plus actif
+            $moisPlusActif['sessions'] = $moisPlusActif['sessions'] ?? 0;
+            $moisPlusActif['participants'] = $moisPlusActif['participants'] ?? 0;
+            $moisPlusActif['inscriptionsAcceptees'] = $moisPlusActif['inscriptionsAcceptees'] ?? 0;
+            $moisPlusActif['moyenneSatisfaction'] = $moisPlusActif['satisfaction'] ?? 0;
         }
         
         // Calcul de croissance

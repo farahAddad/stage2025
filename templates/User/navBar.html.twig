@@ -4,7 +4,7 @@
             <div class="navbar-header">
                 <ul class="nav navbar-nav flex-row">
                     <li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
-                    <li class="nav-item"><a class="navbar-brand" href="../../../html/ltr/vertical-overlay-menu-template/index.html"><img class="brand-logo" alt="stack admin logo" src="../../../app-assets/images/logo/stack-logo-light.png">
+                    <li class="nav-item"><a class="navbar-brand" href="{{ path('user_dashboard') }}"><img class="brand-logo" alt="stack admin logo" src="/app-assets/images/logo/stack-logo-light.png">
                             <h2 class="brand-text">Stack</h2>
                         </a></li>
                     <li class="nav-item d-md-none"><a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile"><i class="fa fa-ellipsis-v"></i></a></li>
@@ -93,13 +93,13 @@
                         <li class="dropdown dropdown-user nav-item">
                             <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
                                 <span class="avatar avatar-online">
-                                    <img src="../../../app-assets/images/portrait/small/avatar-s-1.png" alt="avatar">
+                                    <img src="/app-assets/images/portrait/small/avatar-s-1.png" alt="avatar">
                                     <i></i>
                                 </span>
                                 <span class="user-name">{{ app.user.nom }} {{app.user.prenom }}</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="{{ path('user_sessions') }}">
+                                <a class="dropdown-item" href="{{ path('user_dashboard') }}">
                                     <i class="ft-graduation-cap"></i> Mes sessions
                                 </a>
                                 <a class="dropdown-item" href="{{ path('user_notifications') }}">

@@ -130,7 +130,7 @@ final class FormationController extends AbstractController
 
 
 
-    #[Route('/notifications', name: 'admin_notifications')]
+    #[Route('/admin/notifications', name: 'admin_notifications')]
     public function notifications(NotificationService $notificationService, EntityManagerInterface $em): Response
     {
     // Utiliser l'utilisateur réellement connecté

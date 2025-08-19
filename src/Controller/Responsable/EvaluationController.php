@@ -21,7 +21,7 @@ class EvaluationController extends AbstractController
     ) {}
 
     /**
-     * Liste de toutes les évaluations
+     * Liste des évaluations des formations du responsable connecté
      */
     #[Route('/', name: 'responsable_evaluations_list', methods: ['GET'])]
     public function index(Request $request): Response
@@ -29,14 +29,18 @@ class EvaluationController extends AbstractController
         $page = $request->query->getInt('page', 1);
         $limit = 20;
         
-        $evaluations = $this->evaluationRepository->findAllWithDetails($page, $limit);
-        $totalEvaluations = $this->evaluationRepository->count([]);
+        // Récupérer l'utilisateur connecté (responsable)
+        $user = $this->getUser();
+        
+        // Récupérer les évaluations des formations du responsable
+        $evaluations = $this->evaluationRepository->findEvaluationsByResponsable($user, $page, $limit);
+        $totalEvaluations = $this->evaluationRepository->countEvaluationsByResponsable($user);
         $totalPages = ceil($totalEvaluations / $limit);
         
-        // Statistiques globales
-        $moyenneGlobale = $this->evaluationRepository->getMoyenneGlobale();
-        $moyenneClarte = $this->evaluationRepository->getMoyenneClarte();
-        $moyennePertinence = $this->evaluationRepository->getMoyennePertinence();
+        // Statistiques globales pour les formations du responsable
+        $moyenneGlobale = $this->evaluationRepository->getMoyenneGlobaleByResponsable($user);
+        $moyenneClarte = $this->evaluationRepository->getMoyenneClarteByResponsable($user);
+        $moyennePertinence = $this->evaluationRepository->getMoyennePertinenceByResponsable($user);
         
         return $this->render('responsable/evaluations.html.twig', [
             'evaluations' => $evaluations,

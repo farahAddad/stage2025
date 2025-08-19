@@ -106,14 +106,13 @@ class AdminDashboardRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
         
-        // Heures de formation totales
-        $heuresFormation = $this->createQueryBuilder('f')
+        // Jours de formation totales
+        $joursFormation = $this->createQueryBuilder('f')
             ->select('SUM(f.duree)')
             ->getQuery()
             ->getSingleScalarResult() ?? 0;
         
-        // Heures par utilisateur
-        $heuresParUtilisateur = $totalUsers > 0 ? round($heuresFormation / $totalUsers, 2) : 0;
+
         
         // Formations par responsable
         $formationsParResponsable = $this->createQueryBuilder('f')
@@ -128,8 +127,7 @@ class AdminDashboardRepository extends ServiceEntityRepository
             'tauxParticipation' => $tauxParticipation,
             'totalEvaluations' => $totalEvaluations,
             'tauxSatisfaction' => $tauxSatisfaction,
-            'heuresFormation' => $heuresFormation,
-            'heuresParUtilisateur' => $heuresParUtilisateur,
+            'joursFormation' => $joursFormation,
             'formationsParResponsable' => $formationsParResponsable,
             'statsSessions' => $statsSessions,
             'moyenneGlobale' => $moyenneGlobale,
@@ -139,7 +137,7 @@ class AdminDashboardRepository extends ServiceEntityRepository
     }
 
     /**
-     * Récupérer tous les responsables avec leurs formations
+     * Récupérer tous les responsables (même ceux sans formations)
      */
     public function getAllResponsables(): array
     {
@@ -147,8 +145,10 @@ class AdminDashboardRepository extends ServiceEntityRepository
             ->getRepository(User::class)
             ->createQueryBuilder('u')
             ->select('u.id, u.nom, u.prenom')
-            ->join('u.formations', 'f')
-            ->groupBy('u.id')
+            ->where('u.role = :role')
+            ->setParameter('role', 'ROLE_RESPONSABLE')
+            ->orderBy('u.nom', 'ASC')
+            ->addOrderBy('u.prenom', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -200,8 +200,8 @@ class AdminDashboardRepository extends ServiceEntityRepository
         // Taux de participation
         $tauxParticipation = $totalParticipants > 0 ? round(($participantsValides / $totalParticipants) * 100, 1) : 0;
 
-        // Heures totales de formation
-        $heuresFormation = $this->createQueryBuilder('f')
+        // Jours totales de formation
+        $joursFormation = $this->createQueryBuilder('f')
             ->select('SUM(f.duree)')
             ->where('f.responsable = :responsableId')
             ->setParameter('responsableId', $responsableId)
@@ -214,7 +214,7 @@ class AdminDashboardRepository extends ServiceEntityRepository
             'totalParticipants' => $totalParticipants,
             'participantsValides' => $participantsValides,
             'tauxParticipation' => $tauxParticipation,
-            'heuresFormation' => $heuresFormation,
+            'joursFormation' => $joursFormation,
         ];
     }
 
@@ -311,6 +311,17 @@ class AdminDashboardRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->getSingleScalarResult() ?? 0;
             
+            // Sessions organisées ce mois
+            $sessionsCount = $em->getRepository('App\Entity\Session')
+                ->createQueryBuilder('s')
+                ->select('COUNT(s.id)')
+                ->where('s.dateDebut >= :startDate')
+                ->andWhere('s.dateDebut <= :endDate')
+                ->setParameter('startDate', $startOfMonth)
+                ->setParameter('endDate', $endOfMonth)
+                ->getQuery()
+                ->getSingleScalarResult() ?? 0;
+            
             // Participants ce mois
             $participantsCount = $em->getRepository(Inscription::class)
                 ->createQueryBuilder('i')
@@ -320,6 +331,20 @@ class AdminDashboardRepository extends ServiceEntityRepository
                 ->andWhere('s.dateDebut <= :endDate')
                 ->setParameter('startDate', $startOfMonth)
                 ->setParameter('endDate', $endOfMonth)
+                ->getQuery()
+                ->getSingleScalarResult() ?? 0;
+            
+            // Inscriptions acceptées ce mois
+            $inscriptionsAccepteesCount = $em->getRepository(Inscription::class)
+                ->createQueryBuilder('i')
+                ->select('COUNT(i.id)')
+                ->join('i.session', 's')
+                ->where('s.dateDebut >= :startDate')
+                ->andWhere('s.dateDebut <= :endDate')
+                ->andWhere('i.statutParticipation = :statutAccepte')
+                ->setParameter('startDate', $startOfMonth)
+                ->setParameter('endDate', $endOfMonth)
+                ->setParameter('statutAccepte', 'accepté')
                 ->getQuery()
                 ->getSingleScalarResult() ?? 0;
             
@@ -339,7 +364,9 @@ class AdminDashboardRepository extends ServiceEntityRepository
                 'month' => $monthLabel,
                 'monthKey' => $monthKey,
                 'formations' => $formationsCount,
+                'sessions' => $sessionsCount,
                 'participants' => $participantsCount,
+                'inscriptionsAcceptees' => $inscriptionsAccepteesCount,
                 'satisfaction' => round($satisfactionAvg, 1)
             ];
         }

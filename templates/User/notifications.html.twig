@@ -114,6 +114,20 @@
                                                         {% endif %}
                                                     {% endif %}
                                                     
+                                                    {% if (notification.type == 'modification' or notification.type == 'absence_automatique') and notification.session %}
+                                                        {% set inscription = null %}
+                                                        {% for userInscription in user.inscriptions %}
+                                                            {% if userInscription.session.id == notification.session.id %}
+                                                                {% set inscription = userInscription %}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        {% if inscription %}
+                                                            <a href="{{ path('user_inscription_details', {'id': inscription.id}) }}" class="btn btn-sm btn-outline-info ml-2">
+                                                                <i class="icon-eye"></i> Voir détails
+                                                            </a>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                    
                                                     {% if notification.type == 'session_terminee' and notification.session %}
                                                         {% set evaluation = null %}
                                                         {% for eval in user.evaluations %}
@@ -238,7 +252,96 @@
     <script src="../../../app-assets/js/scripts/pages/dashboard-analytics.js"></script>
     <!-- END: Page JS-->
 
-
+    <!-- Script pour gérer les notifications -->
+    <script>
+        $(document).ready(function() {
+            // Marquer une notification comme lue
+            $('.marquer-lue').on('click', function() {
+                const notificationId = $(this).data('id');
+                const $notificationItem = $(this).closest('.list-group-item');
+                
+                $.ajax({
+                    url: '/user/notification/marquer-lue/' + notificationId,
+                    method: 'POST',
+                    success: function(response) {
+                        if (response.success) {
+                            // Mettre à jour l'apparence de la notification
+                            $notificationItem.removeClass('list-group-item-warning');
+                            $notificationItem.addClass('list-group-item-success');
+                            
+                            // Remplacer le bouton par un badge "Lue"
+                            const $button = $notificationItem.find('.marquer-lue');
+                            $button.replaceWith('<span class="badge badge-success">Lue</span>');
+                            
+                            // Mettre à jour le compteur
+                            updateNotificationCount();
+                        } else {
+                            alert('Erreur: ' + response.message);
+                        }
+                    },
+                    error: function() {
+                        alert('Erreur lors du marquage de la notification');
+                    }
+                });
+            });
+            
+            // Marquer toutes les notifications comme lues
+            $('#marquerToutesLues').on('click', function() {
+                $.ajax({
+                    url: '/user/notifications/marquer-toutes-lues',
+                    method: 'POST',
+                    success: function(response) {
+                        if (response.success) {
+                            // Mettre à jour toutes les notifications
+                            $('.list-group-item').each(function() {
+                                const $item = $(this);
+                                $item.removeClass('list-group-item-warning');
+                                $item.addClass('list-group-item-success');
+                                
+                                // Remplacer tous les boutons par des badges "Lue"
+                                const $button = $item.find('.marquer-lue');
+                                if ($button.length > 0) {
+                                    $button.replaceWith('<span class="badge badge-success">Lue</span>');
+                                }
+                            });
+                            
+                            // Mettre à jour le compteur
+                            updateNotificationCount();
+                            
+                            // Masquer le bouton "Marquer toutes comme lues"
+                            $('#marquerToutesLues').hide();
+                            
+                            // Afficher un message de succès
+                            const $header = $('.content-header');
+                            $header.append('<div class="alert alert-success alert-dismissible fade show mt-2" role="alert">' +
+                                '<i class="icon-check"></i> Toutes les notifications ont été marquées comme lues !' +
+                                '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                                '<span aria-hidden="true">&times;</span></button></div>');
+                        } else {
+                            alert('Erreur: ' + response.message);
+                        }
+                    },
+                    error: function() {
+                        alert('Erreur lors du marquage des notifications');
+                    }
+                });
+            });
+            
+            // Mettre à jour le compteur de notifications non lues
+            function updateNotificationCount() {
+                const currentCount = parseInt($('.badge-info').text()) || 0;
+                const newCount = Math.max(0, currentCount - 1);
+                
+                if (newCount === 0) {
+                    $('.badge-info').text('0 non lues');
+                    $('.badge-info').removeClass('badge-info').addClass('badge-success');
+                    $('.badge-success').text('Toutes lues');
+                } else {
+                    $('.badge-info').text(newCount + ' non lues');
+                }
+            }
+        });
+    </script>
 
 </body>
 <!-- END: Body-->

@@ -5266,3 +5266,19 @@ NOTIF SESSION: acteur=1 admin@test.com, createur=null, responsable=2 MED.ali@gma
 NOTIF SESSION - CASE: AUTRE
 NOTIF SESSION - RESPONSABLE NOTIFIED: YES
 NOTIF SESSION CIBLES: [3 participant@1.com, 4 participant@2.com]
+NOTIF FORMATION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=7 rania@gmail.com
+NOTIF FORMATION - CASE: CREATEUR
+NOTIF FORMATION - PARTICIPANTS COUNT: 2
+NOTIF FORMATION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=7 rania@gmail.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [5 participant@2.com, 6 participant@3.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=7 rania@gmail.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [4 participant@1.com, 5 participant@2.com, 6 participant@3.com]
+NOTIF FORMATION: acteur=7 rania@gmail.com, createur=1 admin@test.com, responsable=7 rania@gmail.com
+NOTIF FORMATION - CASE: RESPONSABLE
+NOTIF FORMATION - PARTICIPANTS COUNT: 3
+NOTIF FORMATION - RESPONSABLE NOTIFIED: NO

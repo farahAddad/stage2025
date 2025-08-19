@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/user')]
@@ -106,33 +107,64 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/notification/marquer-lue/{id}', name: 'user_marquer_notification_lue')]
+    #[Route('/notification/marquer-lue/{id}', name: 'user_marquer_notification_lue', methods: ['POST'])]
     public function marquerNotificationLue(int $id, NotificationService $notificationService, EntityManagerInterface $em): JsonResponse
     {
-        $notification = $em->getRepository(Notification::class)->find($id);
-        
-        if (!$notification) {
-            return new JsonResponse(['success' => false, 'message' => 'Notification non trouvée']);
+        try {
+            $user = $this->getUser();
+            
+            if (!$user) {
+                return new JsonResponse(['success' => false, 'message' => 'Utilisateur non connecté']);
+            }
+            
+            $notification = $em->getRepository(Notification::class)->find($id);
+            
+            if (!$notification) {
+                return new JsonResponse(['success' => false, 'message' => 'Notification non trouvée']);
+            }
+            
+            // Vérifier que l'utilisateur connecté est bien le destinataire de la notification
+            $destinataire = $notification->getDestinataire();
+            if (!$destinataire) {
+                return new JsonResponse(['success' => false, 'message' => 'Notification invalide']);
+            }
+            
+            // Vérifier que le destinataire est bien l'utilisateur connecté
+            if ($destinataire->getId() !== $user->getId()) {
+                return new JsonResponse(['success' => false, 'message' => 'Vous n\'êtes pas autorisé à modifier cette notification']);
+            }
+            
+            $notificationService->marquerCommeLue($notification);
+            
+            return new JsonResponse(['success' => true]);
+            
+        } catch (\Exception $e) {
+            // Log l'erreur
+            error_log('Erreur dans marquerNotificationLue: ' . $e->getMessage());
+            return new JsonResponse(['success' => false, 'message' => 'Erreur interne: ' . $e->getMessage()]);
         }
-        
-        $notificationService->marquerCommeLue($notification);
-        
-        return new JsonResponse(['success' => true]);
     }
 
-    #[Route('/notifications/marquer-toutes-lues', name: 'user_marquer_toutes_notifications_lues')]
+    #[Route('/notifications/marquer-toutes-lues', name: 'user_marquer_toutes_notifications_lues', methods: ['POST'])]
     public function marquerToutesNotificationsLues(NotificationService $notificationService, EntityManagerInterface $em): JsonResponse
     {
-        // Utiliser l'utilisateur réellement connecté
-        $user = $this->getUser();
-        
-        if (!$user) {
-            return new JsonResponse(['success' => false, 'message' => 'Utilisateur non connecté']);
+        try {
+            // Utiliser l'utilisateur réellement connecté
+            $user = $this->getUser();
+            
+            if (!$user) {
+                return new JsonResponse(['success' => false, 'message' => 'Utilisateur non connecté']);
+            }
+            
+            $notificationService->marquerToutesCommeLues($user);
+            
+            return new JsonResponse(['success' => true]);
+            
+        } catch (\Exception $e) {
+            // Log l'erreur
+            error_log('Erreur dans marquerToutesNotificationsLues: ' . $e->getMessage());
+            return new JsonResponse(['success' => false, 'message' => 'Erreur interne: ' . $e->getMessage()]);
         }
-        
-        $notificationService->marquerToutesCommeLues($user);
-        
-        return new JsonResponse(['success' => true]);
     }
 
     #[Route('/formations', name: 'user_formations')]
@@ -159,29 +191,6 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/sessions', name: 'user_sessions')]
-    public function sessions(EntityManagerInterface $em): Response
-    {
-        // Utiliser l'utilisateur réellement connecté
-        $user = $this->getUser();
-        
-        if (!$user) {
-            return $this->redirectToRoute('app_login');
-        }
-        
-        // Vérifier que l'utilisateur n'est pas RH ou Responsable
-        if (in_array('ROLE_RH', $user->getRoles()) || in_array('ROLE_RESPONSABLE', $user->getRoles())) {
-            return $this->redirectToRoute('liste_formations');
-        }
-        
-        // Récupérer les sessions de l'utilisateur
-        $inscriptions = $em->getRepository('App\Entity\Inscription')->findBy(['user' => $user]);
-        
-        return $this->render('User/sessions.html.twig', [
-            'inscriptions' => $inscriptions,
-            'user' => $user
-        ]);
-    }
 
     #[Route('/inscription/{id}/details', name: 'user_inscription_details')]
     public function inscriptionDetails(int $id, EntityManagerInterface $em): Response
@@ -308,6 +317,60 @@ class UserController extends AbstractController
         ]);
     }
 
+    #[Route('/evaluations', name: 'user_evaluations')]
+    public function evaluations(Request $request, EntityManagerInterface $em): Response
+    {
+        // Utiliser l'utilisateur réellement connecté
+        $user = $this->getUser();
+        
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+        
+        // Vérifier que l'utilisateur n'est pas RH ou Responsable
+        if (in_array('ROLE_RH', $user->getRoles()) || in_array('ROLE_RESPONSABLE', $user->getRoles())) {
+            return $this->redirectToRoute('liste_formations');
+        }
+        
+        // Récupérer le numéro de page depuis la requête
+        $page = $request->query->getInt('page', 1);
+        $limit = 10; // 10 évaluations par page
+        $offset = ($page - 1) * $limit;
+        
+        // Récupérer le total des évaluations
+        $totalEvaluations = $em->getRepository('App\Entity\Evaluation')
+            ->createQueryBuilder('e')
+            ->select('COUNT(e.id)')
+            ->where('e.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getSingleScalarResult();
+        
+        // Récupérer les évaluations paginées
+        $evaluations = $em->getRepository('App\Entity\Evaluation')
+            ->createQueryBuilder('e')
+            ->leftJoin('e.session', 's')
+            ->leftJoin('s.formation', 'f')
+            ->where('e.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('e.id', 'DESC')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+        
+        // Calculer le nombre total de pages
+        $totalPages = ceil($totalEvaluations / $limit);
+        
+        return $this->render('User/evaluations.html.twig', [
+            'user' => $user,
+            'evaluations' => $evaluations,
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
+            'totalEvaluations' => $totalEvaluations
+        ]);
+    }
+
     #[Route('/historique', name: 'user_historique')]
     public function historique(EntityManagerInterface $em): Response
     {
@@ -343,10 +406,22 @@ class UserController extends AbstractController
             ->getQuery()
             ->getResult();
         
+        // Récupérer les évaluations de l'utilisateur
+        $evaluations = $em->getRepository('App\Entity\Evaluation')
+            ->createQueryBuilder('e')
+            ->leftJoin('e.session', 's')
+            ->leftJoin('s.formation', 'f')
+            ->where('e.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('e.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+        
         return $this->render('User/historique.html.twig', [
             'user' => $user,
             'inscriptions' => $inscriptions,
-            'notifications' => $notifications
+            'notifications' => $notifications,
+            'evaluations' => $evaluations
         ]);
     }
 }

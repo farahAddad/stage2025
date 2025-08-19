@@ -313,8 +313,8 @@
             </div>
             
             <div class="stat-card">
-                <div class="value">{{ globalStats.totalUsers }}</div>
-                <div class="label">Total Utilisateurs</div>
+                <div class="value">{{ globalStats.joursFormation }}</div>
+                <div class="label">Total Jours Formation</div>
             </div>
             
             <div class="stat-card">
@@ -357,73 +357,43 @@
             </div>
         </div>
         
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="value">{{ calculsAvances.croissanceFormations }}%</div>
-                <div class="label">Croissance Formations</div>
-                <div class="trend {% if calculsAvances.croissanceFormations > 0 %}positive{% elseif calculsAvances.croissanceFormations < 0 %}negative{% else %}neutral{% endif %}">
-                    {% if calculsAvances.croissanceFormations > 0 %}↗ Hausse{% elseif calculsAvances.croissanceFormations < 0 %}↘ Baisse{% else %}→ Stable{% endif %}
+        <!-- Détails du mois le plus actif -->
+        {% if calculsAvances.moisPlusActif and calculsAvances.moisPlusActif.month != 'Aucun' %}
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="value">{{ calculsAvances.moisPlusActif.formations }}</div>
+                    <div class="label">Formations créées</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="value">{{ calculsAvances.moisPlusActif.sessions }}</div>
+                    <div class="label">Sessions organisées</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="value">{{ calculsAvances.moisPlusActif.participants }}</div>
+                    <div class="label">Total participants</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="value">{{ calculsAvances.moisPlusActif.inscriptionsAcceptees }}</div>
+                    <div class="label">Inscriptions acceptées</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="value">{{ calculsAvances.moisPlusActif.moyenneSatisfaction }}/5</div>
+                    <div class="label">Satisfaction moyenne</div>
+                    <div class="trend {% if calculsAvances.moisPlusActif.moyenneSatisfaction >= 4 %}positive{% elseif calculsAvances.moisPlusActif.moyenneSatisfaction >= 3 %}neutral{% else %}negative{% endif %}">
+                        {% if calculsAvances.moisPlusActif.moyenneSatisfaction >= 4 %}Excellent{% elseif calculsAvances.moisPlusActif.moyenneSatisfaction >= 3 %}Bon{% else %}À améliorer{% endif %}
+                    </div>
                 </div>
             </div>
-            
-            <div class="stat-card">
-                <div class="value">{{ calculsAvances.croissanceParticipants }}%</div>
-                <div class="label">Croissance Participants</div>
-                <div class="trend {% if calculsAvances.croissanceParticipants > 0 %}positive{% elseif calculsAvances.croissanceParticipants < 0 %}negative{% else %}neutral{% endif %}">
-                    {% if calculsAvances.croissanceParticipants > 0 %}↗ Hausse{% elseif calculsAvances.croissanceParticipants < 0 %}↘ Baisse{% else %}→ Stable{% endif %}
-                </div>
-            </div>
-            
-            <div class="stat-card">
-                <div class="value">{{ calculsAvances.efficaciteFormation }}%</div>
-                <div class="label">Efficacité Formation</div>
-                <div class="trend {% if calculsAvances.efficaciteFormation >= 50 %}positive{% elseif calculsAvances.efficaciteFormation >= 25 %}neutral{% else %}negative{% endif %}">
-                    {% if calculsAvances.efficaciteFormation >= 50 %}Élevée{% elseif calculsAvances.efficaciteFormation >= 25 %}Moyenne{% else %}Faible{% endif %}
-                </div>
-            </div>
-            
-            <div class="stat-card">
-                <div class="value">{{ calculsAvances.moyenneSatisfaction }}/5</div>
-                <div class="label">Satisfaction Moyenne</div>
-                <div class="trend {% if calculsAvances.moyenneSatisfaction >= 4 %}positive{% elseif calculsAvances.moyenneSatisfaction >= 3 %}neutral{% else %}negative{% endif %}">
-                    {% if calculsAvances.moyenneSatisfaction >= 4 %}Excellent{% elseif calculsAvances.moyenneSatisfaction >= 3 %}Bon{% else %}À améliorer{% endif %}
-                </div>
-            </div>
-        </div>
+        {% endif %}
+        
+
     </div>
 
-    <!-- Section 3: Top formations -->
-    <div class="section">
-        <h2 class="section-title">🏆 Top 5 des formations par participation</h2>
-        
-        <div class="table-container">
-            <div class="table-title">📊 Classement des formations par nombre de participants</div>
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Formation</th>
-                        <th>Participants</th>
-                        <th>Pourcentage</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for formation in additionalStats.topFormations %}
-                    <tr>
-                        <td>{{ formation.sujet }}</td>
-                        <td>{{ formation.participantCount }}</td>
-                        <td>
-                            {% set percentage = (formation.participantCount / additionalStats.topFormations|first.participantCount * 100)|round(1) %}
-                            {{ percentage }}%
-                            <div class="progress-bar">
-                                <div class="progress-fill {% if percentage >= 80 %}excellent{% elseif percentage >= 50 %}good{% else %}poor{% endif %}" style="width: {{ percentage }}%"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
+
 
     <!-- Section 4: Répartition des statuts -->
     <div class="section">
@@ -434,9 +404,9 @@
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Statut</th>
-                        <th>Nombre</th>
-                        <th>Pourcentage</th>
+                        <th style="background-color: #007bff; color: white; font-weight: bold; text-align: center; padding: 12px; border: 2px solid #0056b3; font-size: 14px;">Statut</th>
+                        <th style="background-color: #007bff; color: white; font-weight: bold; text-align: center; padding: 12px; border: 2px solid #0056b3; font-size: 14px;">Nombre</th>
+                        <th style="background-color: #007bff; color: white; font-weight: bold; text-align: center; padding: 12px; border: 2px solid #0056b3; font-size: 14px;">Pourcentage</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -446,14 +416,14 @@
                     {% endfor %}
                     
                     {% for statut in additionalStats.statutsParticipation %}
-                    <tr>
-                        <td>{{ statut.statutParticipation|title }}</td>
-                        <td>{{ statut.count }}</td>
-                        <td>
+                    <tr style="background-color: {% if loop.index is even %}#f8f9fa{% else %}#ffffff{% endif %};">
+                        <td style="border: 1px solid #dee2e6; padding: 10px; text-align: left;">{{ statut.statutParticipation|title }}</td>
+                        <td style="border: 1px solid #dee2e6; padding: 10px; text-align: center;">{{ statut.count }}</td>
+                        <td style="border: 1px solid #dee2e6; padding: 10px; text-align: center;">
                             {% set percentage = (statut.count / totalStatuts * 100)|round(1) %}
                             {{ percentage }}%
-                            <div class="progress-bar">
-                                <div class="progress-fill {% if statut.statutParticipation == 'accepté' %}excellent{% elseif statut.statutParticipation == 'en attente' %}good{% else %}poor{% endif %}" style="width: {{ percentage }}%"></div>
+                            <div class="progress-bar" style="background-color: #e9ecef; height: 8px; border-radius: 4px; margin-top: 5px;">
+                                <div class="progress-fill {% if statut.statutParticipation == 'accepté' %}excellent{% elseif statut.statutParticipation == 'en attente' %}good{% else %}poor{% endif %}" style="width: {{ percentage }}%; height: 100%; border-radius: 4px; background-color: {% if statut.statutParticipation == 'accepté' %}#28a745{% elseif statut.statutParticipation == 'en attente' %}#ffc107{% else %}#dc3545{% endif %};"></div>
                             </div>
                         </td>
                     </tr>
@@ -472,26 +442,66 @@
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Formation</th>
-                        <th>Date</th>
-                        <th>Durée</th>
-                        <th>Participants</th>
-                        <th>Taux</th>
+                        <th style="background-color: #007bff; color: white; font-weight: bold; text-align: center; padding: 12px; border: 2px solid #0056b3; font-size: 14px;">Formation</th>
+                        <th style="background-color: #007bff; color: white; font-weight: bold; text-align: center; padding: 12px; border: 2px solid #0056b3; font-size: 14px;">Date</th>
+                        <th style="background-color: #007bff; color: white; font-weight: bold; text-align: center; padding: 12px; border: 2px solid #0056b3; font-size: 14px;">Durée</th>
+                        <th style="background-color: #007bff; color: white; font-weight: bold; text-align: center; padding: 12px; border: 2px solid #0056b3; font-size: 14px;">Participants</th>
+                        <th style="background-color: #007bff; color: white; font-weight: bold; text-align: center; padding: 12px; border: 2px solid #0056b3; font-size: 14px;">Taux</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for formation in formationsAvecParticipation %}
-                    <tr>
-                        <td>{{ formation.sujet }}</td>
-                        <td>{{ formation.dateDebut ? formation.dateDebut|date('d/m/Y') : 'Non définie' }}</td>
-                        <td>{{ formation.duree }} jour(s)</td>
-                        <td>{{ formation.participantsValides }}/{{ formation.totalParticipants }}</td>
-                        <td>
+                    <tr style="background-color: {% if loop.index is even %}#f8f9fa{% else %}#ffffff{% endif %};">
+                        <td style="border: 1px solid #dee2e6; padding: 10px; text-align: left;">{{ formation.sujet }}</td>
+                        <td style="border: 1px solid #dee2e6; padding: 10px; text-align: center;">{{ formation.dateDebut ? formation.dateDebut|date('d/m/Y') : 'Non définie' }}</td>
+                        <td style="border: 1px solid #dee2e6; padding: 10px; text-align: center;">{{ formation.duree }} jour(s)</td>
+                        <td style="border: 1px solid #dee2e6; padding: 10px; text-align: center;">{{ formation.participantsValides }}/{{ formation.totalParticipants }}</td>
+                        <td style="border: 1px solid #dee2e6; padding: 10px; text-align: center;">
                             {{ formation.tauxParticipation }}%
-                            <div class="progress-bar">
-                                <div class="progress-fill {% if formation.tauxParticipation >= 70 %}excellent{% elseif formation.tauxParticipation >= 40 %}good{% else %}poor{% endif %}" style="width: {{ formation.tauxParticipation }}%"></div>
+                            <div class="progress-bar" style="background-color: #e9ecef; height: 8px; border-radius: 4px; margin-top: 5px;">
+                                <div class="progress-fill {% if formation.tauxParticipation >= 70 %}excellent{% elseif formation.tauxParticipation >= 40 %}good{% else %}poor{% endif %}" style="width: {{ formation.tauxParticipation }}%; height: 100%; border-radius: 4px; background-color: {% if formation.tauxParticipation >= 70 %}#28a745{% elseif formation.tauxParticipation >= 40 %}#ffc107{% else %}#dc3545{% endif %};"></div>
                             </div>
                         </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Section 6: Statistiques par Responsable -->
+    <div class="section">
+        <h2 class="section-title">Statistiques par Responsable</h2>
+        
+        <div class="table-container">
+            <div class="table-title">Détail des performances de chaque responsable</div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th style="background-color: #007bff; color: white; font-weight: bold; text-align: center; padding: 12px; border: 2px solid #0056b3; font-size: 14px;">Responsable</th>
+                        <th style="background-color: #007bff; color: white; font-weight: bold; text-align: center; padding: 12px; border: 2px solid #0056b3; font-size: 14px;">Formations</th>
+                        <th style="background-color: #007bff; color: white; font-weight: bold; text-align: center; padding: 12px; border: 2px solid #0056b3; font-size: 14px;">Sessions</th>
+                        <th style="background-color: #007bff; color: white; font-weight: bold; text-align: center; padding: 12px; border: 2px solid #0056b3; font-size: 14px;">Participants</th>
+                        <th style="background-color: #007bff; color: white; font-weight: bold; text-align: center; padding: 12px; border: 2px solid #0056b3; font-size: 14px;">Acceptés</th>
+                        <th style="background-color: #007bff; color: white; font-weight: bold; text-align: center; padding: 12px; border: 2px solid #0056b3; font-size: 14px;">Taux</th>
+                        <th style="background-color: #007bff; color: white; font-weight: bold; text-align: center; padding: 12px; border: 2px solid #0056b3; font-size: 14px;">Jours Formation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for responsable in statsParResponsable %}
+                    <tr style="background-color: {% if loop.index is even %}#f8f9fa{% else %}#ffffff{% endif %};">
+                        <td style="border: 1px solid #dee2e6; padding: 10px; font-weight: bold; text-align: left;"><strong>{{ responsable.prenom }} {{ responsable.nom }}</strong></td>
+                        <td style="border: 1px solid #dee2e6; padding: 10px; text-align: center;">{{ responsable.stats.totalFormations }}</td>
+                        <td style="border: 1px solid #dee2e6; padding: 10px; text-align: center;">{{ responsable.stats.totalSessions }}</td>
+                        <td style="border: 1px solid #dee2e6; padding: 10px; text-align: center;">{{ responsable.stats.totalParticipants }}</td>
+                        <td style="border: 1px solid #dee2e6; padding: 10px; text-align: center;">{{ responsable.stats.participantsValides }}</td>
+                        <td style="border: 1px solid #dee2e6; padding: 10px; text-align: center;">
+                            {{ responsable.stats.tauxParticipation }}%
+                            <div class="progress-bar" style="background-color: #e9ecef; height: 8px; border-radius: 4px; margin-top: 5px;">
+                                <div class="progress-fill {% if responsable.stats.tauxParticipation >= 70 %}excellent{% elseif responsable.stats.tauxParticipation >= 40 %}good{% else %}poor{% endif %}" style="width: {{ responsable.stats.tauxParticipation }}%; height: 100%; border-radius: 4px; background-color: {% if responsable.stats.tauxParticipation >= 70 %}#28a745{% elseif responsable.stats.tauxParticipation >= 40 %}#ffc107{% else %}#dc3545{% endif %};"></div>
+                            </div>
+                        </td>
+                                                        <td style="border: 1px solid #dee2e6; padding: 10px; text-align: left;">{{ responsable.stats.joursFormation }} jour(s)</td>
                     </tr>
                     {% endfor %}
                 </tbody>

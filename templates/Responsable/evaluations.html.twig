@@ -1,47 +1,27 @@
 <!DOCTYPE html>
-<html class="loading" lang="fr" data-textdirection="ltr">
-<!-- BEGIN: Head-->
+<html class="loading" lang="en" data-textdirection="fr">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimal-ui">
-    <title>Gestion des Évaluations - Responsable</title>
-    
-    <!-- BEGIN: Vendor CSS-->
+    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
-    <!-- END: Vendor CSS-->
-
-    <!-- BEGIN: Theme CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
-    <!-- END: Theme CSS-->
-
-    <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-overlay-menu.css">
-    <!-- END: Page CSS-->
-
-    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-gradient.css">
     <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- END: Custom CSS-->
-
-    <!-- BEGIN: Favicon-->
-    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
-    <!-- END: Favicon-->
+    <title>Détails de la formation</title>
 </head>
-<!-- END: Head-->
-
-<!-- BEGIN: Body-->
 <body class="vertical-layout vertical-overlay-menu 2-columns fixed-navbar" data-open="click" data-menu="vertical-overlay-menu" data-col="2-columns">
 
-    {% include 'Responsable/navBar.html.twig' %}
-
-    <!-- BEGIN: Main Menu-->
-    {% include 'Responsable/menuVertical.html.twig' %}
+{% include 'responsable/navBar.html.twig' %}
+   
     <!-- END: Main Menu-->
 
     <!-- BEGIN: Content-->
@@ -51,7 +31,7 @@
                 <div class="content-header-left col-md-6 col-12 mb-2">
                     <h3 class="content-header-title">
                         <i class="fas fa-chart-bar text-primary"></i> 
-                        Gestion des Évaluations Post-Formation
+                        Évaluations de Mes Formations
                     </h3>
                 </div>
             </div>
@@ -59,28 +39,7 @@
             <div class="content-body">
                 <div class="row">
                     <div class="col-12">
-                        <!-- En-tête de la page -->
-                        <div class="row mb-4">
-                            <div class="col-12">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h1 class="h3 mb-0">
-                                            <i class="fas fa-chart-bar text-primary"></i> 
-                                            Gestion des Évaluations Post-Formation
-                                        </h1>
-                                        <p class="text-muted">Consultez et analysez toutes les évaluations des participants</p>
-                                    </div>
-                                    <div>
-                                        <a href="{{ path('responsable_evaluations_export_csv') }}" class="btn btn-success">
-                                            <i class="fas fa-download"></i> Export CSV
-                                        </a>
-                                        <a href="{{ path('responsable_evaluations_stats') }}" class="btn btn-info">
-                                            <i class="fas fa-chart-pie"></i> Statistiques
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                      
 
                         <!-- Statistiques globales -->
                         <div class="row mb-4">
@@ -164,9 +123,9 @@
                                 {% else %}
                                     <div class="table-responsive">
                                         <table class="table table-hover">
-                                            <thead class="table-dark">
+                                            <thead class="table-light">
                                                 <tr>
-                                                    <th>ID</th>
+                                                  
                                                     <th>Formation</th>
                                                     <th>Session</th>
                                                     <th>Participant</th>
@@ -179,9 +138,7 @@
                                             <tbody>
                                                 {% for evaluation in evaluations %}
                                                     <tr>
-                                                        <td>
-                                                            <span class="badge bg-secondary">#{{ evaluation.id }}</span>
-                                                        </td>
+                                                       
                                                         <td>
                                                             <strong>{{ evaluation.session.formation.sujet }}</strong>
                                                         </td>
@@ -190,9 +147,7 @@
                                                         </td>
                                                         <td>
                                                             <div class="d-flex align-items-center">
-                                                                <div class="avatar-sm bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2">
-                                                                    {{ evaluation.user.prenom|first|upper }}{{ evaluation.user.nom|first|upper }}
-                                                                </div>
+                                                               
                                                                 <div>
                                                                     <div class="fw-bold">{{ evaluation.user.prenom }} {{ evaluation.user.nom }}</div>
                                                                     <small class="text-muted">{{ evaluation.user.email }}</small>
@@ -296,15 +251,7 @@
     <div class="sidenav-overlay"></div>
     <div class="drag-target"></div>
 
-    <!-- BEGIN: Footer-->
-    <footer class="footer footer-static footer-light navbar-border navbar-shadow">
-        <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2">
-            <span class="float-md-left d-block d-md-inline-block">
-                Copyright &copy; 2025 <a class="text-bold-800 grey darken-2" href="#" target="_blank">Formation Manager</a>, All rights reserved.
-            </span>
-        </p>
-    </footer>
-    <!-- END: Footer-->
+   
 
     <!-- BEGIN: Vendor JS-->
     <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
@@ -330,14 +277,14 @@
         text-align: center;
         border-radius: 50%;
         background-color: #e9ecef;
-        color: #6c757d;
+        color:rgb(255, 255, 255);
         font-weight: bold;
         font-size: 0.7rem;
     }
 
     .rating-number-small.active {
         background-color: #ffc107;
-        color: #212529;
+        color:rgb(255, 255, 255);
     }
 
     .avatar-sm {

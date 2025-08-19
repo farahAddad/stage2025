@@ -64,10 +64,12 @@ class SessionSchedulerService
             }
 
             // Message de fin d'exécution
+            $totalParticipantsAbsence = array_sum(array_column($resultat['details'], 'participants_marques_absence') ?? [0]);
             echo sprintf(
-                "✅ SCHEDULER TERMINÉ - %d sessions vérifiées, %d modifiées - Prochaine exécution dans 40 secondes\n",
+                "✅ SCHEDULER TERMINÉ - %d sessions vérifiées, %d modifiées, %d participants marqués absence - Prochaine exécution dans 40 secondes\n",
                 $resultat['sessions_verifiees'],
-                $resultat['sessions_modifiees']
+                $resultat['sessions_modifiees'],
+                $totalParticipantsAbsence
             );
 
         } catch (\Exception $e) {
@@ -108,7 +110,10 @@ class SessionSchedulerService
                         'en cours'
                     );
                     
-                    // Envoyer des notifications aux participants
+                    // Marquer les participants non validés comme "absence" et les notifier
+                    $participantsMarquesAbsence = $this->marquerParticipantsAbsence($session);
+                    
+                    // Envoyer des notifications aux participants acceptés
                     $notificationsEnvoyees = $this->notifierParticipantsSession($session);
                     $resultat['notifications_envoyees'] += $notificationsEnvoyees;
                     
@@ -121,7 +126,8 @@ class SessionSchedulerService
                         'type_changement' => 'debut',
                         'date_debut' => $dateDebut->format('Y-m-d H:i:s'),
                         'timestamp' => $now->format('Y-m-d H:i:s'),
-                        'notifications_envoyees' => $notificationsEnvoyees
+                        'notifications_envoyees' => $notificationsEnvoyees,
+                        'participants_marques_absence' => $participantsMarquesAbsence
                     ];
                 }
             } catch (\Exception $e) {
@@ -425,6 +431,9 @@ class SessionSchedulerService
             $this->entityManager->persist($session);
             $this->entityManager->flush();
             
+            // Marquer les participants non validés comme "absence"
+            $this->marquerParticipantsAbsence($session);
+            
             // Audit log
             $this->auditLogService->enregistrer(
                 null,
@@ -444,6 +453,128 @@ class SessionSchedulerService
                 $e->getMessage()
             ));
             return false;
+        }
+    }
+
+    /**
+     * Marque tous les participants non validés comme "absence" quand une session commence
+     */
+    private function marquerParticipantsAbsence(Session $session): int
+    {
+        $participantsMarques = 0;
+        
+        try {
+            // Récupérer toutes les inscriptions pour cette session qui ne sont pas "accepté"
+            $inscriptionsNonValidees = $this->entityManager->getRepository('App\Entity\Inscription')
+                ->createQueryBuilder('i')
+                ->where('i.session = :session')
+                ->andWhere('i.statutParticipation != :statutAccepte OR i.statutParticipation IS NULL')
+                ->setParameter('session', $session)
+                ->setParameter('statutAccepte', 'accepté')
+                ->getQuery()
+                ->getResult();
+            
+            if (empty($inscriptionsNonValidees)) {
+                return 0;
+            }
+
+            $formation = $session->getFormation();
+            $formationTitre = $formation ? $formation->getSujet() : 'Formation inconnue';
+            
+            foreach ($inscriptionsNonValidees as $inscription) {
+                $ancienStatut = $inscription->getStatutParticipation() ?? 'en attente';
+                
+                // Changer le statut à "absence"
+                $inscription->setStatutParticipation('absence');
+                
+                // Persister le changement
+                $this->entityManager->persist($inscription);
+                
+                // Créer un audit log pour ce changement
+                $this->auditLogService->enregistrer(
+                    null, // Pas d'utilisateur spécifique pour les changements automatiques
+                    sprintf('Changement automatique statut participation (Session: %s, Formation: %s)', 
+                        $session->getTitre(), 
+                        $formationTitre
+                    ),
+                    $ancienStatut,
+                    'absence'
+                );
+                
+                // Envoyer une notification au participant pour l'informer de son absence
+                $this->notifierParticipantAbsence($inscription, $session, $formationTitre);
+                
+                $participantsMarques++;
+            }
+            
+            // Flush tous les changements
+            $this->entityManager->flush();
+            
+            $this->logger->info(sprintf(
+                'Session ID %d (%s) : %d participants marqués comme absence',
+                $session->getId(),
+                $session->getTitre(),
+                $participantsMarques
+            ));
+            
+        } catch (\Exception $e) {
+            $this->logger->error(sprintf(
+                'Erreur lors du marquage des participants en absence pour la session ID %d: %s',
+                $session->getId(),
+                $e->getMessage()
+            ));
+        }
+        
+        return $participantsMarques;
+    }
+
+    /**
+     * Notifie un participant qu'il sera absent de la session
+     */
+    private function notifierParticipantAbsence($inscription, Session $session, string $formationTitre): void
+    {
+        try {
+            $participant = $inscription->getUser();
+            
+            if ($participant) {
+                // Créer la notification d'absence
+                $this->notificationService->creerNotification(
+                    $participant,
+                    'Absence automatique - Session de formation',
+                    sprintf(
+                        'Bonjour %s %s,<br><br>' .
+                        'La session de formation "%s" (Formation: %s) commence maintenant.<br><br>' .
+                        'Votre participation n\'ayant pas été validée à temps, vous êtes automatiquement marqué(e) comme <strong>ABSENT(E)</strong> de cette session.<br><br>' .
+                        'Si vous souhaitez participer à une prochaine session de cette formation, veuillez contacter le responsable.<br><br>' .
+                        'Cordialement,<br>' .
+                        'Système de gestion des formations',
+                        $participant->getPrenom(),
+                        $participant->getNom(),
+                        $session->getTitre(),
+                        $formationTitre
+                    ),
+                    'absence_automatique',
+                    json_encode([
+                        'session_id' => $session->getId(),
+                        'formation_id' => $session->getFormation() ? $session->getFormation()->getId() : null,
+                        'type' => 'absence_automatique'
+                    ])
+                );
+                
+                $this->logger->info(sprintf(
+                    'Notification d\'absence envoyée au participant %s (ID: %d) pour la session %s (ID: %d)',
+                    $participant->getEmail(),
+                    $participant->getId(),
+                    $session->getTitre(),
+                    $session->getId()
+                ));
+            }
+        } catch (\Exception $e) {
+            $this->logger->error(sprintf(
+                'Erreur lors de l\'envoi de la notification d\'absence au participant de la session ID %d: %s',
+                $session->getId(),
+                $e->getMessage()
+            ));
         }
     }
 }
