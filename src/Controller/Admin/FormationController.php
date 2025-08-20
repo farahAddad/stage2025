@@ -813,10 +813,23 @@ final class FormationController extends AbstractController
         null
     );
     
+    // Supprimer les notifications liées à cette session
+    $notifications = $em->getRepository('App\\Entity\\Notification')->findBy(['session' => $session]);
+    foreach ($notifications as $notification) {
+        $em->remove($notification);
+    }
+    
+    // Supprimer les évaluations liées à cette session
+    $evaluations = $em->getRepository('App\\Entity\\Evaluation')->findBy(['session' => $session]);
+    foreach ($evaluations as $evaluation) {
+        $em->remove($evaluation);
+    }
+    
     // Supprimer les inscriptions liées
     foreach ($session->getInscriptions() as $insc) {
         $em->remove($insc);
     }
+    
     $em->remove($session);
     $em->flush();
     return new JsonResponse(['success' => true]);

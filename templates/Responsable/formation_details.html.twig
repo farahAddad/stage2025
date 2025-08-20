@@ -189,7 +189,8 @@
                                                     <td>
                                                         <div class="view-mode">
                                                             {% if session.fichier %}
-                                                                <a href="{{ asset('uploads/' ~ session.fichier) }}" target="_blank" class="btn btn-sm btn-outline-info">
+                                                                {% set fichierPath = session.fichier starts with '/' ? session.fichier : 'uploads/' ~ session.fichier %}
+                                                                <a href="{{ asset(fichierPath) }}" target="_blank" class="btn btn-sm btn-outline-info">
                                                                     <i class="ft-download"></i> Voir le fichier
                                                                 </a>
                                                             {% else %}
@@ -665,6 +666,43 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error('Erreur lors de la requête:', error);
                     alert('Erreur réseau: ' + error.message);
                 });
+            } else if (btn.classList.contains('delete-session-btn')) {
+                // Suppression de session
+                const sessionId = tr.getAttribute('data-session-id');
+                const sessionTitre = tr.querySelector('input[name="titre"]')?.value || 
+                                   tr.querySelector('.view-mode')?.textContent || 
+                                   'Session';
+                
+                if (confirm(`Êtes-vous sûr de vouloir supprimer la session "${sessionTitre}" ?`)) {
+                    // Envoi AJAX pour supprimer la session
+                    fetch('/session/ajax-delete', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            sessionId: sessionId,
+                            formationId: form.dataset.formationId
+                        })
+                    })
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Supprimer la ligne du tableau
+                            tr.remove();
+                            // Vérifier s'il reste des sessions
+                            const remainingSessions = sessionsTable.querySelectorAll('tbody tr[data-session-id]');
+                            if (remainingSessions.length === 0) {
+                                // Recharger la page si plus de sessions
+                                location.reload();
+                            }
+                        } else {
+                            alert(data.message || 'Erreur lors de la suppression');
+                        }
+                    })
+                    .catch((error) => {
+                        console.error('Erreur lors de la suppression:', error);
+                        alert('Erreur réseau lors de la suppression');
+                    });
+                }
             } else if (btn.classList.contains('cancel-session-edit')) {
                 location.reload();
             }

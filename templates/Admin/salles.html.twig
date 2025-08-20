@@ -34,6 +34,28 @@
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+      .form-control.is-invalid {
+        border-color: #dc3545;
+        box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+      }
+      
+      .form-control.is-invalid:focus {
+        border-color: #dc3545;
+        box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+      }
+      
+      .invalid-feedback {
+        display: none;
+        color: #dc3545;
+        font-size: 0.875em;
+        margin-top: 0.25rem;
+      }
+      
+      .table td {
+        vertical-align: middle;
+      }
+    </style>
     <!-- END: Custom CSS-->
 
 </head>
@@ -77,14 +99,19 @@
                         <!-- Ligne ajout cachée au départ -->
                         <tr id="addRow" style="display:none;">
                           <td>--</td>
-                          <td><input type="text" id="inputNom" class="form-control form-control-sm" placeholder="Nom de la salle" /></td>
-                          <td><input type="number" id="inputCapacite" class="form-control form-control-sm" placeholder="Capacité" min="1" /></td>
                           <td>
-<button id="btnConfirmAdd" class="btn p-0 m-0 text-success" title="Confirmer">
-  <i class="fas fa-check fa-lg"></i>
-</button>
+                            <input type="text" id="inputNom" class="form-control form-control-sm" placeholder="Nom de la salle" required />
+                            <div class="invalid-feedback" id="nomError" style="display: none; color: #dc3545; font-size: 0.875em; margin-top: 0.25rem;"></div>
+                          </td>
+                          <td>
+                            <input type="number" id="inputCapacite" class="form-control form-control-sm" placeholder="Capacité" min="1" required />
+                            <div class="invalid-feedback" id="capaciteError" style="display: none; color: #dc3545; font-size: 0.875em; margin-top: 0.25rem;"></div>
+                          </td>
+                          <td>
+                            <button id="btnConfirmAdd" class="btn p-0 m-0 text-success" title="Confirmer">
+                              <i class="fas fa-check fa-lg"></i>
+                            </button>
                             <i id="btnCancelAdd" class="fas fa-times text-danger" style="cursor: pointer; font-size: 1.3rem;" title="Annuler"></i>
-
                           </td>
                         </tr>
                         <!-- Liste des salles -->
@@ -166,15 +193,42 @@
       btnAddSalle.style.display = 'inline-block';
       document.getElementById('inputNom').value = '';
       document.getElementById('inputCapacite').value = '';
+      clearErrors();
     });
 
     // Confirmer ajout
     btnConfirmAdd.addEventListener('click', () => {
       const nom = document.getElementById('inputNom').value.trim();
       const capacite = document.getElementById('inputCapacite').value.trim();
-
-      if (!nom || !capacite) {
-        alert('Veuillez remplir tous les champs');
+      
+      // Réinitialiser les erreurs
+      clearErrors();
+      
+      let hasErrors = false;
+      
+      // Validation du nom
+      if (!nom) {
+        showError('inputNom', 'nomError', 'Le nom de la salle est requis');
+        hasErrors = true;
+      } else if (nom.length < 2) {
+        showError('inputNom', 'nomError', 'Le nom doit contenir au moins 2 caractères');
+        hasErrors = true;
+      }
+      
+      // Validation de la capacité
+      if (!capacite) {
+        showError('inputCapacite', 'capaciteError', 'La capacité est requise');
+        hasErrors = true;
+      } else {
+        const capaciteNum = parseInt(capacite);
+        if (isNaN(capaciteNum) || capaciteNum < 1) {
+          showError('inputCapacite', 'capaciteError', 'La capacité doit être un nombre supérieur ou égal à 1');
+          hasErrors = true;
+        }
+      }
+      
+      // Si il y a des erreurs, ne pas continuer
+      if (hasErrors) {
         return;
       }
 
@@ -240,8 +294,14 @@
         const nom = tr.querySelector('.td-nom').textContent.trim();
         const capacite = tr.querySelector('.td-capacite').textContent.trim();
 
-        tr.querySelector('.td-nom').innerHTML = `<input type="text" class="form-control form-control-sm edit-nom  style="width: 120px;"  value="${nom}" />`;
-        tr.querySelector('.td-capacite').innerHTML = `<input type="number" min="1" class="form-control form-control-sm edit-capacite  style="width: 120px;" value="${capacite}" />`;
+        tr.querySelector('.td-nom').innerHTML = `
+          <input type="text" class="form-control form-control-sm edit-nom" style="width: 120px;" value="${nom}" required />
+          <div class="invalid-feedback edit-nom-error" style="display: none; color: #dc3545; font-size: 0.875em; margin-top: 0.25rem;"></div>
+        `;
+        tr.querySelector('.td-capacite').innerHTML = `
+          <input type="number" min="1" class="form-control form-control-sm edit-capacite" style="width: 120px;" value="${capacite}" required />
+          <div class="invalid-feedback edit-capacite-error" style="display: none; color: #dc3545; font-size: 0.875rem; margin-top: 0.25rem;"></div>
+        `;
 
         tr.querySelector('.actions').innerHTML = `
           <a href="#" class="save-btn" title="Valider" style="color: #28a745; cursor: pointer; margin-right: 10px;">
@@ -282,8 +342,34 @@
         const newNom = tr.querySelector('.edit-nom').value.trim();
         const newCapacite = tr.querySelector('.edit-capacite').value.trim();
 
-        if (!newNom || !newCapacite) {
-          alert('Veuillez remplir tous les champs');
+        // Réinitialiser les erreurs d'édition
+        clearEditErrors(tr);
+
+        let hasErrors = false;
+
+        // Validation du nom
+        if (!newNom) {
+          showEditError(tr, 'edit-nom', 'edit-nom-error', 'Le nom de la salle est requis');
+          hasErrors = true;
+        } else if (newNom.length < 2) {
+          showEditError(tr, 'edit-nom', 'edit-nom-error', 'Le nom doit contenir au moins 2 caractères');
+          hasErrors = true;
+        }
+        
+        // Validation de la capacité
+        if (!newCapacite) {
+          showEditError(tr, 'edit-capacite', 'edit-capacite-error', 'La capacité est requise');
+          hasErrors = true;
+        } else {
+          const capaciteNum = parseInt(newCapacite);
+          if (isNaN(capaciteNum) || capaciteNum < 1) {
+            showEditError(tr, 'edit-capacite', 'edit-capacite-error', 'La capacité doit être un nombre supérieur ou égal à 1');
+            hasErrors = true;
+          }
+        }
+        
+        // Si il y a des erreurs, ne pas continuer
+        if (hasErrors) {
           return;
         }
 
@@ -353,6 +439,56 @@
       }
     });
 
+    // Fonctions utilitaires pour la validation
+    function showError(inputId, errorId, message) {
+      const input = document.getElementById(inputId);
+      const errorDiv = document.getElementById(errorId);
+      
+      if (input && errorDiv) {
+        input.classList.add('is-invalid');
+        errorDiv.textContent = message;
+        errorDiv.style.display = 'block';
+      }
+    }
+    
+    function clearErrors() {
+      const errorDivs = document.querySelectorAll('.invalid-feedback');
+      const inputs = document.querySelectorAll('.form-control');
+      
+      errorDivs.forEach(div => {
+        div.style.display = 'none';
+      });
+      
+      inputs.forEach(input => {
+        input.classList.remove('is-invalid');
+      });
+    }
+    
+    // Fonctions pour la validation d'édition
+    function showEditError(tr, inputClass, errorClass, message) {
+      const input = tr.querySelector('.' + inputClass);
+      const errorDiv = tr.querySelector('.' + errorClass);
+      
+      if (input && errorDiv) {
+        input.classList.add('is-invalid');
+        errorDiv.textContent = message;
+        errorDiv.style.display = 'block';
+      }
+    }
+    
+    function clearEditErrors(tr) {
+      const errorDivs = tr.querySelectorAll('.invalid-feedback');
+      const inputs = tr.querySelectorAll('.form-control');
+      
+      errorDivs.forEach(div => {
+        div.style.display = 'none';
+      });
+      
+      inputs.forEach(input => {
+        input.classList.remove('is-invalid');
+      });
+    }
+    
     // Réinitialiser le menu vertical après tous les scripts
     if (typeof $.app !== "undefined" && $.app.menu && $.app.menu.init) {
       $.app.menu.init();

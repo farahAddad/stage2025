@@ -102,7 +102,7 @@ $salle->setDisponible(true);
     }
 
     #[Route('/admin/salles/delete', name: 'delete_salle', methods: ['POST'])]
-    public function deleteAjax(Request $request, EntityManagerInterface $em, SalleRepository $salleRepository): JsonResponse
+    public function deleteAjax(Request $request, EntityManagerInterface $em, SalleRepository $salleRepository, AuditLogService $auditLogService): JsonResponse
     {
         $id = $request->request->get('id');
 
@@ -115,6 +115,32 @@ $salle->setDisponible(true);
         if (!$salle) {
             return new JsonResponse(['success' => false, 'message' => 'Salle non trouvée'], 404);
         }
+
+        // Vérifier s'il y a des sessions qui utilisent cette salle
+        $sessions = $em->getRepository('App\\Entity\\Session')->findBy(['salle' => $salle]);
+        
+        if (!empty($sessions)) {
+            $sessionTitles = array_map(function($session) {
+                return $session->getTitre();
+            }, $sessions);
+            
+            $message = sprintf(
+                'Impossible de supprimer la salle "%s". Elle est utilisée par %d session(s) : %s',
+                $salle->getNom(),
+                count($sessions),
+                implode(', ', array_slice($sessionTitles, 0, 3)) . (count($sessionTitles) > 3 ? '...' : '')
+            );
+            
+            return new JsonResponse(['success' => false, 'message' => $message], 409);
+        }
+
+        // Audit log avant suppression
+        $auditLogService->enregistrer(
+            $this->getUser(),
+            'Suppression salle',
+            json_encode(['id' => $salle->getId(), 'nom' => $salle->getNom(), 'capacite' => $salle->getCapacite()]),
+            null
+        );
 
         $em->remove($salle);
         $em->flush();
