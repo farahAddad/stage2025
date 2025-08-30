@@ -82,21 +82,25 @@
                                         <div class="col-lg-3 col-12">
                                             <div class="text-center">
                                                 <h3>{{ totalFormations }}</h3>
-                                                <p class="text-muted">Total Formations <span class="success"><i class="ft-arrow-up"></i> Actif</span></p>
+                                                <p class="text-muted">Total Formations <span class="success"><i class="ft-arrow-up"></i> Total</span></p>
                                                 <div id="sp-tristate-bar-total-revenue"></div>
                                             </div>
                                         </div>
                                         <div class="col-lg-3 col-12">
                                             <div class="text-center">
                                                 <h3>{{ tauxParticipation }}%</h3>
-                                                <p class="text-muted">Taux Participation <span class="success"><i class="ft-arrow-up"></i> {{ tauxParticipation > 70 ? 'Excellent' : 'Bon' }}</span></p>
+                                                {% set tpLabel = tauxParticipation > 70 ? 'Bon' : (tauxParticipation >= 40 ? 'Moyen' : 'Faible') %}
+                                                {% set tpClass = tauxParticipation > 70 ? 'success' : (tauxParticipation >= 40 ? 'warning' : 'danger') %}
+                                                <p class="text-muted">Taux Participation <span class="{{ tpClass }}"><i class="ft-arrow-up"></i> {{ tpLabel }}</span></p>
                                                 <div id="sp-stacked-bar-total-sales"></div>
                                             </div>
                                         </div>
                                         <div class="col-lg-3 col-12">
                                             <div class="text-center">
                                                 <h3>{{ tauxSatisfaction }}/5</h3>
-                                                <p class="text-muted">Satisfaction Moyenne <span class="warning"><i class="ft-arrow-up"></i> {{ tauxSatisfaction > 4 ? 'Excellent' : 'Bon' }}</span></p>
+                                                {% set satLabel = tauxSatisfaction >= 4 ? 'Bon' : (tauxSatisfaction >= 3 ? 'Moyen' : 'Faible') %}
+                                                {% set satClass = tauxSatisfaction >= 4 ? 'success' : (tauxSatisfaction >= 3 ? 'warning' : 'danger') %}
+                                                <p class="text-muted">Satisfaction Moyenne <span class="{{ satClass }}"><i class="ft-arrow-up"></i> {{ satLabel }}</span></p>
                                                 <div id="sp-bar-total-cost"></div>
                                             </div>
                                         </div>
@@ -180,14 +184,14 @@
                                     <div class="media">
                                         <div class="media-body text-left w-100">
                                             <h3 class="primary">{{ formationsParResponsable }}</h3>
-                                            <span>Formations par responsable</span>
+                                            <span>Moyenne formations par responsable</span>
                                         </div>
                                         <div class="media-right media-middle">
                                             <i class="icon-user primary font-large-2 float-right"></i>
                                         </div>
                                     </div>
                                     <div class="progress progress-sm mt-1 mb-0">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: {{ totalFormations > 0 ? (formationsParResponsable / totalFormations * 100)|round : 0 }}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                             </div>
@@ -201,13 +205,15 @@
                                         <div class="media-body text-left w-100">
                                             <h3 class="success">{{ tauxParticipation }}%</h3>
                                             <span>Taux de participation</span>
+                                            <div class="font-small-2 text-muted">{{ inscriptionsAcceptees }}/{{ totalInscriptions }}</div>
                                         </div>
                                         <div class="media-right media-middle">
                                             <i class="icon-users success font-large-2 float-right"></i>
                                         </div>
                                     </div>
                                     <div class="progress progress-sm mt-1 mb-0">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ tauxParticipation }}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        {% set color = tauxParticipation >= 70 ? 'bg-success' : (tauxParticipation >= 40 ? 'bg-warning' : 'bg-danger') %}
+                                        <div class="progress-bar {{ color }}" role="progressbar" style="width: {{ tauxParticipation }}%" aria-valuenow="{{ tauxParticipation }}" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                             </div>

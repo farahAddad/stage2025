@@ -425,7 +425,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Validation
         if (!sujet.value.trim()) { sujet.classList.add('is-invalid'); sujetError.textContent = 'Le sujet est requis.'; valid = false; }
         if (!dateDebut.value) { dateDebut.classList.add('is-invalid'); dateDebutError.textContent = 'La date de début est requise.'; valid = false; }
-        if (!duree.value || isNaN(duree.value) || parseInt(duree.value) < 2) { duree.classList.add('is-invalid'); dureeError.textContent = 'La durée doit être un nombre supérieur ou égal à 2.'; valid = false; }
+        if (!duree.value || isNaN(duree.value) || parseInt(duree.value) < 1) { duree.classList.add('is-invalid'); dureeError.textContent = 'La durée doit être un nombre supérieur ou égal à 1.'; valid = false; }
         if (!responsable.value) { responsable.classList.add('is-invalid'); responsableError.textContent = 'Le responsable est requis.'; valid = false; }
         
         if (!valid) return;

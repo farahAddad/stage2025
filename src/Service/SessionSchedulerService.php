@@ -17,12 +17,7 @@ class SessionSchedulerService
         private LoggerInterface $logger
     ) {}
 
-    /**
-     * Vérifie et met à jour le statut des sessions
-     * Change le statut de "créée" vers "en cours" si la date de début est atteinte
-     * Change le statut de "en cours" vers "terminé" si la date de fin est atteinte
-     * Envoie des notifications aux participants
-     */
+  
     public function verifierEtMettreAJourSessions(): array
     {
         $resultat = [
@@ -92,30 +87,39 @@ class SessionSchedulerService
             try {
                 $dateDebut = $session->getDateDebut();
                 
-                // Vérifier si la date de début est maintenant ou dans le passé
+                
                 if ($dateDebut <= $now) {
                     $ancienStatut = $session->getStatus();
                     
-                    // Mettre à jour le statut
+                    
                     $session->setStatus('en cours');
                     
-                    // Persister les changements
+                    
                     $this->entityManager->persist($session);
                     
-                    // Créer un audit log pour ce changement
+                  
                     $this->auditLogService->enregistrer(
-                        null, // Pas d'utilisateur spécifique pour les changements automatiques
+                        null,
                         sprintf('Changement automatique de statut session (ID: %d) - Début', $session->getId()),
                         $ancienStatut,
                         'en cours'
                     );
                     
-                    // Marquer les participants non validés comme "absence" et les notifier
+                    // Console log session start
+                    echo sprintf("\n🟢 Session passe 'en cours' | ID:%d | Titre:%s | Début:%s\n",
+                        $session->getId(),
+                        $session->getTitre(),
+                        $dateDebut->format('Y-m-d H:i:s')
+                    );
+
                     $participantsMarquesAbsence = $this->marquerParticipantsAbsence($session);
                     
                     // Envoyer des notifications aux participants acceptés
                     $notificationsEnvoyees = $this->notifierParticipantsSession($session);
                     $resultat['notifications_envoyees'] += $notificationsEnvoyees;
+                    
+                    // Afficher un résumé des inscriptions de la session
+                    $this->echoInscriptionsSession($session);
                     
                     $resultat['sessions_modifiees']++;
                     $resultat['details'][] = [
@@ -464,17 +468,21 @@ class SessionSchedulerService
         $participantsMarques = 0;
         
         try {
-            // Récupérer toutes les inscriptions pour cette session qui ne sont pas "accepté"
+            // Récupérer uniquement les inscriptions avec statut "en attente" pour cette session
             $inscriptionsNonValidees = $this->entityManager->getRepository('App\Entity\Inscription')
                 ->createQueryBuilder('i')
                 ->where('i.session = :session')
-                ->andWhere('i.statutParticipation != :statutAccepte OR i.statutParticipation IS NULL')
+                ->andWhere('i.statutParticipation = :statutEnAttente')
                 ->setParameter('session', $session)
-                ->setParameter('statutAccepte', 'accepté')
+                ->setParameter('statutEnAttente', 'en attente')
                 ->getQuery()
                 ->getResult();
             
             if (empty($inscriptionsNonValidees)) {
+                echo sprintf(
+                    "   ↪ Aucun participant en attente pour session ID:%d\n",
+                    $session->getId()
+                );
                 return 0;
             }
 
@@ -489,6 +497,13 @@ class SessionSchedulerService
                 
                 // Persister le changement
                 $this->entityManager->persist($inscription);
+                $participant = $inscription->getUser();
+                echo sprintf(
+                    "   ✳️ Inscription ID:%d | User:%s | %s → absence\n",
+                    $inscription->getId(),
+                    $participant ? $participant->getEmail() : 'inconnu',
+                    $ancienStatut
+                );
                 
                 // Créer un audit log pour ce changement
                 $this->auditLogService->enregistrer(
@@ -509,6 +524,11 @@ class SessionSchedulerService
             
             // Flush tous les changements
             $this->entityManager->flush();
+            echo sprintf(
+                "   ✅ Total marqués 'absence' pour session ID:%d → %d\n",
+                $session->getId(),
+                $participantsMarques
+            );
             
             $this->logger->info(sprintf(
                 'Session ID %d (%s) : %d participants marqués comme absence',
@@ -575,6 +595,61 @@ class SessionSchedulerService
                 $session->getId(),
                 $e->getMessage()
             ));
+        }
+    }
+
+    /**
+     * Affiche dans la console la liste des inscriptions d'une session et un résumé par statut
+     */
+    private function echoInscriptionsSession(Session $session): void
+    {
+        try {
+            $repo = $this->entityManager->getRepository('App\\Entity\\Inscription');
+            $inscriptions = $repo->createQueryBuilder('i')
+                ->leftJoin('i.user', 'u')
+                ->addSelect('u')
+                ->where('i.session = :session')
+                ->setParameter('session', $session)
+                ->orderBy('i.id', 'ASC')
+                ->getQuery()
+                ->getResult();
+
+            $counts = [
+                'accepté' => 0,
+                'en attente' => 0,
+                'absence' => 0,
+                'autre' => 0,
+            ];
+
+            echo "   📋 Inscriptions de la session:\n";
+            foreach ($inscriptions as $inscription) {
+                $user = $inscription->getUser();
+                $email = $user ? $user->getEmail() : 'inconnu';
+                $statut = $inscription->getStatutParticipation() ?? 'en attente';
+                if (!isset($counts[$statut])) {
+                    $counts['autre']++;
+                } else {
+                    $counts[$statut]++;
+                }
+                echo sprintf(
+                    "      • ID:%d | User:%s | Statut:%s\n",
+                    $inscription->getId(),
+                    $email,
+                    $statut
+                );
+            }
+
+            $total = count($inscriptions);
+            echo sprintf(
+                "   🔎 Résumé: total=%d | accepté=%d | en attente=%d | absence=%d | autre=%d\n",
+                $total,
+                $counts['accepté'] ?? 0,
+                $counts['en attente'] ?? 0,
+                $counts['absence'] ?? 0,
+                $counts['autre'] ?? 0
+            );
+        } catch (\Throwable $e) {
+            echo sprintf("   ⚠️ Erreur affichage inscriptions: %s\n", $e->getMessage());
         }
     }
 }

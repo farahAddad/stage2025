@@ -96,7 +96,7 @@
                         
                         <!-- Filtre par statut -->
                         <div class="col-md-3 mb-3">
-                            <label for="statutFilter" style="color: black; font-weight: 500;">Statut</label>
+                            <label for="statutFilter" style="color: black; font-weight: 500;">Statut de participation</label>
                             <select id="statutFilter" class="form-control" 
                                     style="border: 1px solid #d4c4b7; border-radius: 6px; background-color: #fefefe;">
                                 <option value="">Tous les statuts</option>
@@ -130,15 +130,32 @@
                         {% else %}
                             {% for formationKey, formationData in participantsOrganises %}
                                 <div class="formation-section mb-4" data-formation="{{ formationData.formation.sujet }}">
-                                    <div class="formation-header" style="background-color: #f8f6f3; border: 1px solid #e8e4e0; border-radius: 8px; padding: 16px;">
+                                    <div class="formation-header" style="background-color: #e6f7f5; border: 1px solid #b2e5df; border-radius: 8px; padding: 16px;">
                                         <h5 class="mb-0" style="color: black;"><i class="ft-book" style="color: #666;"></i> {{ formationData.formation.sujet }}</h5>
                                         <small style="color: black;">{{ formationData.formation.dateDebut ? formationData.formation.dateDebut|date('d/m/Y') : 'Date non définie' }} | {{ formationData.formation.duree }} jour(s)</small>
                                     </div>
                                     {% for sessionKey, sessionData in formationData.sessions %}
                                         <div class="session-section ml-4 mt-3" data-session="{{ sessionData.session.titre }}">
-                                            <div class="session-header" style="background-color: #fefefe; border: 1px solid #f0ede8; border-radius: 6px; padding: 12px;">
-                                                <h6 class="mb-0" style="color: black;"><i class="ft-calendar" style="color: #666;"></i> Session: {{ sessionData.session.titre }}</h6>
-                                                <small style="color: black;">{{ sessionData.session.dateDebut ? sessionData.session.dateDebut|date('d/m/Y') : 'Date non définie' }} {% if sessionData.session.dateFin %}- {{ sessionData.session.dateFin|date('d/m/Y') }}{% endif %}</small>
+                                            <div class="session-header" style="background-color: #f8f6f3; border: 1px solid #e8e4e0; border-radius: 6px; padding: 12px;">
+                                                <h6 class="mb-0" style="color: black; position: relative;"><i class="ft-calendar" style="color: #666;"></i> Session: {{ sessionData.session.titre }}
+                                                    {% set st = sessionData.session.status %}
+                                                    {% if st %}
+                                                        <span style="float: right;">
+                                                            {% if st == 'créée' %}
+                                                                <span class="badge badge-secondary">{{ st|title }}</span>
+                                                            {% elseif st == 'en cours' %}
+                                                                <span class="badge badge-info">{{ st|title }}</span>
+                                                            {% elseif st == 'terminé' or st == 'terminée' %}
+                                                                <span class="badge badge-success">Terminé</span>
+                                                            {% elseif st == 'annulée' or st == 'annulé' %}
+                                                                <span class="badge badge-danger">{{ st|title }}</span>
+                                                            {% else %}
+                                                                <span class="badge" style="background-color:#d4c4b7; color:black;">{{ st|title }}</span>
+                                                            {% endif %}
+                                                        </span>
+                                                    {% endif %}
+                                                </h6>
+                                                <small style="color: black;">{{ sessionData.session.dateDebut ? sessionData.session.dateDebut|date('d/m/Y H:i') : 'Date non définie' }} {% if sessionData.session.dateFin %}- {{ sessionData.session.dateFin|date('d/m/Y H:i') }}{% endif %}</small>
                                             </div>
                                             <div class="participants-list ml-4 mt-2">
                                                 <div class="table-responsive">
@@ -190,6 +207,21 @@
                                     {% endfor %}
                                 </div>
                             {% endfor %}
+                            {% if pagination is defined and pagination.totalPages > 1 %}
+                                <nav aria-label="Pagination formations" class="mt-3">
+                                    <ul class="pagination justify-content-center">
+                                        <li class="page-item {% if pagination.page <= 1 %}disabled{% endif %}">
+                                            <a class="page-link" href="{{ path('admin_participants', { page: pagination.page - 1 }) }}" tabindex="-1">Précédent</a>
+                                        </li>
+                                        {% for p in 1..pagination.totalPages %}
+                                            <li class="page-item {% if p == pagination.page %}active{% endif %}"><a class="page-link" href="{{ path('admin_participants', { page: p }) }}">{{ p }}</a></li>
+                                        {% endfor %}
+                                        <li class="page-item {% if pagination.page >= pagination.totalPages %}disabled{% endif %}">
+                                            <a class="page-link" href="{{ path('admin_participants', { page: pagination.page + 1 }) }}">Suivant</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            {% endif %}
                         {% endif %}
                     </div>
                 </div>

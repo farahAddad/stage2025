@@ -5282,3 +5282,55 @@ NOTIF FORMATION: acteur=7 rania@gmail.com, createur=1 admin@test.com, responsabl
 NOTIF FORMATION - CASE: RESPONSABLE
 NOTIF FORMATION - PARTICIPANTS COUNT: 3
 NOTIF FORMATION - RESPONSABLE NOTIFIED: NO
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=7 rania@gmail.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [4 participant@1.com, 5 participant@2.com, 6 participant@3.com]
+NOTIF FORMATION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=7 rania@gmail.com
+NOTIF FORMATION - CASE: CREATEUR
+NOTIF FORMATION - PARTICIPANTS COUNT: 3
+NOTIF FORMATION - RESPONSABLE NOTIFIED: YES
+NOTIF FORMATION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=7 rania@gmail.com
+NOTIF FORMATION - CASE: CREATEUR
+NOTIF FORMATION - PARTICIPANTS COUNT: 3
+NOTIF FORMATION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=7 rania@gmail.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [6 participant@3.com]
+NOTIF FORMATION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=2 MED.ali@gmail.com
+NOTIF FORMATION - CASE: CREATEUR
+NOTIF FORMATION - PARTICIPANTS COUNT: 3
+NOTIF FORMATION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=2 MED.ali@gmail.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [4 participant@1.com, 5 participant@2.com, 6 participant@3.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=2 MED.ali@gmail.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [6 participant@3.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=2 MED.ali@gmail.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [5 participant@2.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=2 MED.ali@gmail.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [4 participant@1.com, 5 participant@2.com]
+NOTIF SESSION: acteur=1 admin@test.com, createur=1 admin@test.com, responsable=7 rania@gmail.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [4 participant@1.com, 5 participant@2.com, 6 participant@3.com]
+NOTIF SESSION: acteur=1 admin@gmail.com, createur=1 admin@gmail.com, responsable=2 eya@gmail.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [4 participant@1.com, 5 participant@2.com, 6 participant@3.com, 8 participant@4.com, 9 participant@5.com]
+NOTIF FORMATION: acteur=1 admin@gmail.com, createur=1 admin@gmail.com, responsable=2 eya@gmail.com
+NOTIF FORMATION - CASE: CREATEUR
+NOTIF FORMATION - PARTICIPANTS COUNT: 5
+NOTIF FORMATION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION: acteur=1 admin@gmail.com, createur=1 admin@gmail.com, responsable=2 eya@gmail.com
+NOTIF SESSION - CASE: CREATEUR
+NOTIF SESSION - RESPONSABLE NOTIFIED: YES
+NOTIF SESSION CIBLES: [4 participant@1.com, 5 participant@2.com, 6 participant@3.com, 8 participant@4.com, 9 participant@5.com]

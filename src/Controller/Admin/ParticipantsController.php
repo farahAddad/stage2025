@@ -14,7 +14,7 @@ class ParticipantsController extends AbstractController
 {
     #[Route('', name: '')]
     #[IsGranted('ROLE_RH')]
-    public function index(EntityManagerInterface $em): Response
+    public function index(EntityManagerInterface $em, \Symfony\Component\HttpFoundation\Request $request): Response
     {
         $user = $this->getUser();
         
@@ -61,10 +61,31 @@ class ParticipantsController extends AbstractController
                 'inscription' => $inscription
             ];
         }
-        
+        // Pagination par formations (2 par page)
+        $formationsParPage = 2;
+        $page = max(1, (int)$request->query->get('page', 1));
+        $formationIds = array_keys($participantsOrganises);
+        $totalFormations = count($formationIds);
+        $totalPages = (int) ceil($totalFormations / $formationsParPage);
+        if ($page > $totalPages && $totalPages > 0) {
+            $page = $totalPages;
+        }
+        $offset = ($page - 1) * $formationsParPage;
+        $idsPage = array_slice($formationIds, $offset, $formationsParPage, true);
+        $participantsOrganisesPage = [];
+        foreach ($idsPage as $fid) {
+            $participantsOrganisesPage[$fid] = $participantsOrganises[$fid];
+        }
+
         return $this->render('Admin/participants.html.twig', [
             'user' => $user,
-            'participantsOrganises' => $participantsOrganises
+            'participantsOrganises' => $participantsOrganisesPage,
+            'pagination' => [
+                'page' => $page,
+                'perPage' => $formationsParPage,
+                'totalFormations' => $totalFormations,
+                'totalPages' => $totalPages,
+            ],
         ]);
     }
 }

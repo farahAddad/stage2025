@@ -45,6 +45,8 @@ class AdminDashboardController extends AbstractController
             'user' => $user,
             'totalFormations' => $globalStats['totalFormations'],
             'tauxParticipation' => $globalStats['tauxParticipation'],
+            'totalInscriptions' => $globalStats['totalInscriptions'] ?? 0,
+            'inscriptionsAcceptees' => $globalStats['inscriptionsAcceptees'] ?? 0,
             'tauxSatisfaction' => $globalStats['tauxSatisfaction'],
             'joursFormation' => $globalStats['joursFormation'],
 

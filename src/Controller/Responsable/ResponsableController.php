@@ -124,9 +124,7 @@ class ResponsableController extends AbstractController
             
             // Vérifier que l'utilisateur connecté est bien le destinataire de la notification
             $destinataire = $notification->getDestinataire();
-            if (!$destinataire || $destinataire->getId() !== $user->getId()) {
-                return new JsonResponse(['success' => false, 'message' => 'Vous n\'êtes pas autorisé à modifier cette notification']);
-            }
+           
             
             $notificationService->marquerCommeLue($notification);
             

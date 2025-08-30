@@ -94,7 +94,7 @@
                                                 {% endif %}
                                             </div>
                                             <div class="form-group col-md-6 mb-2">
-                                                <input type="number" class="form-control" placeholder="Durée" name="duree" required min="2" value="{{ app.request.get('duree') }}">
+                                                <input type="number" class="form-control" placeholder="Durée (jours, ex: 1.5)" name="duree" required min="0.5" step="0.5" value="{{ app.request.get('duree') }}">
                                                 {% if errors.duree is defined %}
                                                     <div class="text-danger">{{ errors.duree }}</div>
                                                 {% endif %}
@@ -211,7 +211,7 @@
         </div>
       </div>
 
-      <!-- Bouton Ajouter -->
+      
       <div class="form-group overflow-hidden">
         <div class="col-12">
           <button data-repeater-create class="btn btn-primary btn-lg"><i class="icon-plus4"></i> Ajouter</button>
@@ -566,13 +566,14 @@ document.getElementById('btn-save-formation').addEventListener('click', function
             hasFormationError = true;
         }
     }
-    // Durée
+    // Durée (accepte décimales)
     const dureeInput = document.querySelector('[name="duree"]');
-    if (dureeInput && (!dureeInput.value || isNaN(dureeInput.value) || parseInt(dureeInput.value) < 2)) {
+    const dureeVal = dureeInput ? parseFloat(dureeInput.value) : NaN;
+    if (dureeInput && (!dureeInput.value || isNaN(dureeVal) || dureeVal < 0.5)) {
         if (!dureeInput.parentNode.querySelector('.formation-error')) {
             const errorDiv = document.createElement('div');
             errorDiv.className = 'text-danger formation-error';
-            errorDiv.innerText = 'La durée doit être un nombre supérieur ou égal à 2.';
+            errorDiv.innerText = 'La durée doit être un nombre supérieur ou égal à 0.5.';
             dureeInput.parentNode.appendChild(errorDiv);
         }
         hasFormationError = true;

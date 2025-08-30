@@ -130,7 +130,7 @@ class UserController extends AbstractController
             }
             
             // Vérifier que le destinataire est bien l'utilisateur connecté
-            if ($destinataire->getId() !== $user->getId()) {
+            if ($destinataire !== $user) {
                 return new JsonResponse(['success' => false, 'message' => 'Vous n\'êtes pas autorisé à modifier cette notification']);
             }
             

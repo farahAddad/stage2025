@@ -948,8 +948,23 @@ final class FormationController extends AbstractController
                 $ancienStatus = $session->getStatus();
                 $session->setStatus('en cours');
                 $em->persist($session);
+
+                // Marquer les inscriptions "en attente" comme "absence" pour cette session
+                $inscriptions = $em->getRepository('App\\Entity\\Inscription')
+                    ->createQueryBuilder('i')
+                    ->where('i.session = :session')
+                    ->andWhere('i.statutParticipation = :attente')
+                    ->setParameter('session', $session)
+                    ->setParameter('attente', 'en attente')
+                    ->getQuery()
+                    ->getResult();
+                foreach ($inscriptions as $insc) {
+                    $insc->setStatutParticipation('absence');
+                    $em->persist($insc);
+                }
+
                 $sessionsModifiees++;
-                $details[] = "Session '{$session->getTitre()}' (ID: {$session->getId()}) : '{$ancienStatus}' → 'en cours'";
+                $details[] = "Session '{$session->getTitre()}' (ID: {$session->getId()}) : '{$ancienStatus}' → 'en cours' (" . count($inscriptions) . " en attente → absence)";
             }
         }
         

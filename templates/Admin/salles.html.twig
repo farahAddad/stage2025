@@ -418,12 +418,21 @@
           },
           body: new URLSearchParams({ id: id }),
         })
-        .then(response => {
-          if (!response.ok) throw new Error('Erreur lors de la suppression');
-          return response.json();
+        .then(async response => {
+          let data;
+          try { data = await response.json(); } catch(e) { data = null; }
+          if (!response.ok) {
+            const msg = (data && (data.message || data.error))
+              ? (data.message || data.error)
+              : (response.status === 409
+                  ? 'Impossible de supprimer: cette salle est réservée par une ou plusieurs sessions.'
+                  : 'Erreur lors de la suppression');
+            throw new Error(msg);
+          }
+          return data;
         })
         .then(data => {
-          if(data.success){
+          if(data && data.success){
             tr.remove();
             // Si plus aucune salle, afficher message
             if(salleTableBody.querySelectorAll('tr').length === 0){
@@ -432,7 +441,7 @@
               salleTableBody.appendChild(trEmpty);
             }
           } else {
-            alert('Erreur serveur: ' + (data.message || ''));
+            alert('Erreur serveur: ' + ((data && data.message) ? data.message : ''));
           }
         })
         .catch(err => alert(err.message));

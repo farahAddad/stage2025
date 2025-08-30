@@ -114,17 +114,29 @@ class AdminDashboardRepository extends ServiceEntityRepository
         
 
         
-        // Formations par responsable
-        $formationsParResponsable = $this->createQueryBuilder('f')
+        // Moyenne de formations par responsable (uniquement responsables ayant au moins une formation)
+        $totalFormationsAvecResponsable = (int) ($this->createQueryBuilder('f')
+            ->select('COUNT(f.id)')
+            ->where('f.responsable IS NOT NULL')
+            ->getQuery()
+            ->getSingleScalarResult() ?? 0);
+
+        $nbResponsablesActifs = (int) ($this->createQueryBuilder('f')
             ->select('COUNT(DISTINCT f.responsable)')
             ->where('f.responsable IS NOT NULL')
             ->getQuery()
-            ->getSingleScalarResult() ?? 0;
+            ->getSingleScalarResult() ?? 0);
+
+        $formationsParResponsable = $nbResponsablesActifs > 0
+            ? round($totalFormationsAvecResponsable / $nbResponsablesActifs, 2)
+            : 0;
         
         return [
             'totalFormations' => $totalFormations,
             'totalUsers' => $totalUsers,
             'tauxParticipation' => $tauxParticipation,
+            'totalInscriptions' => (int) $totalParticipants,
+            'inscriptionsAcceptees' => (int) $participantsAcceptes,
             'totalEvaluations' => $totalEvaluations,
             'tauxSatisfaction' => $tauxSatisfaction,
             'joursFormation' => $joursFormation,
